@@ -1,0 +1,9 @@
+#prettierignore
+*.log*
+.nuxt
+.nitro
+.cache
+.output
+.env
+dist
+
