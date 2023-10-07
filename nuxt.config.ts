@@ -8,5 +8,23 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss', '@nuxt/content'],
   content: {
     // ... options
+    highlight: {
+      theme: 'github-dark',
+      // Define languages you expect to use
+      preload: ['java', 'javascript']
+    },
+    markdown: {
+      // Configuring external link processing
+      // https://github.com/rehypejs/rehype-external-links
+      rehypePlugins: [
+        [
+          'rehype-external-links',
+          {
+            target: '_blank',
+            rel: 'noopener noreferer'
+          }
+        ]
+      ]
+    }
   }
 })

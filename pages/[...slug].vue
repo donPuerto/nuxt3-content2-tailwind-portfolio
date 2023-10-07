@@ -1,5 +1,7 @@
+<script lang="ts" setup></script>
+
 <template>
-  <main>
-    <ContentDoc />
-  </main>
+  <div></div>
 </template>
+
+<style></style>

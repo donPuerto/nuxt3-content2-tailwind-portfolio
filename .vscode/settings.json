@@ -84,5 +84,5 @@
   // spelling
   "cSpell.allowCompoundWords": true,
   "cSpell.language": "en,en-US",
-  "cSpell.words": ["nuxtjs", "pinia"]
+  "cSpell.words": ["noopener", "noreferer", "nuxtjs", "pinia", "rehype"]
 }
