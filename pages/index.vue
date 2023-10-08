@@ -1,8 +1,11 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+  definePageMeta({
+    layout: 'default'
+  })
+</script>
 
 <template>
-  <div>Index</div>
-  <NuxtLink to="/blog/">Read the blog!</NuxtLink>
+  <div>Index Page</div>
 </template>
 
 <style></style>
