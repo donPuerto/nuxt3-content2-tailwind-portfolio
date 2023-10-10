@@ -1,15 +1,23 @@
 <template>
-  <div>
+  <div class="relative">
+    <!-- Background -->
     <img
-      class="w-auto"
+      class="top-0"
       src="~/assets/img/bg.svg"
       alt="Blue and purple background graphics"
-      height="20px"
     />
-    <div class="absolute h-full w-full top-0">
+
+    <!-- Content -->
+    <div class="absolute h-full w-full top-0 md:px-2">
       <Nabvar />
       <slot />
       <Footer />
     </div>
   </div>
 </template>
+
+<style>
+  body {
+    @apply bg-gray-900;
+  }
+</style>

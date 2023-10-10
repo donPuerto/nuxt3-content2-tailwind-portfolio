@@ -5,7 +5,7 @@
 </script>
 
 <template>
-  <div>Index Page</div>
+  <Hero />
 </template>
 
 <style></style>
