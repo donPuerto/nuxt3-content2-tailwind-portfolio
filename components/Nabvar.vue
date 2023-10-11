@@ -1,10 +1,7 @@
 <template>
   <Toolbar
-    :pt="{
-      root: {
-        style: { background: 'transparent', border: 'none' }
-      }
-    }"
+    style="'background-color': 'transparent !important'"
+    class="px-8 py-3 bg-primary"
   >
     <template #start>
       <ul class="flex flex-grow space-x-4">
@@ -14,9 +11,11 @@
             class="flex items-center space-x-3 text-gray-700 md:mr-5"
           >
             <img
-              class="w-10"
+              class=""
               src="~/assets/img/logo.png"
               alt="https://www.svgshapes.in/"
+              height="30"
+              width="30"
             />
             <span class="text-gray-200 hover:text-gray-300 text-1xl font-semibold py-1">donpuerto.ph</span>
           </NuxtLink>
