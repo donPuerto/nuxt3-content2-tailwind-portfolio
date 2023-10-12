@@ -8,7 +8,7 @@
     />
 
     <!-- Content -->
-    <div class="absolute h-full w-full top-0 md:px-2">
+    <div class="absolute h-full w-full top-0">
       <Nabvar />
       <slot />
       <Footer />

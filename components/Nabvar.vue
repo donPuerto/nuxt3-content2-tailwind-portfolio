@@ -1,7 +1,9 @@
 <template>
   <Toolbar
-    style="'background-color': 'transparent !important'"
-    class="px-8 py-3 bg-primary"
+    :pt="{
+      root: { style: { backgroundColor: 'transparent !important' } }
+    }"
+    class="px-8 py-3 border-none border-noround"
   >
     <template #start>
       <ul class="flex flex-grow space-x-4">
@@ -14,8 +16,8 @@
               class=""
               src="~/assets/img/logo.png"
               alt="https://www.svgshapes.in/"
-              height="30"
-              width="30"
+              height="35"
+              width="35"
             />
             <span class="text-gray-200 hover:text-gray-300 text-1xl font-semibold py-1">donpuerto.ph</span>
           </NuxtLink>
@@ -49,9 +51,36 @@
     </template>
 
     <template #end>
-      <div class="flex">
-        <div class="hidden sm:flex">Icons Here</div>
+      <div class="flex gap-3">
+        <div class="hidden sm:flex">
+          <div class="flex flex-none">
+            <i
+              class="pi pi-github hover:text-700 cursor-pointer"
+              style="color: white; font-size: 1.5rem"
+            ></i>
+          </div>
+
+          <div class="flex flex-none">
+            <i
+              class="pi pi-twitter hover:text-700 cursor-pointer"
+              style="color: white; font-size: 1.5rem"
+            ></i>
+          </div>
+
+          <div class="flex flex-none">
+            <i
+              class="pi pi-linkedin hover:text-700 cursor-pointer"
+              style="color: white; font-size: 1.5rem"
+            ></i>
+          </div>
+        </div>
         <div class="flex sm:hidden">Show</div>
+        <div class="flex flex-none">
+          <i
+            class="pi pi-linkedin hover:text-700 cursor-pointer"
+            style="color: white; font-size: 1.5rem"
+          ></i>
+        </div>
       </div>
     </template>
   </Toolbar>
