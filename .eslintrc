@@ -7,12 +7,14 @@
   },
   // Avoids the eslint
   "globals": {},
+  "parser": "vue-eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 2023,
+    "parser": "@typescript-eslint/parser",
+    "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "extends": ["@nuxtjs/eslint-config-typescript", "plugin:vue/vue3-recommended", "prettier"],
-  "plugins": ["vue,prettier"],
+  "plugins": ["prettier"],
   "rules": {
     // prettier
     "prettier/prettier": "error",
@@ -37,7 +39,7 @@
         "order": ["script:not([setup])", "script[setup]", "template", "style:not([scoped])", "style[scoped]"]
       }
     ],
-    "vue/html-quotes": ["error", "double", { "avoidEscape": true }],
+    // "vue/html-quotes": ["error", "double", { "avoidEscape": true }],
     "vue/block-lang": [
       "error",
       {

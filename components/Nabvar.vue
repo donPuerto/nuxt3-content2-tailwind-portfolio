@@ -53,21 +53,21 @@
     <template #end>
       <div class="flex gap-3">
         <div class="hidden sm:flex">
-          <div class="flex flex-none">
+          <div class="flex">
             <i
               class="pi pi-github hover:text-700 cursor-pointer"
               style="color: white; font-size: 1.5rem"
             ></i>
           </div>
 
-          <div class="flex flex-none">
+          <div class="flex">
             <i
               class="pi pi-twitter hover:text-700 cursor-pointer"
               style="color: white; font-size: 1.5rem"
             ></i>
           </div>
 
-          <div class="flex flex-none">
+          <div class="flex">
             <i
               class="pi pi-linkedin hover:text-700 cursor-pointer"
               style="color: white; font-size: 1.5rem"
@@ -75,12 +75,12 @@
           </div>
         </div>
         <div class="flex sm:hidden">Show</div>
-        <div class="flex flex-none">
+        <!-- <div class="flex flex-none">
           <i
             class="pi pi-linkedin hover:text-700 cursor-pointer"
             style="color: white; font-size: 1.5rem"
           ></i>
-        </div>
+        </div> -->
       </div>
     </template>
   </Toolbar>
