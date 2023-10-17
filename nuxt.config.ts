@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  css: ['primevue/resources/themes/lara-dark-indigo/theme.css', 'primeflex/primeflex.css', 'primeicons/primeicons.css'],
+  css: ['primevue/resources/themes/lara-dark-indigo/theme.css', 'primeicons/primeicons.css', 'primeflex/primeflex.css'],
   build: {
     transpile: ['primevue']
   },

@@ -3,7 +3,7 @@
     :pt="{
       root: { style: { backgroundColor: 'transparent !important' } }
     }"
-    class="px-8 py-3 border-none border-noround"
+    class="px-8 py-3 border-none border-noround container"
   >
     <template #start>
       <ul class="flex flex-grow space-x-4">
@@ -51,26 +51,26 @@
     </template>
 
     <template #end>
-      <div class="flex gap-3">
-        <div class="hidden sm:flex">
+      <div class="flex">
+        <div class="hidden sm:flex space-x-3">
           <div class="flex">
             <i
               class="pi pi-github hover:text-700 cursor-pointer"
-              style="color: white; font-size: 1.5rem"
+              style="color: white; font-size: 1.2rem"
             ></i>
           </div>
 
           <div class="flex">
             <i
               class="pi pi-twitter hover:text-700 cursor-pointer"
-              style="color: white; font-size: 1.5rem"
+              style="color: white; font-size: 1.2rem"
             ></i>
           </div>
 
           <div class="flex">
             <i
               class="pi pi-linkedin hover:text-700 cursor-pointer"
-              style="color: white; font-size: 1.5rem"
+              style="color: white; font-size: 1.2rem"
             ></i>
           </div>
         </div>
