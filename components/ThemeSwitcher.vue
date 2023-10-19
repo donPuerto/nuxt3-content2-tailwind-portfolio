@@ -11,8 +11,10 @@
 
 <template>
   <button
+    text
+    rounded
     type="button"
-    class="flex border-1 w-2rem h-2rem p-0 align-center justify-center"
+    class="border-none bg-transparent"
     @click="onThemeToggler"
   >
     <i :class="`dark:text-white pi ${iconClass}`" />
