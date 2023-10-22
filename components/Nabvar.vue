@@ -53,7 +53,7 @@
     <div class="px-4 py-4">
       <ul class="space-y-1">
         <li>
-          <h3 class="block rounded-lg bg-gray-100 font-medium px-3 py-2">Navigation</h3>
+          <h3 class="block rounded-lg bg-gray-100 font-medium text-gray-500 px-3 py-2">Navigation</h3>
         </li>
         <li>
           <a
