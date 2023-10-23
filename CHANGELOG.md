@@ -2,8 +2,12 @@
 
 ## [0.0.1]
 
-2023-10-22
 **Todo: **
+2023-10-23
+
+- Nothing so far
+
+2023-10-22
 
 - Working on Navbar Design
 
