@@ -1,3 +1,17 @@
+<script lang="ts">
+  const isMenuOpen = ref<boolean>(false)
+  const count = ref(0)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleMenuToggled = (isOpen: boolean) => {
+    isMenuOpen.value = isOpen
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  function test() {
+    // eslint-disable-next-line no-console
+    console.log('test')
+  }
+</script>
+
 <template>
   <header class="bg-transparent">
     <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
@@ -45,7 +59,15 @@
             </ul>
           </nav>
         </div>
-        <div class="flex flex-none h-14 justify-center items-center">
+        <p>Count is: {{ count }}</p>
+
+        <div class="flex flex-none h-14 justify-center items-center space-x-2">
+          <button @click="count++">Add 1</button>
+          <MenuSwitcher
+            class="flex sm:hidden"
+            :menu-toggled="isMenuOpen"
+            @menu-toggled="handleMenuToggled"
+          />
           <ThemeSwitcher class="flex" />
         </div>
       </div>
@@ -88,5 +110,3 @@
     </div>
   </header>
 </template>
-
-<style></style>

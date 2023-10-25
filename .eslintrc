@@ -55,12 +55,12 @@
         "multiline": "always",
         "maxEmptyLines": 1
       }
-    ],
-    "vue/no-reserved-component-names": [
-      "error",
-      {
-        "disallowVue3BuiltInComponents": false
-      }
     ]
+    // "vue/no-reserved-component-names": [
+    //   "error",
+    //   {
+    //     "disallowVue3BuiltInComponents": false
+    //   }
+    // ]
   }
 }
