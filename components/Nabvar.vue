@@ -1,14 +1,8 @@
-<script lang="ts">
-  const isMenuOpen = ref<boolean>(false)
-  const count = ref(0)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleMenuToggled = (isOpen: boolean) => {
-    isMenuOpen.value = isOpen
-  }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  function test() {
-    // eslint-disable-next-line no-console
-    console.log('test')
+<script setup lang="ts">
+  const isMenuSwitch = ref<boolean>(false)
+
+  function handleMenuSwitch(changeSwitch: boolean) {
+    isMenuSwitch.value = changeSwitch
   }
 </script>
 
@@ -44,14 +38,12 @@
               </li>
               <li class="hidden sm:flex">
                 <NuxtLink
-                  to="/portfolio/"
                   class="text-white-300 hover:text-gray-400 text-md font-medium transform hover:scale-125 transition-transform duration-300"
                   >Portfolio</NuxtLink
                 >
               </li>
               <li class="hidden sm:flex">
                 <NuxtLink
-                  to="/blogs/"
                   class="text-white-300 hover:text-gray-400 text-md font-medium transform hover:scale-125 transition-transform duration-300"
                   >Blog</NuxtLink
                 >
@@ -59,54 +51,79 @@
             </ul>
           </nav>
         </div>
-        <p>Count is: {{ count }}</p>
 
-        <div class="flex flex-none h-14 justify-center items-center space-x-2">
-          <button @click="count++">Add 1</button>
+        <div class="flex flex-none h-14 justify-center items-center space-x-3">
+          <ThemeSwitcher class="flex" />
           <MenuSwitcher
             class="flex sm:hidden"
-            :menu-toggled="isMenuOpen"
-            @menu-toggled="handleMenuToggled"
+            @emit-switch="handleMenuSwitch"
           />
-          <ThemeSwitcher class="flex" />
         </div>
       </div>
     </div>
-    <div class="px-4 py-4">
-      <ul class="space-y-1">
-        <li>
-          <h3 class="block rounded-lg bg-gray-100 font-medium text-gray-500 px-3 py-2">Navigation</h3>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="/"
-            class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-          >
-            Home
-          </a>
-        </li>
+    <div
+      v-show="isMenuSwitch"
+      class="px-4 py-4"
+    >
+      <transition
+        name="fade"
+        mode="out-in"
+      >
+        <ul class="space-y-1">
+          <li>
+            <h3 class="block rounded-lg bg-gray-100 font-medium text-gray-500 px-3 py-2">Navigation</h3>
+          </li>
+          <li>
+            <a
+              target="_blank"
+              href="/"
+              class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+            >
+              Home
+            </a>
+          </li>
 
-        <li>
-          <a
-            target="_blank"
-            href="/portfolio"
-            class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-          >
-            Portfolio
-          </a>
-        </li>
+          <li>
+            <a
+              target="_blank"
+              href="/portfolio"
+              class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+            >
+              Portfolio
+            </a>
+          </li>
 
-        <li>
-          <a
-            target="_blank"
-            href="/blog"
-            class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-          >
-            Blog
-          </a>
-        </li>
-      </ul>
+          <li>
+            <a
+              target="_blank"
+              href="/blog"
+              class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+            >
+              Blog
+            </a>
+          </li>
+        </ul>
+      </transition>
     </div>
   </header>
 </template>
+
+<style scoped>
+  .fade-enter-active,
+  .fade-leave-active {
+    transition:
+      opacity 0.5s,
+      transform 0.5s;
+  }
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+
+  .hover-animation:hover {
+    /* Add your hover animation properties here */
+    transform: scale(1.5); /* Example: Scale on hover */
+    transition: transform 1.5s; /* Example: Animation duration */
+  }
+</style>
