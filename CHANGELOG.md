@@ -3,6 +3,10 @@
 ## [0.0.1]
 
 **Todo: **
+2023-10-30
+
+- Nothing so far
+
 2023-10-28
 
 - Updating navbar
