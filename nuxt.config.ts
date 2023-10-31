@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ['primevue']
   },
-  modules: ['@nuxtjs/tailwindcss', '@nuxt/content', '@nuxt/devtools'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/content', '@nuxt/devtools', '@formkit/auto-animate/nuxt'],
   content: {
     // ... options
     highlight: {
