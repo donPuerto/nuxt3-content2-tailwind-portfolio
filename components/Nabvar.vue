@@ -74,7 +74,7 @@
 
     <div
       v-show="isMenuSwitch"
-      class="px-6 py-3 space-x-1"
+      class="px-4 py-3 space-x-1"
     >
       <ul
         v-if="isSmallScreen"
@@ -85,34 +85,16 @@
           <h3 class="block rounded-lg bg-gray-100 font-medium text-gray-500 px-3 py-2">Navigation</h3>
         </li>
 
-        <li>
-          <a
-            target="_blank"
-            href="/"
-            class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+        <li
+          v-for="item in menuItems"
+          :key="item.id"
+        >
+          <NuxtLink
+            :to="item.url"
+            class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 transition-transform duration-300"
           >
-            Home
-          </a>
-        </li>
-
-        <li>
-          <a
-            target="_blank"
-            href="/portfolio"
-            class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+            {{ item.label }}</NuxtLink
           >
-            Portfolio
-          </a>
-        </li>
-
-        <li>
-          <a
-            target="_blank"
-            href="/blog"
-            class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-          >
-            Blog
-          </a>
         </li>
       </ul>
     </div>

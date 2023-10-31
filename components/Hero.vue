@@ -1,6 +1,6 @@
 <template>
   <section class="text-white mx-auto justify-center items-center">
-    <div class="mx-auto max-w-screen-xl py-20 lg:py-20 lg:flex lg:h-screen lg:items-center">
+    <div class="mx-auto max-w-screen-xl mt-2 lg:flex md:h-screen lg:items-center">
       <!-- <div class="justify-center items-center">
         <img
           src="~/assets/img/seats.jpg?webp"
