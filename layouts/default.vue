@@ -1,19 +1,15 @@
 <template>
-  <div class="relative">
+  <div class="relative h-screen">
     <!-- Background -->
     <img
-      class="top-0"
       src="~/assets/img/bg.svg"
       alt="Blue and purple background graphics"
     />
 
-    <!-- Content -->
-    <div class="absolute h-full w-full top-0">
-      <Nabvar />
-      <!-- <Toolbar /> -->
-      <slot />
-      <Footer />
-    </div>
+    <Nabvar class="absolute top-0 w-full" />
+    <!-- Pages -->
+    <slot />
+    <Footer />
   </div>
 </template>
 

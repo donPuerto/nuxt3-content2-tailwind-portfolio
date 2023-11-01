@@ -1,7 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <footer class="text-white">
+  <footer class="text-gray-600 body-font absolute">
     <div class="mx-auto">
       <div class="border-t border-gray-100 py-4">
         <p class="text-center text-xs/relaxed text-gray-500">
