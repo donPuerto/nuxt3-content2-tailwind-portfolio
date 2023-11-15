@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 2023-15-10
 
 - Updated dependencies
+- Renaming Repo, removing the file name versioning, instead to use "Tag"
 
 ### Changed
 
