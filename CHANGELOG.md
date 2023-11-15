@@ -17,6 +17,12 @@ All notable changes to this project will be documented in this file.
 
 2023-15-10
 
+- Updated dependencies
+
+### Changed
+
+2023-10-10
+
 - Working on Main Page
 
 ### Changed
