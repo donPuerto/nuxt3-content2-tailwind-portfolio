@@ -13,11 +13,13 @@ All notable changes to this project will be documented in this file.
 
 ## [1.0.0] - 2023-01-10
 
-### Added
+### Changed
 
 2023-15-10
 
 - Working on Main Page
+
+### Changed
 
 2023-10-23
 
