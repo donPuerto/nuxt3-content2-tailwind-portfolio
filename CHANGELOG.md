@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 
 - Updated dependencies
 - Renaming Repo, removing the file name versioning, instead to use "Tag"
+- Creating new Branch, "ev"
 
 ### Changed
 

@@ -9,7 +9,7 @@
     <Nabvar class="absolute top-0 w-full" />
     <!-- Pages -->
     <slot />
-    <Footer />
+    <MainFooter class="absolute bottom-0 w-full bg-gray-800 text-white dark:border-gray-800 border-t" />
   </div>
 </template>
 
