@@ -44,10 +44,7 @@
             class="p-2 bg-gray-300 text-gray-800 rounded-md"
             aria-label="LinkedIn"
           >
-            <Icon
-              name="fa:linkedin-square"
-              size="1em"
-            />
+            <IconsGithub />
           </NuxtLink>
           <NuxtLink
             to="https://twitter.com/qdnvubp"
