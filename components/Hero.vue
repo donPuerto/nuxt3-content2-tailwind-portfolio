@@ -45,6 +45,7 @@
             aria-label="LinkedIn"
           >
             <IconsGithub />
+            <IconsGithub />
           </NuxtLink>
           <NuxtLink
             to="https://twitter.com/qdnvubp"
