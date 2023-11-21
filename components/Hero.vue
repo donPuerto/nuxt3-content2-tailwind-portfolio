@@ -46,6 +46,7 @@
           >
             <IconsGithub />
             <IconsGithub />
+            <IconsGithub />
           </NuxtLink>
           <NuxtLink
             to="https://twitter.com/qdnvubp"
