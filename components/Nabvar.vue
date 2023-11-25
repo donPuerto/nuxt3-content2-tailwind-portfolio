@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import { useAutoAnimate } from '@formkit/auto-animate/vue'
-  const [parent] = useAutoAnimate()
   const isMenuSwitch = ref<boolean>(false)
   const isSmallScreen = ref<boolean>(false)
 

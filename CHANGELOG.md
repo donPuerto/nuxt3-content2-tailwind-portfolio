@@ -15,6 +15,10 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+2023-24-11
+
+- I think, I am doubling and its time to remove, Primevue and shift focus into Tailwind, since no components to be used in this project
+
 2023-15-10
 
 - Updated dependencies

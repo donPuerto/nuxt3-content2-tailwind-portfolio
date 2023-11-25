@@ -1,7 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div>Blog</div>
+  <div>Portfolio</div>
 </template>
 
 <style></style>

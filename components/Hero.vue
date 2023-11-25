@@ -45,9 +45,6 @@
             aria-label="LinkedIn"
           >
             <IconsGithub />
-            <IconsGithub />
-            <IconsGithub />
-            <IconsGithub />
           </NuxtLink>
           <NuxtLink
             to="https://twitter.com/qdnvubp"
@@ -55,10 +52,6 @@
             class="p-2 bg-gray-300 text-gray-800 rounded-md"
             aria-label="Twitter"
           >
-            <Icon
-              name="fa:twitter-square"
-              size="1em"
-            />
           </NuxtLink>
           <NuxtLink
             to="https://stackoverflow.com/users/16781395/nur-riyad"
@@ -66,10 +59,6 @@
             class="p-2 bg-gray-300 text-gray-800 rounded-md"
             aria-label="StackOverflow"
           >
-            <Icon
-              name="fa:stack-overflow"
-              size="1em"
-            />
           </NuxtLink>
         </div>
       </div>
