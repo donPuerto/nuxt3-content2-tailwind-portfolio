@@ -17,7 +17,7 @@ All notable changes to this project will be documented in this file.
 
 2024-15-02
 
-- Updating path and location
+- Updating and relocation dependecies
 
 2023-24-11
 
