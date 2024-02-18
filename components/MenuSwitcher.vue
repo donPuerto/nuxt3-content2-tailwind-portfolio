@@ -13,7 +13,7 @@
     text
     rounded
     type="button"
-    class="border-none bg-transparent bg-transparent transition-all duration-300 ease-in-out transform hover:scale-110"
+    class="border-none bg-transparent transition-all duration-300 ease-in-out transform hover:scale-110"
     @click="handleMenuSwitch"
   >
     <i :class="`dark:text-white pi ${iconClass}`" />

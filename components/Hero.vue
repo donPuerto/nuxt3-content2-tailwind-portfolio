@@ -27,6 +27,41 @@
           LinkedIn
         </a>
       </div>
+
+      <div>
+        <div class="my-3 space-x-3 pb-3">
+          <NuxtLink
+            to="https://github.com/nurRiyad"
+            target="_blank"
+            class="p-2 bg-gray-300 text-gray-800 rounded-md"
+            aria-label="Github"
+          >
+            <IconsGithub />
+          </NuxtLink>
+          <NuxtLink
+            to="https://www.linkedin.com/in/nur-riyad/"
+            target="_blank"
+            class="p-2 bg-gray-300 text-gray-800 rounded-md"
+            aria-label="LinkedIn"
+          >
+            <IconsGithub />
+          </NuxtLink>
+          <NuxtLink
+            to="https://twitter.com/qdnvubp"
+            target="_blank"
+            class="p-2 bg-gray-300 text-gray-800 rounded-md"
+            aria-label="Twitter"
+          >
+          </NuxtLink>
+          <NuxtLink
+            to="https://stackoverflow.com/users/16781395/nur-riyad"
+            target="_blank"
+            class="p-2 bg-gray-300 text-gray-800 rounded-md"
+            aria-label="StackOverflow"
+          >
+          </NuxtLink>
+        </div>
+      </div>
     </div>
   </section>
 </template>

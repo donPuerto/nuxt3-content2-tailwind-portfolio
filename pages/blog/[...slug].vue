@@ -2,9 +2,9 @@
   <main>
     <ContentDoc>
       <template #default="{ doc }">
-        <!-- <div>
+        <div>
           {{ doc }}
-        </div> -->
+        </div>
         <div>Hello</div>
       </template>
     </ContentDoc>

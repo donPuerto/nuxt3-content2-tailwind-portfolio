@@ -15,10 +15,19 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+2024-15-02
+
+- Updating and relocation dependecies
+
+2023-24-11
+
+- I think, I am doubling and its time to remove, Primevue and shift focus into Tailwind, since no components to be used in this project
+
 2023-15-10
 
 - Updated dependencies
 - Renaming Repo, removing the file name versioning, instead to use "Tag"
+- Creating new Branch, "ev"
 
 ### Changed
 
