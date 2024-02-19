@@ -15,6 +15,10 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+2024-19-02
+
+- Troubleshooting dependencies
+
 2024-15-02
 
 - Updating and relocation dependecies
