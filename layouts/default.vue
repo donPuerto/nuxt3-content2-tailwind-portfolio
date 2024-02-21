@@ -1,7 +1,9 @@
 <template>
-  <div class="dark bg-neutral-900">
+  <div class="min-h-screen flex flex-col font-rubik text-gray-800 antialiased dark:bg-gray-900 dark:text-gray-200">
     <AppNavbar />
-    <slot />
+    <main class="mx-auto flex-1 py-16 container space-y-16 lg:py-24 md:space-y-24">
+      <slot />
+    </main>
   </div>
 </template>
 

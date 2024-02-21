@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Types of changes
-
+`
 - Added for new features.
 - Changed for changes in existing functionality.
 - Deprecated for soon-to-be removed features.
@@ -21,7 +21,7 @@ All notable changes to this project will be documented in this file.
 
 2024-15-02
 
-- Updating and relocation dependecies
+- Updating and relocation dependencies
 
 2023-24-11
 

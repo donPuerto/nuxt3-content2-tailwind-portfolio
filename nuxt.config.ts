@@ -6,7 +6,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {},
-    pageTransition: { name: 'page', mode: 'out-in' },
+    pageTransition: { name: "page", mode: "out-in" },
   },
 
   // site: {
@@ -24,7 +24,7 @@ export default defineNuxtConfig({
   image: {
     // Options
     quality: 90,
-    format: ['webp'],
+    format: ["webp"],
   },
 
   ui: {
@@ -32,22 +32,26 @@ export default defineNuxtConfig({
   },
 
   colorMode: {
-    preference: 'dark',
-    fallback: 'dark',
+    preference: "dark",
+    fallback: "dark",
   },
   content: {
     markdown: {
       anchorLinks: false,
     },
     highlight: {
-      theme: 'github-dark',
+      theme: "github-dark",
     },
   },
-  modules: ['@nuxt/content', '@nuxt/ui', '@nuxt/image'],
-  components: [{ path: '~/components/global', pathPrefix: false }, { path: '~/components/core', pathPrefix: false }, '~/components'],
+  modules: ["@nuxt/content", "@nuxt/ui", "@nuxt/image"],
+  components: [
+    { path: "~/components/global", pathPrefix: false },
+    { path: "~/components/core", pathPrefix: false },
+    "~/components",
+  ],
   router: {
     options: {
-      scrollBehaviorType: 'smooth',
+      scrollBehaviorType: "smooth",
     },
   },
 });
