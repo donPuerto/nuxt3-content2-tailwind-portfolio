@@ -6,6 +6,7 @@
 ### Changed
 2024-May-15
 - Jumping to Version 3, pushing to master
+- troubleshooting ESlint
 
 2024-Feb-19
 - Troubleshooting dependencies
