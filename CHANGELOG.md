@@ -5,6 +5,10 @@
 
 ### Changed
 2024-May-15
+- Added App.vue
+- Added Nuxt Layout and Nuxt Page with transition
+
+2024-May-13
 - Jumping to Version 3, pushing to master
 - troubleshooting ESlint
 

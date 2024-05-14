@@ -1,13 +1,23 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxt/devtools', '@nuxt/eslint'],
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' }
+  },
+  css: ['~/assets/scss/globals.scss'],
+  modules: ['@nuxt/devtools', '@nuxt/eslint', '@nuxtjs/tailwindcss','@nuxtjs/color-mode'],
   eslint: {
     // options here
     config: {
-      stylistic: true,
-    },
+      stylistic: {
+        indent: 'tab',
+        quotes: 'single',
+        semi: true,
+      },
+    }
+    
   },
+
   typescript: {
     typeCheck: true,
   },
