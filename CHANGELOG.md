@@ -1,7 +1,7 @@
 ## 1.3.0 - 2023-Jan-10
 
 ### Added
-- Added completed feature
+- Added App.vue with Layout and Page transition
 
 ### Changed
 2024-May-15
@@ -46,3 +46,5 @@
 
 ### Security
 - Security-related changes.
+
+

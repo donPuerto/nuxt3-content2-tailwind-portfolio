@@ -7,7 +7,7 @@
   "editor.formatOnSave": false,
 
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
+    "source.fixAll.eslint": "always",
     "source.organizeImports": "never"
   },
 
@@ -44,6 +44,7 @@
   ],
   "cSpell.words": [
     "lucide",
-    "nuxtjs"
+    "nuxtjs",
+    "pinia"
   ]
 }
