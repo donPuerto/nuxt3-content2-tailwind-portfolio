@@ -4,7 +4,7 @@
 
 <template>
 	<div>
-		<h1>Home page</h1>
+		<h1>Home Page</h1>
 		<NuxtLink
 			to="/about"
 			class="custom-link"
@@ -16,6 +16,9 @@
 </template>
 
 <style scoped>
+	h1 {
+		font-family: "Inter", sans-serif;
+	}
   .custom-link {
     text-decoration: underline;
     /* Additional styling if needed */

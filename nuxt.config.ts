@@ -4,8 +4,15 @@ export default defineNuxtConfig({
 	app: {
 		pageTransition: { name: 'page', mode: 'out-in' },
 	},
-	css: ['~/assets/scss/globals.scss'],
-	modules: ['@nuxt/devtools', '@nuxt/eslint', '@nuxtjs/tailwindcss', '@nuxtjs/color-mode', '@pinia/nuxt'],
+	css: ['~/assets/styles/main.scss'],
+	modules: [
+		'@nuxt/devtools',
+		'@nuxt/eslint',
+		'@nuxtjs/tailwindcss',
+		'@nuxtjs/color-mode',
+		'@pinia/nuxt',
+		'@nuxt/fonts',
+	],
 	eslint: {
 		// options here
 		config: {
