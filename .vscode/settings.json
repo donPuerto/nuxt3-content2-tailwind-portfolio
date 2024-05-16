@@ -1,15 +1,60 @@
 {
-  // Enable ESlint flat config support
-  "eslint.experimental.useFlatConfig": true,
-
   // Disable the default formatter, use eslint instead
   "prettier.enable": false,
   "editor.formatOnSave": false,
+  "files.insertFinalNewline": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+
+  // SCSS
+  "[scss]": {
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
+  },
+  // JSON
+  "[json]": {
+      "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+      "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  
+  // Vue
+  "[vue]": {
+      "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  },
+
+  // Extension: Volar
+  "volar.preview.port": 3000,
+  "volar.completion.preferredTagNameCase": "pascal",
+
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.autoClosingBrackets": "always"
+  },
+  
+  // Enable ESlint flat config support
+  "eslint.experimental.useFlatConfig": true,
+
+  
 
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "always",
-    "source.organizeImports": "never"
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit",
+    "source.organizeImports": "explicit"
   },
+
+  "eslint.alwaysShowStatus": true,
+  "eslint.format.enable": true,
+
+  // Extension: Stylelint
+  "stylelint.validate": [
+    "css",
+    "scss",
+    "vue"
+  ],
+
 
   // Silent the stylistic rules in you IDE, but still auto fix them
   "eslint.rules.customizations": [
@@ -45,6 +90,18 @@
   "cSpell.words": [
     "lucide",
     "nuxtjs",
-    "pinia"
+    "pinia",
+    "Composables",
+    "Customizer",
+    "destr",
+    "flagpack",
+    "Iconify",
+    "ofetch",
+    "psudo",
+    "stylelint",
+    "touchless",
+    "triggerer",
+    "vuetify",
+    "nuxt"
   ]
 }

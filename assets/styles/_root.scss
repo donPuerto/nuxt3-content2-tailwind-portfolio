@@ -1,0 +1,15 @@
+:root {
+  --default-font: 'Inter Regular', sans-serif;
+}
+
+
+body {
+  font-family: var(--default-font);
+  background-color: var(--bg);
+  color: var(--color);
+  transition: background-color .3s;
+}
+
+a {
+  color: var(--color-primary);
+}
