@@ -1,14 +1,17 @@
 <script setup>
 const colorMode = useColorMode();
 
-console.log(colorMode.preference);
+console.log(colorMode);
 </script>
 
 <template>
 	<div>
 		<NuxtLayout>
+			<div class="bg-background">
+				Tailwind
+			</div>
 			<p class="p-4 pb-2" />
-			<h1>Color mode: {{ $colorMode.value }}</h1>
+			<h1>Color mode: {{ $colorMode }}</h1>
 			<select v-model="$colorMode.preference">
 				<option value="system">
 					System
