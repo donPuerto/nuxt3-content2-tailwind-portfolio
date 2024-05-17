@@ -1,4 +1,107 @@
 {
+  // Disable the default formatter, use eslint instead
+  "prettier.enable": false,
+  "editor.formatOnSave": false,
+  "files.insertFinalNewline": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+
+  // SCSS
+  "[scss]": {
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
+  },
+  // JSON
+  "[json]": {
+      "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+      "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  
+  // Vue
+  "[vue]": {
+      "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  },
+
+  // Extension: Volar
+  "volar.preview.port": 3000,
+  "volar.completion.preferredTagNameCase": "pascal",
+
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.autoClosingBrackets": "always"
+  },
+  
   // Enable ESlint flat config support
-  "eslint.experimental.useFlatConfig": true
+  "eslint.experimental.useFlatConfig": true,
+
+  
+
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+
+  "eslint.alwaysShowStatus": true,
+  "eslint.format.enable": true,
+
+  // Extension: Stylelint
+  "stylelint.validate": [
+    "css",
+    "scss",
+    "vue"
+  ],
+
+
+  // Silent the stylistic rules in you IDE, but still auto fix them
+  "eslint.rules.customizations": [
+    { "rule": "style/*", "severity": "off" },
+    { "rule": "format/*", "severity": "off" },
+    { "rule": "*-indent", "severity": "off" },
+    { "rule": "*-spacing", "severity": "off" },
+    { "rule": "*-spaces", "severity": "off" },
+    { "rule": "*-order", "severity": "off" },
+    { "rule": "*-dangle", "severity": "off" },
+    { "rule": "*-newline", "severity": "off" },
+    { "rule": "*quotes", "severity": "off" },
+    { "rule": "*semi", "severity": "off" }
+  ],
+
+   // Enable eslint for all supported languages
+   "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml",
+    "toml",
+    "gql",
+    "graphql",
+    "astro"
+  ],
+  "cSpell.words": [
+    "lucide",
+    "nuxtjs",
+    "pinia",
+    "Composables",
+    "Customizer",
+    "destr",
+    "flagpack",
+    "Iconify",
+    "ofetch",
+    "psudo",
+    "stylelint",
+    "touchless",
+    "triggerer",
+    "vuetify",
+    "nuxt"
+  ]
 }
