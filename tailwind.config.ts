@@ -12,6 +12,11 @@ export default <Partial<Config>> {
 				'inter': ['Inter Regular', 'sans-serif'],
 				'inter-light': ['Inter Light', 'sans-serif'],
 				'inter-bold': ['Inter Bold', 'sans-serif'],
+				'olupos': ['Olupos', 'sans-serif'],
+				'spacegrotesk-light': ['SpaceGrotesk-Light', 'sans-serif'],
+				'spacegrotesk-regular': ['SpaceGrotesk-Regular', 'sans-serif'],
+				'spacegrotesk-medium': ['SpaceGrotesk-Medium', 'sans-serif'],
+				'spacegrotesk-bold': ['SpaceGrotesk-Bold', 'sans-serif'],
 			},
 			colors: {
 				'primary': 'var(--color-primary)',
@@ -22,6 +27,18 @@ export default <Partial<Config>> {
 				'text': 'var(--color)',
 				'text-primary': 'var(--text-primary)',
 				'text-secondary': 'var(--text-secondary)',
+			},
+			animation: {
+				'gradient-border': 'gradient-border 5s infinite linear',
+			},
+			keyframes: {
+				'gradient-border': {
+					'0%': { 'stroke-dashoffset': '0' },
+					'100%': { 'stroke-dashoffset': '200' },
+				},
+			},
+			backgroundImage: {
+				'gradient-border': 'linear-gradient(90deg, #ff7e5f, #feb47b)',
 			},
 		},
 	},

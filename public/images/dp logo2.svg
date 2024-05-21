@@ -1,0 +1,29 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <style>
+    
+    .outer {
+          font-family: 'Olupos', sans-serif;
+          font-size: 100px;
+          font-weight: bold;
+        }
+
+        .inner {
+          font-family: 'Olupos', sans-serif;
+          font-size: 90px;
+          font-weight: bold;
+        }
+  </style>
+  <rect rx="15" ry="15" width="200" height="200" fill="lightblue"/>
+  <text x="105" y="110" class="outer" fill="darkblue" text-anchor="middle" alignment-baseline="middle">D</text>
+  <text x="125" y="140" class="inner" fill="blue" text-anchor="middle" alignment-baseline="middle">P</text>
+</svg>
+
+<style scoped>
+@font-face {
+  font-family: 'Olupos';
+  src: url('/fonts/Olupos.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+</style>
+

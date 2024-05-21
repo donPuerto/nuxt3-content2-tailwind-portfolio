@@ -2,9 +2,11 @@
 export default defineNuxtConfig({
 	devtools: { enabled: true },
 	app: {
+		layoutTransition: { name: 'slide', mode: 'out-in' },
 		pageTransition: { name: 'page', mode: 'out-in' },
 	},
 	css: ['~/assets/styles/main.scss'],
+	components: [{ path: '~/components', pathPrefix: false }],
 	modules: [
 		'@nuxt/devtools',
 		'@nuxt/eslint',
