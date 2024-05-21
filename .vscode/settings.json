@@ -88,20 +88,23 @@
     "astro"
   ],
   "cSpell.words": [
-    "lucide",
-    "nuxtjs",
-    "pinia",
     "Composables",
     "Customizer",
     "destr",
     "flagpack",
+    "Grotesk",
     "Iconify",
+    "lucide",
+    "nuxt",
+    "nuxtjs",
     "ofetch",
+    "olupos",
+    "pinia",
     "psudo",
+    "spacegrotesk",
     "stylelint",
     "touchless",
     "triggerer",
-    "vuetify",
-    "nuxt"
+    "vuetify"
   ]
 }
