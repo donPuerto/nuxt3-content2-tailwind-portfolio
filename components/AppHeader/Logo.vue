@@ -11,7 +11,7 @@ onMounted(() => {
 		to="/"
 		class="flex items-center space-x-3 text-gray-50 hover:text-gray-400 duration-100"
 	>
-		<div :class="`${$colorMode.value}-mode font-olupos logo-container`">
+		<div class="logo-container">
 			<svg
 				width="200"
 				height="200"
@@ -53,14 +53,12 @@ onMounted(() => {
 							flood-color="rgba(0, 0, 0, 0.5)"
 						/>
 					</filter>
-
 				</defs>
 
-				<rect
-					rx="15"
-					ry="15"
-					width="200"
-					height="200"
+				<circle
+					cx="100"
+					cy="100"
+					r="96"
 					:fill="`var(--bg)`"
 					stroke="url(#gradient-border)"
 					stroke-width="4"
@@ -68,45 +66,41 @@ onMounted(() => {
 				/>
 
 				<text
-					x="80"
-					y="90"
+					x="72"
+					y="85"
 					:class="['outer', { 'scale-enter': !isActive, 'scale-enter-active': isActive }]"
 					:fill="`var(--color)`"
 					text-anchor="middle"
 					alignment-baseline="middle"
-					transform="rotate(-300, 100,100) "
+					transform="rotate(-300, 100,100)"
 					filter="url(#text-shadow)"
 				>d</text>
 
 				<text
-
-					x="135"
+					x="128"
 					y="95"
 					:class="['inner', { 'scale-enter': !isActive, 'scale-enter-active': isActive }]"
 					:fill="`var(--color)`"
 					text-anchor="middle"
 					alignment-baseline="middle"
-					transform="rotate(-275, 100,100) "
+					transform="rotate(-275, 100,100)"
 					filter="url(#text-shadow)"
 				>p</text>
-
 			</svg>
 		</div>
 
-		<span class="text-1xl font-semibold spacegrotesk-regular">donpuerto</span>
+		<span class="text-1xl spacegrotesk-regular">donpuerto</span>
 	</NuxtLink>
 </template>
 
 <style scoped>
 .outer {
-    font-family: 'olupos', sans-serif;
-    font-size: 110px;
-
-    }
+  font-family: 'olupos', sans-serif;
+  font-size: 110px;
+}
 .inner {
   font-family: 'olupos', sans-serif;
   font-size: 90px;
-
 }
 
 /* Custom animation keyframes for gradient border */
@@ -115,13 +109,13 @@ onMounted(() => {
     stroke-dashoffset: 0;
   }
   100% {
-    stroke-dashoffset: 400;
+    stroke-dashoffset: 600; /* Adjusted for circle */
   }
 }
 
 /* Tailwind classes for the gradient border animation */
 .animate-gradient-border {
-  stroke-dasharray: 200;
+  stroke-dasharray: 300; /* Adjusted for circle */
   animation: gradient-border 5s linear infinite;
 }
 
@@ -139,4 +133,8 @@ onMounted(() => {
   height: 100%;
   display: block;
 }
+
+/* .spacegrotesk-regular {
+  font-family: 'SpaceGrotesk-Regular', sans-serif;
+} */
 </style>

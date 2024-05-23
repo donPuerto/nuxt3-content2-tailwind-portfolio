@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-
+import LoadingIndicator from '@/components/LoadingIndicator.vue';
 </script>
 
 <template>
 	<div>
+		<LoadingIndicator />
 		<h1>Home Page</h1>
 		<NuxtLink
 			to="/about"
