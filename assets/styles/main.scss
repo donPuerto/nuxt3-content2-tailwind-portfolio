@@ -1,11 +1,2 @@
-/* main.css */
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
-/* custom styles */
-@use 'body';
-@use 'transitions';
-@use 'fonts';
-@use 'themes';
-@use 'custom-loading'
+@import 'tailwind';
+@import 'custom';
