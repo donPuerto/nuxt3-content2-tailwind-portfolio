@@ -1,8 +1,6 @@
 # TODO
 
 ## Todo-list
-2024-May-23 (Thurs)
-- Deploying site using vercel
 2024-May-22 (Wed)
 - Removing Nuxt Logo and replace with my prepared one
 2024-May-18 (Sat)
@@ -15,6 +13,8 @@
 
 
 # DONE
+2024-May-23 (Thurs)
+- Deploying site using vercel
 2024-May-17 (Fri) 2days Completed 
 - Install font "Inter" locally and integrate into tailwind
 - To add more transition
