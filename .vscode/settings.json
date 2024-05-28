@@ -105,6 +105,17 @@
     "stylelint",
     "touchless",
     "triggerer",
-    "vuetify"
-  ]
+    "vuetify",
+    "vueuse"
+  ],
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true,
+  "terminal.integrated.fontFamily": "Fira Code",
+  "terminal.integrated.fontSize": 12,
+  "terminal.integrated.fontWeight": "normal",
+  "powermode.combo.timeout": 2,
+  "powermode.combo.timerEnabled": "hide",
+  "powermode.shake.intensity": 4,
+  "powermode.presets": "flames",
+  "powermode.combo.counterEnabled": "hide"
 }

@@ -1,7 +1,8 @@
 <script setup>
 import LoadingIndicator from '@/components/LoadingIndicator.vue';
 
-// const colorMode = useColorMode();
+const colorMode = useColorMode();
+// console.log(colorMode.preference);
 
 // Initialize the loading indicator with custom settings
 const { start, finish } = useLoadingIndicator({
@@ -34,8 +35,9 @@ onMounted(() => {
 			Tailwind
 		</div>
 		<p class="p-4 pb-2" />
+		<div>Color Mode: {{ colorMode.preference }}</div>
 
-		<select v-model="$colorMode.preference">
+		<select v-model="colorMode.preference">
 			<option value="system">
 				System
 			</option>

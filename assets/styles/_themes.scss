@@ -2,7 +2,7 @@
 //   /* No need to set default colors for system theme */
 // }
 
-.light-mode {
+.light {
   /* Light theme styles */
   --color: #262626; /* Neutral 800 */
   --color-primary: #166534; /* Green 800 */
@@ -67,7 +67,7 @@
   }
 }
 
-.dark-mode {
+.dark {
   /* Dark theme styles */
   --color: #e5e5e5; /* Neutral 200 */
   --color-primary: #22c55e; /* Green 500 */
@@ -132,7 +132,7 @@
   }
 }
 
-.sepia-mode {
+.sepia {
   /* Sepia theme styles */
   --color: #433422; /* Brown */
   --color-primary: #8a5e34; /* Darker Brown */

@@ -2,6 +2,8 @@
 	<div>
 		<div class="flex">
 			<Logo class="flex-1 justify-start" />
+			<Segment />
+			<ThemeSwitcher />
 		</div>
 	</div>
 </template>

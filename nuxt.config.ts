@@ -29,7 +29,14 @@ export default defineNuxtConfig({
 
 	},
 	pinia: {
-		storesDirs: ['./stores/**', './custom-folder/stores/**'],
+		storesDirs: ['./stores/**'],
+	},
+	colorMode: {
+		classSuffix: '',
+		preference: 'system', // default value of $colorMode.preference
+		fallback: 'light', // fallback value if not system preference found
+		storageKey: 'nuxt-color-mode', // key used to store the value in local storage
+
 	},
 	typescript: {
 		typeCheck: true,

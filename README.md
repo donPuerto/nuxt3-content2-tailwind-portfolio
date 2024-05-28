@@ -61,21 +61,9 @@ Please refer to the [CHANGELOG](CHANGELOG.md) file. We will add a detailed relea
 For free products, enjoy community support via GitHub issues. Upgrade to Premium for dedicated support from our expert team.
 
 
-## License &copy;
-
-- Copyright © [ThemeSelection](https://themeselection.com/)
-- Licensed under [MIT](LICENSE)
-- All our free items are Open Source and licensed under MIT. You can use our free items for personal as well as commercial purposes. We just need an attribution from your end. Copy the below link and paste it at the footer of your web application or project.
-   ```html
-  <a href="https://themeselection.com/">ThemeSelection</a>
    ```
-
 
 ## Social Media :earth_africa:
 
-- [Twitter](https://twitter.com/Theme_Selection)
-- [Facebook](https://www.facebook.com/ThemeSelections/)
-- [Pinterest](https://pinterest.com/themeselect/)
-- [Instagram](https://www.instagram.com/themeselection/)
-- [Discord](https://discord.gg/kBHkY7DekX)
-- [YouTube](https://www.youtube.com/channel/UCuryo5s0CW4aP83itLjIdZg)
+- [Twitter](https://x.com/donpuerto_)
+
