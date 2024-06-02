@@ -1,2 +1,2 @@
-@import 'tailwind';
-@import 'custom';
+@use 'tailwind' as *;
+@use 'custom' as *;

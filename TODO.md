@@ -1,6 +1,8 @@
 # TODO
 
 ## Todo-list
+2024-June-02 (Wed)
+- How to resolve Font warning 
 2024-May-22 (Wed)
 - Removing Nuxt Logo and replace with my prepared one
 2024-May-18 (Sat)

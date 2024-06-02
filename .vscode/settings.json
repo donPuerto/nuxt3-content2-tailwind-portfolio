@@ -28,6 +28,7 @@
   // Extension: Volar
   "volar.preview.port": 3000,
   "volar.completion.preferredTagNameCase": "pascal",
+  
 
   "[typescript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
@@ -40,6 +41,8 @@
   
 
   "editor.codeActionsOnSave": {
+
+
     "source.fixAll.eslint": "explicit",
     "source.fixAll.stylelint": "explicit",
     "source.organizeImports": "explicit"
@@ -117,5 +120,9 @@
   "powermode.combo.timerEnabled": "hide",
   "powermode.shake.intensity": 4,
   "powermode.presets": "flames",
-  "powermode.combo.counterEnabled": "hide"
+  "powermode.combo.counterEnabled": "hide",
+
+  // "typescript.preferences.importModuleSpecifier": "shortest",
+  // "typescript.tsdk": "node_modules/typescript/lib",
+  // "volar.useWorkspaceTsdk": true
 }
