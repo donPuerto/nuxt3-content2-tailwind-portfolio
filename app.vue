@@ -35,7 +35,7 @@ onMounted(() => {
 			Tailwind
 		</div>
 		<p class="p-4 pb-2" />
-		<!-- <div>Color Mode: {{ colorMode.preference }}</div> -->
+		<!-- <div>Color Mode: {{ $colorMode.preference }}</div> -->
 
 		<select v-model="$colorMode.preference">
 			<option value="system">
