@@ -1,19 +1,19 @@
 <script lang="ts" setup>
-import LoadingIndicator from '@/components/LoadingIndicator.vue';
+import LoadingIndicator from '@/components/LoadingIndicator.vue'
 </script>
 
 <template>
-	<div>
-		<LoadingIndicator />
-		<h1>Home Page</h1>
-		<NuxtLink
-			to="/about"
-			class="custom-link"
-			active-class="active-link"
-		>
-			About page
-		</NuxtLink>
-	</div>
+  <div>
+    <LoadingIndicator />
+    <h1>Home Page</h1>
+    <NuxtLink
+      to="/about"
+      class="custom-link"
+      active-class="active-link"
+    >
+      About page
+    </NuxtLink>
+  </div>
 </template>
 
 <style scoped>

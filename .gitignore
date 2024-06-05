@@ -1,10 +1,16 @@
 # Nuxt dev/build outputs
-.output
-.data
-.nuxt
-.nitro
-.cache
 dist
+.nuxt
+.nuxt-*
+.vercel
+.netlify
+.output
+.output-*
+.gen
+
+# VSCode
+.vscode
+
 
 # Node dependencies
 node_modules

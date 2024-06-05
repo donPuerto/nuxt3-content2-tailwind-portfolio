@@ -33,6 +33,7 @@
     "pinia-plugin-persistedstate": "^3.2.1",
     "sass": "^1.77.4",
     "typescript": "^5.4.5",
+    "vite-plugin-eslint2": "^4.4.0",
     "vue-tsc": "^1"
   }
 }

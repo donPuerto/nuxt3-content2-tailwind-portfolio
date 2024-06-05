@@ -4,9 +4,7 @@
   "editor.formatOnSave": false,
   "files.insertFinalNewline": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
-  "[javascript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
+
 
   // SCSS
   "[scss]": {
@@ -19,30 +17,29 @@
   "[jsonc]": {
       "editor.defaultFormatter": "vscode.json-language-features"
   },
-  
+
   // Vue
   "[vue]": {
-      "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+      "editor.defaultFormatter": "Vue.volar",
+      "editor.formatOnSave": true
   },
 
   // Extension: Volar
   "volar.preview.port": 3000,
   "volar.completion.preferredTagNameCase": "pascal",
-  
+
 
   "[typescript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+
     "editor.autoClosingBrackets": "always"
   },
-  
+
   // Enable ESlint flat config support
   "eslint.experimental.useFlatConfig": true,
 
-  
+
 
   "editor.codeActionsOnSave": {
-
-
     "source.fixAll.eslint": "explicit",
     "source.fixAll.stylelint": "explicit",
     "source.organizeImports": "explicit"
@@ -90,6 +87,10 @@
     "graphql",
     "astro"
   ],
+
+  "eslint.options": {
+    "extensions": [".js", ".jsx", ".ts", ".tsx", ".vue"]
+  },
   "cSpell.words": [
     "Composables",
     "Customizer",
@@ -121,6 +122,7 @@
   "powermode.shake.intensity": 4,
   "powermode.presets": "flames",
   "powermode.combo.counterEnabled": "hide",
+  "editor.stickyScroll.scrollWithEditor": false,
 
   // "typescript.preferences.importModuleSpecifier": "shortest",
   // "typescript.tsdk": "node_modules/typescript/lib",

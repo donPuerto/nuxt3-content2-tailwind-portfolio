@@ -3,13 +3,13 @@
 </script>
 
 <template>
-	<!-- Main Content -->
-	<main
-		id="main-content"
-		class="main-error"
-	>
-		<ErrorPageNotFound />
-	</main>
+  <!-- Main Content -->
+  <main
+    id="main-content"
+    class="main-error"
+  >
+    <ErrorPageNotFound />
+  </main>
 </template>
 
 <style scoped>
