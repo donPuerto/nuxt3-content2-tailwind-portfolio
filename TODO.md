@@ -2,6 +2,8 @@
 
 ## Todo-list
 2024-June-06 (Thurs)
+- As of now working on the Icons, on How to implement and insert the icon and the right config in tailwind
+2024-June-06 (Thurs)
 - To study further .stylelintrc.json and on how to integrate in eslint config
 2024-June-02 (Wed)
 - How to resolve Font warning 

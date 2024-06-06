@@ -32,17 +32,18 @@ export default <Partial<Config>> {
     },
   },
   content: [
-    './components/**/*.{js,vue,ts}',
+    './components/**/*.{vue,js,ts}',
     './layouts/**/*.vue',
     './pages/**/*.vue',
     './plugins/**/*.{js,ts}',
+    './nuxt.config.{js,ts}',
     './app.vue',
     './error.vue',
   ],
   plugins: [
     typography(),
     iconsPlugin({
-      collections: getIconCollections(['mdi', 'lucide']),
+      collections: getIconCollections(['mdi', 'lucide', 'logos']),
     }),
   ],
 }

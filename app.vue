@@ -83,14 +83,22 @@ onMounted(() => {
     </div>
 
     <br>
-    <div>Icon:</div>
+    <div>Iconify</div>
     <div>
-      <span class="i-mdi-home hover:i-mdi-home-alert text-5xl text-green-800" />
+      <p>Material Design Icon (MDI)</p>
+      <span class="i-mdi-home hover:i-mdi-home-alert text-5xl cursor-pointer text-green-800" />
+      <br>
+      <p>Lucile</p>
       <span
-        class="iconify"
-        data-icon="line-md:alert-loop"
-        data-inline="false"
+        class="i-lucide-a-arrow-down
+        text-5xl
+        cursor-pointer
+        text-green-800"
       />
+      <br>
+      <p>SVG Logos</p>
+      <span class="i-logos-vue text-5xl text-green-800 cursor-pointer transition duration-300 ease-in-out transform hover:scale-110" />
+      <br>
     </div>
   </NuxtLayout>
   <LoadingIndicator />
