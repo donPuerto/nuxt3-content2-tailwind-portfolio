@@ -8,23 +8,24 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint": "eslint --config ./eslint.config.mjs \"**/*.{js,cjs,mjs,ts,cts,mts,vue}\"",
+    "lint:fix": "eslint \"**/*.{js,cjs,mjs,ts,cts,mts,vue}\" --fix"
   },
   "dependencies": {
-    "nuxt": "^3.11.2",
-    "vue": "^3.4.27",
-    "vue-router": "^4.3.2"
+    "nuxt": "latest",
+    "vue": "latest",
+    "vue-router": "latest"
   },
   "devDependencies": {
-    "@egoist/tailwindcss-icons": "^1.8.0",
+    "@egoist/tailwindcss-icons": "latest",
     "@eslint/config-inspector": "^0.4.10",
     "@iconify-json/lucide": "^1.1.188",
     "@iconify-json/mdi": "^1.1.66",
+    "@iconify/json": "latest",
     "@nuxt/eslint": "^0.3.13",
     "@nuxt/fonts": "^0.7.0",
     "@nuxtjs/color-mode": "^3.4.1",
-    "@nuxtjs/tailwindcss": "^6.12.0",
+    "@nuxtjs/tailwindcss": "latest",
     "@pinia/nuxt": "^0.5.1",
     "@tailwindcss/typography": "^0.5.13",
     "@vueuse/core": "^10.10.0",

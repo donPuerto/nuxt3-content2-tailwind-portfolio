@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import LoadingIndicator from '@/components/LoadingIndicator.vue'
 
 // const colorMode = useColorMode();
@@ -81,19 +81,21 @@ onMounted(() => {
         This is text with the Space Grotesk Bold font.
       </div>
     </div>
+
+    <br>
+    <div>Icon:</div>
+    <div>
+      <span class="i-mdi-home hover:i-mdi-home-alert text-5xl text-green-800" />
+      <span
+        class="iconify"
+        data-icon="line-md:alert-loop"
+        data-inline="false"
+      />
+    </div>
   </NuxtLayout>
   <LoadingIndicator />
 </template>
 
-<style>
-.outer {
-    /* font-family: 'olupos', sans-serif;
-    font-size: 140px; */
+<style lang="scss">
 
-    }
-.inner {
-  /* font-family: 'olupos', sans-serif;
-  font-size: 115px; */
-
-}
 </style>

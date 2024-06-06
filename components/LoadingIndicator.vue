@@ -1,12 +1,3 @@
-<template>
-  <div
-    v-if="isLoading"
-    class="loading-info"
-  >
-    Loading... {{ progress }}%
-  </div>
-</template>
-
 <script setup lang="ts">
 // Initialize the loading indicator with custom settings
 const { progress, isLoading, start, finish } = useLoadingIndicator({
@@ -25,6 +16,15 @@ onMounted(() => {
   }, 1000)
 })
 </script>
+
+<template>
+  <div
+    v-if="isLoading"
+    class="loading-info"
+  >
+    Loading... {{ progress }}%
+  </div>
+</template>
 
 <style scoped>
 .loading-info {

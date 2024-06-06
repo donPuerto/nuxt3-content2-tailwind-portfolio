@@ -28,18 +28,7 @@ export default <Partial<Config>> {
         'text-primary': 'var(--text-primary)',
         'text-secondary': 'var(--text-secondary)',
       },
-      animation: {
-        'gradient-border': 'gradient-border 5s infinite linear',
-      },
-      keyframes: {
-        'gradient-border': {
-          '0%': { 'stroke-dashoffset': '0' },
-          '100%': { 'stroke-dashoffset': '200' },
-        },
-      },
-      backgroundImage: {
-        'gradient-border': 'linear-gradient(90deg, #ff7e5f, #feb47b)',
-      },
+
     },
   },
   content: [
@@ -53,13 +42,7 @@ export default <Partial<Config>> {
   plugins: [
     typography(),
     iconsPlugin({
-      // Select the icon collections you want to use
-      // You can also ignore this option to automatically discover all individual icon packages you have installed
-      // If you install @iconify/json, you should explicitly specify the collections you want to use, like this:
       collections: getIconCollections(['mdi', 'lucide']),
-      // If you want to use all icons from @iconify/json, you can do this:
-      // collections: getIconCollections("all"),
-      // and the more recommended way is to use `dynamicIconsPlugin`, see below.
     }),
   ],
 }

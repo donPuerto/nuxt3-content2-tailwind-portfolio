@@ -1,65 +1,20 @@
 {
+  // Enable the ESlint flat config support
+  "eslint.experimental.useFlatConfig": true,
+
   // Disable the default formatter, use eslint instead
   "prettier.enable": false,
   "editor.formatOnSave": false,
-  "files.insertFinalNewline": true,
-  "javascript.updateImportsOnFileMove.enabled": "always",
 
-
-  // SCSS
-  "[scss]": {
-    "editor.defaultFormatter": "stylelint.vscode-stylelint"
-  },
-  // JSON
-  "[json]": {
-      "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "[jsonc]": {
-      "editor.defaultFormatter": "vscode.json-language-features"
-  },
-
-  // Vue
-  "[vue]": {
-      "editor.defaultFormatter": "Vue.volar",
-      "editor.formatOnSave": true
-  },
-
-  // Extension: Volar
-  "volar.preview.port": 3000,
-  "volar.completion.preferredTagNameCase": "pascal",
-
-
-  "[typescript]": {
-
-    "editor.autoClosingBrackets": "always"
-  },
-
-  // Enable ESlint flat config support
-  "eslint.experimental.useFlatConfig": true,
-
-
-
+  // Auto fix
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.fixAll.stylelint": "explicit",
-    "source.organizeImports": "explicit"
+    "source.fixAll": "explicit",
+    "source.organizeImports": "never"
   },
-
-  "eslint.alwaysShowStatus": true,
-  "eslint.format.enable": true,
-
-  // Extension: Stylelint
-  "stylelint.validate": [
-    "css",
-    "scss",
-    "vue"
-  ],
-
 
   // Silent the stylistic rules in you IDE, but still auto fix them
   "eslint.rules.customizations": [
     { "rule": "style/*", "severity": "off" },
-    { "rule": "format/*", "severity": "off" },
     { "rule": "*-indent", "severity": "off" },
     { "rule": "*-spacing", "severity": "off" },
     { "rule": "*-spaces", "severity": "off" },
@@ -70,8 +25,8 @@
     { "rule": "*semi", "severity": "off" }
   ],
 
-   // Enable eslint for all supported languages
-   "eslint.validate": [
+  // Enable eslint for all supported languages
+  "eslint.validate": [
     "javascript",
     "javascriptreact",
     "typescript",
@@ -81,50 +36,16 @@
     "markdown",
     "json",
     "jsonc",
-    "yaml",
-    "toml",
-    "gql",
-    "graphql",
-    "astro"
+    "yaml"
   ],
-
-  "eslint.options": {
-    "extensions": [".js", ".jsx", ".ts", ".tsx", ".vue"]
-  },
   "cSpell.words": [
-    "Composables",
-    "Customizer",
-    "destr",
-    "flagpack",
-    "Grotesk",
-    "Iconify",
     "lucide",
-    "nuxt",
+    "nocheck",
     "nuxtjs",
-    "ofetch",
     "olupos",
     "pinia",
-    "psudo",
     "spacegrotesk",
-    "stylelint",
-    "touchless",
-    "triggerer",
-    "vuetify",
+    "stylelintrc",
     "vueuse"
-  ],
-  "editor.fontFamily": "Fira Code",
-  "editor.fontLigatures": true,
-  "terminal.integrated.fontFamily": "Fira Code",
-  "terminal.integrated.fontSize": 12,
-  "terminal.integrated.fontWeight": "normal",
-  "powermode.combo.timeout": 2,
-  "powermode.combo.timerEnabled": "hide",
-  "powermode.shake.intensity": 4,
-  "powermode.presets": "flames",
-  "powermode.combo.counterEnabled": "hide",
-  "editor.stickyScroll.scrollWithEditor": false,
-
-  // "typescript.preferences.importModuleSpecifier": "shortest",
-  // "typescript.tsdk": "node_modules/typescript/lib",
-  // "volar.useWorkspaceTsdk": true
+  ]
 }

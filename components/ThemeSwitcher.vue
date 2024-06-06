@@ -1,28 +1,3 @@
-<template>
-  <div class="relative">
-
-    <button
-      class="transition-all duration-200 w-max h-max p-2 flex items-center justify-center bg-white gap-2 rounded-lg border border-zinc-200"
-      @click="toggleDropdown">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-        <path fill="currentColor"
-          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2s-2 .9-2 2s.9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2" />
-      </svg>
-    </button>
-    <ul v-if="dropdownOpen"
-      class="absolute z-10 shadow-lg w-full h-max p-2 bg-white border border-zinc-200 rounded-lg flex flex-col gap-2 mt-2">
-      <li v-for="(option, index) in themeOptions" :key="index"
-        class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg cursor-pointer"
-        @mousedown.prevent="option.action">
-        <svg v-if="option.icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
-          <path :d="option.icon" fill="currentColor" />
-        </svg>
-        <p>{{ option.label }}</p>
-      </li>
-    </ul>
-  </div>
-</template>
-
 <script lang="ts" setup>
 const colorMode = useColorMode()
 const test = ref('test')
@@ -75,6 +50,52 @@ const themeOptions: ThemeOption[] = [
   },
 ]
 </script>
+
+<template>
+  <div class="relative">
+    <button
+      class="transition-all duration-200 w-max h-max p-2 flex items-center justify-center bg-white gap-2 rounded-lg border border-zinc-200"
+      @click="toggleDropdown"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+      >
+        <path
+          fill="currentColor"
+          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2s-2 .9-2 2s.9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2"
+        />
+      </svg>
+    </button>
+    <ul
+      v-if="dropdownOpen"
+      class="absolute z-10 shadow-lg w-full h-max p-2 bg-white border border-zinc-200 rounded-lg flex flex-col gap-2 mt-2"
+    >
+      <li
+        v-for="(option, index) in themeOptions"
+        :key="index"
+        class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg cursor-pointer"
+        @mousedown.prevent="option.action"
+      >
+        <svg
+          v-if="option.icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+        >
+          <path
+            :d="option.icon"
+            fill="currentColor"
+          />
+        </svg>
+        <p>{{ option.label }}</p>
+      </li>
+    </ul>
+  </div>
+</template>
 
 <style scoped>
 button {

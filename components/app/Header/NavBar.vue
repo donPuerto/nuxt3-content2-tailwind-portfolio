@@ -1,3 +1,7 @@
+<script lang="ts" setup>
+
+</script>
+
 <template>
   <div>
     <div class="flex">
@@ -91,10 +95,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-
-</script>
 
 <style>
 
