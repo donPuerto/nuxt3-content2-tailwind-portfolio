@@ -47,5 +47,16 @@
     "spacegrotesk",
     "stylelintrc",
     "vueuse"
-  ]
+  ],
+
+  // Tailwind Editor Config
+  "tailwindCSS.experimental.configFile": ".nuxt/tailwind.config.cjs",
+  "tailwindCSS.experimental.classRegex": ["tw`(.*?)`", "tw\\('(.*?)'\\)", "tw\\(\\s*('(.*?)'|\"(.*?)\")\\s*\\)"],
+    "files.associations": {
+        "*.css": "tailwindcss"
+    },
+    "editor.quickSuggestions": {
+      "strings": true
+  },
+  "experimentalDisableTemplateSupport": true
 }

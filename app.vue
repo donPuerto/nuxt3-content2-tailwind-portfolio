@@ -99,6 +99,9 @@ onMounted(() => {
       <p>SVG Logos</p>
       <span class="i-logos-vue text-5xl text-green-800 cursor-pointer transition duration-300 ease-in-out transform hover:scale-110" />
       <br>
+      <p class="bg-red-700">
+        Tailwind IntelliSense
+      </p>
     </div>
   </NuxtLayout>
   <LoadingIndicator />
