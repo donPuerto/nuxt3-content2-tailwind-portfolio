@@ -4,7 +4,7 @@
 
 <template>
   <div>
-    <div class="flex">
+    <div class="flex bg-navbar-background text-navbar-color">
       <Logo class="flex-1 justify-start" />
       <Segment />
       <ThemeSwitcher />

@@ -1,6 +1,10 @@
 # TODO
 
 ## Todo-list
+2024-June-07 (Thurs)
+- How to become Responsive Layout using Tailwind
+2024-June-07 (Thurs)
+- Will be working on the Layout, or How to work on proper layout in tailwind
 2024-June-06 (Thurs)
 - How to setup PostCSS configuration
 2024-June-06 (Thurs)
@@ -10,7 +14,8 @@
 2024-May-22 (Wed)
 - Removing Nuxt Logo and replace with my prepared one
 2024-May-18 (Sat)
-- Navbar (Partial Implementation)
+- (2024-June-07) Working on the Navbar, theming 
+- (2024-May-18) Navbar (Partial Implementation)
 2024-May-15 (Wed)
 - Program dynamically font color and font height
 - Integrate to Pinia for persist storing

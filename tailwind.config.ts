@@ -27,6 +27,12 @@ export default <Partial<Config>> {
         'text': 'var(--color)',
         'text-primary': 'var(--text-primary)',
         'text-secondary': 'var(--text-secondary)',
+
+        'navbar': {
+          background: 'var(--navbar-background)',
+          color: 'var(--navbar-color)',
+          active: 'var(--navbar-active-color)',
+        },
       },
 
     },

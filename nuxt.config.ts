@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
 
   },
-  css: ['~/assets/styles/main.scss'],
+  css: ['~/assets/css/tailwind.css', '~/assets/scss/main.scss'],
 
   components: [{ path: '~/components', pathPrefix: false }],
   modules: [
@@ -39,15 +39,6 @@ export default defineNuxtConfig({
   },
   typescript: {
     typeCheck: true,
-  },
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: '@use "~/assets/styles/_custom.scss" as *;',
-        },
-      },
-    },
   },
 
 })

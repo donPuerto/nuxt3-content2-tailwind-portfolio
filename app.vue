@@ -102,6 +102,9 @@ onMounted(() => {
       <p class="bg-red-700">
         Tailwind IntelliSense
       </p>
+      <h1 class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-100">
+        Gradient title
+      </h1>
     </div>
   </NuxtLayout>
   <LoadingIndicator />
