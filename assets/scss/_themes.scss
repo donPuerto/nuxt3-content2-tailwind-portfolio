@@ -78,9 +78,11 @@
   --border-shadow: 5px 5px 15px rgba(255, 255, 255, 0.3); /* Dark theme shadow */
 
   /* Navbar */
-  --navbar-background: #0A0A0A;  // Navbar Background Color
-  --navbar-color: ##989075;  // Navbar Text Color
-  --navbar-active-color: #FFFFFF;  // Navbar Active Text Color
+  --navbar-background: #18181b !important;  // Navbar Background Color
+  --navbar-color: #3f3f46 !important;  // Navbar Text Color
+  --navbar-active-color: #E7EDED !important;  // Navbar Active Text Color
+
+  --navbar-bottom-border-color: #e5e5e5 !important;;  // Navbar Button Color
 
   --navbar-font-family: 'Inter Regular', sans-serif;;  // Navbar Font Family
   --navbar-font-size: 16px;  // Navbar Font Size
@@ -95,10 +97,7 @@
   --navbar-icon-color: #e5e5e5;  // Navbar Icon Color
   --navbar-icon-size: #e5e5e5;  // Navbar Icon Size
 
-  --navbar-button-background: #e5e5e5;  // Navbar Button Background
-  --navbar-button-color: #e5e5e5;  // Navbar Button Color
-  --navbar-hover-background: #e5e5e5;  // Navbar Hover Background Color
-  --navbar-hover-color: #e5e5e5;  // Navbar Hover Text Color
+
 
 
 

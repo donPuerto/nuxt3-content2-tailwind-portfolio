@@ -26,11 +26,13 @@
     "@nuxtjs/tailwindcss": "latest",
     "@pinia/nuxt": "latest",
     "@tailwindcss/typography": "latest",
+    "@tsparticles/vue3": "^3.0.1",
     "@vueuse/core": "^10.10.0",
     "eslint": "latest",
     "pinia": "latest",
     "pinia-plugin-persistedstate": "latest",
     "sass": "latest",
+    "tsparticles": "^3.4.0",
     "typescript": "latest",
     "vite-plugin-eslint2": "latest",
     "vue-tsc": "^1"

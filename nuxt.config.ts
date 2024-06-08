@@ -40,5 +40,6 @@ export default defineNuxtConfig({
   typescript: {
     typeCheck: true,
   },
+  plugins: [{ src: '~/plugins/particles.client.ts', mode: 'client' }],
 
 })
