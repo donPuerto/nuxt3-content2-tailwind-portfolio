@@ -1,88 +1,55 @@
-<script setup>
-const particlesId = 'tsparticles'
-const particlesLoaded = () => {
-  // eslint-disable-next-line no-console
-  console.log('Particles loaded')
-}
+<script setup lang="ts">
+import type { Container } from '@tsparticles/engine'
+import { MoveDirection, OutMode } from '@tsparticles/engine'
 
-const particlesOptions = ref({
+const particlesLoaded = (container?: Container) => {
+  // eslint-disable-next-line no-console
+  console.log(container)
+}
+const options = ref({
   background: {
     color: {
       value: 'var(--background-color)',
-    },
-  },
-  fpsLimit: 120,
-  interactivity: {
-    events: {
-      onClick: {
-        enable: true,
-        mode: 'push',
-      },
-      onHover: {
-        enable: true,
-        mode: 'repulse',
-      },
-    },
-    modes: {
-      bubble: {
-        distance: 400,
-        duration: 2,
-        opacity: 0.8,
-        size: 40,
-      },
-      push: {
-        quantity: 4,
-      },
-      repulse: {
-        distance: 200,
-        duration: 0.4,
-      },
     },
   },
   particles: {
     color: {
       value: '#ffffff',
     },
-    links: {
-      color: '#ffffff',
-      distance: 150,
-      enable: true,
-      opacity: 0.5,
-      width: 1,
+    number: {
+      value: 100,
     },
     move: {
-      direction: 'none',
+      direction: MoveDirection.none,
       enable: true,
-      outModes: 'bounce',
-      random: false,
-      speed: 6,
+      outModes: {
+        default: OutMode.out,
+      },
+      random: true,
+      speed: 0.1,
       straight: false,
     },
-    number: {
-      density: {
-        enable: true,
-      },
-      value: 80,
-    },
     opacity: {
-      value: 0.5,
-    },
-    shape: {
-      type: 'star', // Use star shape
+      animation: {
+        enable: true,
+        speed: 1,
+        sync: false,
+      },
+      value: { min: 0, max: 1 },
     },
     size: {
-      value: { min: 1, max: 5 },
+      value: { min: 1, max: 3 },
     },
   },
-  detectRetina: true,
+
 })
 </script>
 
 <template>
   <client-only>
     <vue-particles
-      :id="particlesId"
-      :options="particlesOptions"
+      id="tsparticles"
+      :options="options"
       @particles-loaded="particlesLoaded"
     />
   </client-only>

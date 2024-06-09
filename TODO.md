@@ -21,6 +21,10 @@
 - Integrate to Pinia for persist storing
 
 # In Progress
+2024-June-09 (Thurs)
+- Installed TSparticles which already in my system
+- To add theme
+- To Integrate multiple Presets
 2024-May-14 (Tues)
 - (2024-May-14): To polish Eslint configuration and set desired rules
 - (2024-June-06): Eslint config working partially, Im happy with it. But need to polish until I am comportable in setting up the configuration
