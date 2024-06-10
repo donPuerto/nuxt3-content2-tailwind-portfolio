@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 const colorMode = useColorMode()
-const test = ref('test')
 const dropdownOpen = ref(false)
 
 interface ThemeOption {
