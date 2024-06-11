@@ -26,8 +26,10 @@ export default <Partial<Config>> {
         'danger': 'var(--danger-color)',
         'warning': 'var(--warning-color)',
         'info': 'var(--info-color)',
-        'theme-text-color': 'var(--color)',
-        'theme-bg-color': 'var(--bg-color)',
+        'theme-text-primary-color': 'var(--text-primary-color)',
+        'theme-text-secondary-color': 'var(--text-secondary-color)',
+        'theme-bg-primary-color': 'var(--bg-primary-color)',
+        'theme-bg-secondary-color': 'var(--bg-secondary-color)',
         'theme-border-color': 'var(--border-color)',
       },
 

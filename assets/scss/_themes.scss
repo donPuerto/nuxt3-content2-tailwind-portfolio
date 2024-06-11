@@ -1,10 +1,13 @@
 // _themes.scss
-@use './base-colors';
+@import 'base-colors';
 
 :root {
+  // Default Color
   --color: #243746;
   --bg-color: #f3f5f4;
   --border-color: #3bca83;
+
+
   --primary-color: $base-primary-color;
   --secondary-color: $base-secondary-color;
   --success-color: $base-success-color;
@@ -15,22 +18,24 @@
 
 .light-mode {
   /* Light theme styles */
-  --color: $base-light-color;
-  --bg-color: $base-bg-color-light;
-  --border-color: $base-border-color-light;
+  --text-primary-color: #{$base-text-primary-color-light};
+  --text-secondary-color: #{$base-text-secondary-color-light};
+  --bg-primary-color: #{$base-bg-primary-color-light};
+  --bg-secondary-color: #{$base-bg-secondary-color-light};
+  --border-color: #{$base-border-color-light};
 }
 
 .dark-mode {
   /* Dark theme styles */
-  --color: $base-dark-color;
-  --bg-color: $base-bg-dark-color ;
-  --border-color: $base-border-color-dark;
+  --color: #{$base-dark-color};
+  --bg-color: #{$base-bg-dark-color};
+  --border-color: #{ $base-border-color-dark};
   }
 
 .sepia-mode {
-  --color: $base-sepia-color;
-  --bg-color: $base-bg-sepia;
-  --border-color: $base-border-color-sepia;
+  --color: #{$base-sepia-color};
+  --bg-color: #{$base-bg-sepia};
+  --border-color: #{$base-border-color-sepia};
 }
 
 

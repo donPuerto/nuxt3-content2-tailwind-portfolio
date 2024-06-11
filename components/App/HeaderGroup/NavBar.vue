@@ -29,7 +29,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <nav class="background bg-theme-bg-color shadow-lg border-binset-shadow p-4">
+  <nav class="bg-theme-bg-primary-color shadow-lg border-binset-shadow p-4">
     <div class="container mx-auto flex items-center justify-between relative">
       <div class="flex items-center">
         <div class="md:hidden mr-4">
@@ -104,9 +104,9 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.background {
+/* .background {
   background-color: var(--bg-color);
-}
+} */
 .inset-shadow {
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6), 0 8px 16px rgba(0, 0, 0, 0.6);
 

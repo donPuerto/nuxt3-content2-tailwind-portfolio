@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div>
+  <div class="bg-theme-bg-secondary-color">
     <h1>Home Page</h1>
     <NuxtLink
       to="/about"
@@ -35,8 +35,8 @@
     </select>
 
     <br>
-    <div class="bg-theme-bg-color  border-theme-border-color border border-border-color p-4">
-      <span class="text-theme-color">Tailwind Styling</span>
+    <div class="bg-theme-bg-primary-color  border-theme-border-color border border-border-color p-4">
+      <span class="text-theme-text-primary-color">Tailwind Styling</span>
     </div>
     <div class="theme-background border p-4">
       <span class="theme-font-color">Local Theme Styling</span>
@@ -123,10 +123,10 @@
 
 <style scoped>
 .theme-background {
-  background-color: var(--bg-color);
+  background-color: var(--bg-primary-color);
 }
 .theme-font-color {
-  color: var(--color);
+  color: var(--text-primary-color);
 }
 .custom-link {
     text-decoration: underline;
