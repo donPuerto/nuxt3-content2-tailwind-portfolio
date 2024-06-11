@@ -1,6 +1,19 @@
 /* custom styles */
-@use 'body' as *;
-@use 'transitions' as *;
-@use 'fonts' as *;
-@use 'themes' as *;
-@use 'custom-loading' as *;
+// @import 'base-colors';
+@import 'variables';
+@import 'typography';
+// @use 'spacing';
+// @use 'breakpoints';
+// @use 'z-index';
+
+
+/* Partial and themes below */
+@import 'transitions';
+@import 'fonts';
+@import 'custom-loading';
+@import 'themes';
+
+body {
+  background-color: var(--bg-color);
+  color: var(--color);
+}

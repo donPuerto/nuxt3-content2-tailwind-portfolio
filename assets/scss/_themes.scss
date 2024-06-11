@@ -1,220 +1,36 @@
-// :root {
-//   /* No need to set default colors for system theme */
-// }
+// _themes.scss
+@use './base-colors';
 
-.light {
+:root {
+  --color: #243746;
+  --bg-color: #f3f5f4;
+  --border-color: #3bca83;
+  --primary-color: $base-primary-color;
+  --secondary-color: $base-secondary-color;
+  --success-color: $base-success-color;
+  --danger-color: $base-danger-color;
+  --warning-color:$base-warning-color;
+  --info-color: $base-info-color;
+}
+
+.light-mode {
   /* Light theme styles */
-  --color: #262626; /* Neutral 800 */
-  --color-primary: #166534; /* Green 800 */
-  --color-secondary: #eab308; /* Amber 500 */
-  --bg: #fff; /* Neutral 400 */
-  --bg-secondary: ##fafafa; /* Neutral 50 */
-  --border-color: #262626; /* Neutral 800 */
-  --border-shadow: 5px 5px 15px rgba(38, 38, 38, 0.3); /* Light theme shadow */
-
-  /* Typography */
-  --font-family: 'Inter Regular', sans-serif;
-  --font-size: 16px;
-  --line-height: 1.5;
-
-  /* Spacing */
-  --spacing: 1rem;
-  --spacing-small: 0.5rem;
-  --spacing-medium: 1rem;
-  --spacing-large: 2rem;
-
-  /* Box Shadows */
-  --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.2);
-
-  /* Icons */
-  --icon-color: #243746;
-  --icon-size: 24px;
-
-  /* Form Elements */
-  --input-background: #fff;
-  --input-border-color: #ccc;
-  --input-placeholder-color: #999;
-
-  /* Buttons */
-  --button-background: #158876;
-  --button-color: #fff;
-  --button-hover-background: #0e604b;
-  --button-hover-color: #fff;
-
-  /* Alerts and Notifications */
-  --alert-background: #f8d7da;
-  --alert-color: #721c24;
-  --alert-border-color: #f5c6cb;
-
-  /* Navigation */
-  --navbar-background: #158876;
-  --navbar-color: #fff;
-  --navbar-active-color: #0e2233;
-
-  --text-primary: #243746; /* White */
-  --text-secondary: #d1d5db; /* Cool Gray 300 */
-
-  /* Override select element styles */
-  select {
-    color: var(--text-primary);
-    background-color: var(--bg-secondary);
-    border-color: var(--border-color);
-  }
-
-  span {
-    color: var(--color);
-  }
+  --color: $base-light-color;
+  --bg-color: $base-bg-color-light;
+  --border-color: $base-border-color-light;
 }
 
-.dark {
+.dark-mode {
   /* Dark theme styles */
-  --color: #e5e5e5; /* Neutral 200 */
-  --color-primary: #22c55e; /* Green 500 */
-  --color-secondary: #f59e0b; /* Amber 500 */
-  --bg: #171717; /* Neutral 900 */
-  --bg-secondary: #44403c; /* Neutral 700 */
-  --border-color: #fafafa; /* Neutral 100 */
-  --border-shadow: 5px 5px 15px rgba(255, 255, 255, 0.3); /* Dark theme shadow */
-
-  /* Navbar */
-  --navbar-background: #18181b !important;  // Navbar Background Color
-  --navbar-color: #3f3f46 !important;  // Navbar Text Color
-  --navbar-active-color: #E7EDED !important;  // Navbar Active Text Color
-
-  --navbar-bottom-border-color: #e5e5e5 !important;;  // Navbar Button Color
-
-  --navbar-font-family: 'Inter Regular', sans-serif;;  // Navbar Font Family
-  --navbar-font-size: 16px;  // Navbar Font Size
-  --navbar-font-height: 1.5;  // Navbar Font Size
-
-  --navbar-spacing-large: #e5e5e5;  // Navbar Spacing Large
-  --navbar-spacing-medium: #e5e5e5;  // Navbar Spacing Medium
-  --navbar-spacing-small: #e5e5e5;  // Navbar Spacing Small
-
-  --navbar-box-shadow: #e5e5e5;  // Navbar Box Shadow
-
-  --navbar-icon-color: #e5e5e5;  // Navbar Icon Color
-  --navbar-icon-size: #e5e5e5;  // Navbar Icon Size
-
-
-
-
-
-
-
-
-
-
-
-  /* Typography */
-  --font-family: 'Inter Regular', sans-serif;
-  --font-size: 16px;
-  --line-height: 1.5;
-
-  /* Spacing */
-  --spacing: 1rem;
-  --spacing-small: 0.5rem;
-  --spacing-medium: 1rem;
-  --spacing-large: 2rem;
-
-  /* Box Shadows */
-  --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.2);
-
-  /* Icons */
-  --icon-color: #ebf4f1;
-  --icon-size: 24px;
-
-  /* Form Elements */
-  --input-background: #2b3945;
-  --input-border-color: #1d2a35;
-  --input-placeholder-color: #627482;
-
-  /* Buttons */
-  --button-background: #41b38a;
-  --button-color: #fff;
-  --button-hover-background: #158876;
-  --button-hover-color: #fff;
-
-  /* Alerts and Notifications */
-  --alert-background: #383d3f;
-  --alert-color: #b8babc;
-  --alert-border-color: #535859;
-
-  /* Navigation */
-  --navbar-background: #0e2233;
-  --navbar-color: #ebf4f1;
-  --navbar-active-color: #41b38a;
-
-
-  --text-primary: ##a3a3a3; /* Neutral 400 */
-  --text-secondary: #f5f5f5; /* Neutral 100 */
-
-  /* Override select element styles */
-  select {
-    color: var(--text-primary);
-    background-color: var(--bg-secondary);
-    border-color: var(--border-color);
+  --color: $base-dark-color;
+  --bg-color: $base-bg-dark-color ;
+  --border-color: $base-border-color-dark;
   }
-  span {
-    color: var(--color);
-  }
-}
 
-.sepia {
-  /* Sepia theme styles */
-  --color: #433422; /* Brown */
-  --color-primary: #8a5e34; /* Darker Brown */
-  --color-secondary: #504231; /* Brown */
-  --bg: #f1e7d0; /* Light Sepia */
-  --bg-secondary: #eae0c9; /* Lighter Sepia */
-  --border-color: #ded0bf; /* Light Sepia */
-  --border-shadow: 5px 5px 15px rgba(67, 52, 34, 0.3); /* Sepia theme shadow */
-
-  /* Typography */
-  --font-family: 'Inter Regular', sans-serif;
-  --font-size: 16px;
-  --line-height: 1.5;
-
-  /* Spacing */
-  --spacing: 1rem;
-  --spacing-small: 0.5rem;
-  --spacing-medium: 1rem;
-  --spacing-large: 2rem;
-
-  /* Box Shadows */
-  --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.2);
-
-  /* Icons */
-  --icon-color: #433422;
-  --icon-size: 24px;
-
-  /* Form Elements */
-  --input-background: #f1e7d0;
-  --input-border-color: #bca483;
-  --input-placeholder-color: #8a5e34;
-
-  /* Buttons */
-  --button-background: #8a5e34;
-  --button-color: #fff;
-  --button-hover-background: #433422;
-  --button-hover-color: #fff;
-
-  /* Alerts and Notifications */
-  --alert-background: #e2cdbf;
-  --alert-color: #8a5e34;
-  --alert-border-color: #d3b7a1;
-
-  /* Navigation */
-  --navbar-background: #433422;
-  --navbar-color: #f1e7d0;
-  --navbar-active-color: #8a5e34;
-
-  span {
-    color: var(--color);
-  }
+.sepia-mode {
+  --color: $base-sepia-color;
+  --bg-color: $base-bg-sepia;
+  --border-color: $base-border-color-sepia;
 }
 
 

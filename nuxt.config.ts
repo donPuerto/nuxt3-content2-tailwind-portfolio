@@ -8,6 +8,14 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/css/tailwind.css', '~/assets/scss/main.scss'],
 
+  postcss: {
+    plugins: {
+      tailwindcss: { exposeConfig: true },
+      autoprefixer: {},
+    },
+
+  },
+
   components: [{ path: '~/components', pathPrefix: false }],
   modules: [
     '@nuxt/devtools',
@@ -31,7 +39,7 @@ export default defineNuxtConfig({
     storesDirs: ['./stores/**'],
   },
   colorMode: {
-    classSuffix: '',
+    classSuffix: '-mode',
     preference: 'system', // default value of $colorMode.preference
     fallback: 'light', // fallback value if not system preference found
     storageKey: 'nuxt-color-mode', // key used to store the value in local storage

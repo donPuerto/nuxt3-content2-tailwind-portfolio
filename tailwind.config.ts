@@ -4,6 +4,7 @@ import type { Config } from 'tailwindcss'
 
 import { getIconCollections, iconsPlugin } from '@egoist/tailwindcss-icons'
 
+/** @type {import('tailwindcss').Config} */
 export default <Partial<Config>> {
   darkMode: 'class', // Enable class-based dark mode
   theme: {
@@ -19,21 +20,15 @@ export default <Partial<Config>> {
         'spacegrotesk-bold': ['SpaceGrotesk-Bold', 'sans-serif'],
       },
       colors: {
-        'primary': 'var(--color-primary)',
-        'secondary': 'var(--color-secondary)',
-        'background': 'var(--bg)',
-        'background-secondary': 'var(--bg-secondary)',
-        'border': 'var(--border-color)',
-        'text': 'var(--color)',
-        'text-primary': 'var(--text-primary)',
-        'text-secondary': 'var(--text-secondary)',
-
-        'navbar': {
-          'background': 'var(--navbar-background)',
-          'color': 'var(--navbar-color)',
-          'active': 'var(--navbar-active-color)',
-          'bottom-border': 'var(--navbar-bottom-border-color)',
-        },
+        'primary': 'var(--primary-color)',
+        'secondary': 'var(--secondary-color)',
+        'success': 'var(--success-color)',
+        'danger': 'var(--danger-color)',
+        'warning': 'var(--warning-color)',
+        'info': 'var(--info-color)',
+        'theme-text-color': 'var(--color)',
+        'theme-bg-color': 'var(--bg-color)',
+        'theme-border-color': 'var(--border-color)',
       },
 
     },
@@ -53,7 +48,7 @@ export default <Partial<Config>> {
   plugins: [
     typography(),
     iconsPlugin({
-      collections: getIconCollections(['mdi', 'lucide', 'logos']),
+      collections: getIconCollections(['mdi', 'lucide', 'logos', 'iconamoon', 'material-symbols']),
     }),
   ],
 }

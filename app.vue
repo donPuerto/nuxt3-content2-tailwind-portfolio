@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import LoadingIndicator from '@/components/LoadingIndicator.vue'
 
-// const colorMode = useColorMode();
-// console.log(colorMode.preference);
-
 // Initialize the loading indicator with custom settings
 const { start, finish } = useLoadingIndicator({
   duration: 2000,
@@ -20,8 +17,6 @@ onMounted(() => {
     }, 2000)
   }, 1000)
 })
-
-// console.log(colorMode);
 </script>
 
 <template>

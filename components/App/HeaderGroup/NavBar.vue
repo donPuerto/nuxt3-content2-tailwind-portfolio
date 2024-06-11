@@ -29,7 +29,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <nav class="bg-gray-800 text-white p-4  shadow-lg border-b border-gray-700 inset-shadow">
+  <nav class="background bg-theme-bg-color shadow-lg border-binset-shadow p-4">
     <div class="container mx-auto flex items-center justify-between relative">
       <div class="flex items-center">
         <div class="md:hidden mr-4">
@@ -68,27 +68,14 @@ onMounted(() => {
       </div>
 
       <div class="flex items-center space-x-4">
-        <a
-          href="#"
-          aria-label="Notifications"
-          class="menu-item hover:gradient-text"
-        >
-          BellIcon
-        </a>
-        <a
-          href="#"
-          aria-label="User profile"
-          class="menu-item hover:gradient-text"
-        >
-          User Icon
-        </a>
+        <ThemeSwitcher />
       </div>
     </div>
   </nav>
 
   <div
     v-if="isMenuOpen"
-    class="bg-gray-800 container max-w-full md:hidden p-3 shadow-lg border-b border-gray-700 inset-shadow"
+    class="bg-background-color text-text-color border-border-color container max-w-full md:hidden p-3 shadow-lg border-b inset-shadow"
   >
     <div
       class="flex flex-col items-center"
@@ -117,6 +104,9 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.background {
+  background-color: var(--bg-color);
+}
 .inset-shadow {
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6), 0 8px 16px rgba(0, 0, 0, 0.6);
 

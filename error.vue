@@ -9,7 +9,7 @@ const { error } = props
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center h-screen">
+  <div class="bg-theme-bg-color flex flex-col items-center justify-center h-screen">
     <h1 class="text-3xl font-bold mb-4">
       Error Alert!!
     </h1>
