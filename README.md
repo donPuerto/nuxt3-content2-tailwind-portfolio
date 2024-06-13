@@ -11,7 +11,7 @@ Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introdu
 
 - [Nuxt Color Mode](https://color-mode.nuxtjs.org/) (`@nuxtjs/color-mode`)
   - Adds color mode (dark, light, and custom themes) support to your Nuxt.js application.
-
+r
 - [Nuxt TailwindCSS](https://tailwindcss.nuxtjs.org/) (`@nuxtjs/tailwindcss`)
   - TailwindCSS module for Nuxt.js with configuration options for customization.
 

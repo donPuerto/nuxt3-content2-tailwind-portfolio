@@ -47,6 +47,7 @@
     "pinia",
     "spacegrotesk",
     "stylelintrc",
+    "tdesign",
     "vueuse"
   ],
 
@@ -59,5 +60,12 @@
     "editor.quickSuggestions": {
       "strings": true
   },
-  "experimentalDisableTemplateSupport": true
+  "experimentalDisableTemplateSupport": true,
+  "[scss]": {
+
+    "editor.defaultFormatter": "sibiraj-s.vscode-scss-formatter"
+  },
+
+  "html.format.wrapAttributes": "force-expand-multiline",
+  "htmlWhitespaceSensitivity": "ignore"
 }

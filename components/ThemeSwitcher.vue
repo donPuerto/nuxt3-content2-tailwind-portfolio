@@ -27,25 +27,25 @@ const themeOptions: ThemeOption[] = [
     label: 'System',
     value: 'system',
     action: () => switchTheme('system'),
-    iconClass: 'i-material-symbols-settings',
+    iconClass: 'i-tdesign-system-setting',
   },
   {
     label: 'Light',
     value: 'light',
     action: () => switchTheme('light'),
-    iconClass: 'i-material-symbols-light-mode',
+    iconClass: 'i-iconamoon-mode-light-bold',
   },
   {
     label: 'Dark',
     value: 'dark',
     action: () => switchTheme('dark'),
-    iconClass: 'i-material-symbols-dark-mode',
+    iconClass: 'i-ph-moon-stars-bold',
   },
   {
     label: 'Sepia',
     value: 'sepia',
     action: () => switchTheme('sepia'),
-    iconClass: 'i-material-symbols-sepia-mode',
+    iconClass: 'i-ph-coffee-bold',
   },
 ]
 </script>
@@ -53,11 +53,23 @@ const themeOptions: ThemeOption[] = [
 <template>
   <div class="relative">
     <button
-      class="p-2 flex items-center justify-center hover:border-2 hover:rounded-md"
+      data-twe-ripple-init
+      class="
+        p-2
+        flex
+        items-center
+        justify-center
+        bg-transparent
+        border-transparent
+        border-2
+        rounded-md
+        hover:border-theme-border-color
+        hover:bg-theme-bg-secondary-color
+      "
       @click="toggleDropdown"
     >
       <span
-        class="i-material-symbols-settings
+        class="i-mdi-cog-outline
         text-xl
         cursor-pointer
         hover:text-primary
@@ -66,29 +78,52 @@ const themeOptions: ThemeOption[] = [
     </button>
     <ul
       v-if="dropdownOpen"
-      class="absolute z-10 shadow-lg w-full h-max p-2 bg-primary border-zinc-200 rounded-lg flex flex-col gap-2 mt-2"
+      class="
+        absolute
+        z-10
+        shadow-xl
+        w-32
+        h-max
+        bg-theme-bg-primary-color
+        p-2
+        rounded-lg
+        flex
+        flex-col
+        mt-5
+        right-0
+        border-1
+        border-theme-border-color
+        text-sm
+        font-inter
+      "
     >
       <li
         v-for="(option, index) in themeOptions"
         :key="index"
-        class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg cursor-pointer"
+        class="
+          flex
+          flex-row
+          gap-2
+          items-center
+          hover:bg-theme-bg-hover-color
+          p-3
+          rounded-lg
+          cursor-pointer
+        "
         @mousedown.prevent="option.action"
       >
         <span
-          :class="option.iconClass + ' text-5xl cursor-pointer text-green-800'"
+
+          :class="option.iconClass + ' text-2xl cursor-pointer text-theme-text-primary-color'"
         />
-        <p>{{ option.label }}</p>
+        <p class="text-theme-text-secondary-color">
+          {{ option.label }}
+        </p>
       </li>
     </ul>
   </div>
 </template>
 
-<style scoped>
-button {
-  cursor: pointer;
-}
+<!-- <style scoped>
 
-ul {
-  display: flex;
-}
-</style>
+</style> -->

@@ -23,19 +23,29 @@
   --bg-primary-color: #{$base-bg-primary-color-light};
   --bg-secondary-color: #{$base-bg-secondary-color-light};
   --border-color: #{$base-border-color-light};
+  --bg-anchor-tag-hover-color: #{$base-bg-anchor-tag-hover-color-light};
+  --bg-hover-color: #{$base-bg-hover-color-light};
 }
 
 .dark-mode {
   /* Dark theme styles */
-  --color: #{$base-dark-color};
-  --bg-color: #{$base-bg-dark-color};
-  --border-color: #{ $base-border-color-dark};
+  --text-primary-color: #{$base-text-primary-color-dark};
+  --text-secondary-color: #{$base-text-secondary-color-dark};
+  --bg-primary-color: #{$base-bg-primary-color-dark};
+  --bg-secondary-color: #{$base-bg-secondary-color-dark};
+  --border-color: #{$base-border-color-dark};
+  --bg-anchor-tag-hover-color: #{$base-bg-anchor-tag-hover-color-dark};
+  --bg-hover-color: #{$base-bg-hover-color-dark};
   }
 
 .sepia-mode {
-  --color: #{$base-sepia-color};
-  --bg-color: #{$base-bg-sepia};
+  --text-primary-color: #{$base-text-primary-color-sepia};
+  --text-secondary-color: #{$base-text-secondary-color-sepia};
+  --bg-primary-color: #{$base-bg-primary-color-sepia};
+  --bg-secondary-color: #{$base-bg-secondary-color-sepia};
   --border-color: #{$base-border-color-sepia};
+  --bg-anchor-tag-hover-color: #{$base-bg-anchor-tag-hover-color-sepia};
+  --bg-hover-color: #{$base-bg-hover-color-sepia};
 }
 
 

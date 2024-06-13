@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const isMenuOpen = ref(false)
 const isSmallScreen = ref<boolean>(false)
-const activeTab = ref('home')
+// const activeTab = ref('home')
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
 }
@@ -29,8 +29,26 @@ onMounted(() => {
 </script>
 
 <template>
-  <nav class="bg-theme-bg-primary-color shadow-lg border-binset-shadow p-4">
-    <div class="container mx-auto flex items-center justify-between relative">
+  <nav
+    class="
+      bg-theme-bg-primary-color
+      border-theme-border-color
+      shadow-lg
+      border-binset-shadow
+      p-4
+    "
+  >
+    <div
+      class="
+        text-theme-text-primary-color
+        container
+        mx-auto
+        flex
+        items-center
+        justify-between
+        relative
+      "
+    >
       <div class="flex items-center">
         <div class="md:hidden mr-4">
           <button
@@ -38,21 +56,29 @@ onMounted(() => {
             class=" md:hidden "
             @click="toggleMenu"
           >
-            <span class="i-mdi-hamburger cursor-pointer text-3xl" />
+            <span
+              class="i-mdi-hamburger
+              cursor-pointer
+              text-3xl"
+            />
           </button>
 
           <span
             v-else
             class="i-mdi-hamburger-remove
-          cursor-pointer
-          text-3xl"
+            cursor-pointer
+            text-3xl"
             @click="toggleMenu"
           />
         </div>
 
         <Logo />
       </div>
-      <div class="md:flex md:items-center md:space-x-4 hidden">
+      <Menu
+        :menu-items="['Home', 'About', 'Blog']"
+        :is-menu-open="isMenuOpen"
+      />
+      <!-- <div class="md:flex md:items-center md:space-x-4 hidden ">
         <a
           href="#"
           class="text-lg font-bold menu-item"
@@ -65,15 +91,41 @@ onMounted(() => {
           href="#"
           class="text-lg font-bold menu-item"
         >Blog</a>
-      </div>
+      </div> -->
 
-      <div class="flex items-center space-x-4">
+      <div class="flex items-center space-x-1">
+        <button
+          class="
+            p-2
+            flex
+            items-center
+            justify-center
+            bg-transparent
+            border-transparent
+            border-2
+            rounded-md
+            hover:border-theme-border-color
+            hover:bg-theme-bg-secondary-color
+          "
+        >
+          <span
+            class="i-material-symbols-keyboard-command-key
+              cursor-pointer
+              text-xl"
+          />
+        </button>
+
         <ThemeSwitcher />
       </div>
     </div>
   </nav>
-
-  <div
+  <DropMenu
+    v-if="isMenuOpen"
+    :menu-items="['Home', 'About', 'Blog']"
+    :is-menu-open="isMenuOpen"
+    class="bg-theme-bg-primary-color text-theme-text-primary-color border-theme-border-color container max-w-full md:hidden p-4 shadow-lg border-b"
+  />
+  <!-- <div
     v-if="isMenuOpen"
     class="bg-background-color text-text-color border-border-color container max-w-full md:hidden p-3 shadow-lg border-b inset-shadow"
   >
@@ -100,7 +152,7 @@ onMounted(() => {
         @click="activeTab = 'blog'"
       >Blog</a>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style scoped>
@@ -113,11 +165,11 @@ onMounted(() => {
 }
 
 .menu-item {
-  @apply transition-transform duration-200 ease-in-out text-white; /* Default text color */
+  @apply text-theme-text-primary-color transition-transform duration-200 ease-in-out;
 }
 
 .menu-item:hover {
-  @apply text-transparent bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text transform scale-110;
+  @apply text-transparent bg-gradient-to-r from-theme-text-primary-color to-theme-text-secondary-color bg-clip-text transform scale-110;
 
 }
 

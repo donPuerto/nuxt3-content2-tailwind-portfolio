@@ -31,6 +31,8 @@ export default <Partial<Config>> {
         'theme-bg-primary-color': 'var(--bg-primary-color)',
         'theme-bg-secondary-color': 'var(--bg-secondary-color)',
         'theme-border-color': 'var(--border-color)',
+        'theme-bg-anchor-tag-hover-color': 'var(--bg-anchor-tag-hover-color)',
+        'theme-bg-hover-color': 'var(--bg-hover-color)',
       },
 
     },
@@ -50,7 +52,7 @@ export default <Partial<Config>> {
   plugins: [
     typography(),
     iconsPlugin({
-      collections: getIconCollections(['mdi', 'lucide', 'logos', 'iconamoon', 'material-symbols']),
+      collections: getIconCollections(['mdi', 'lucide', 'logos', 'iconamoon', 'material-symbols', 'ph', 'tdesign']),
     }),
   ],
 }

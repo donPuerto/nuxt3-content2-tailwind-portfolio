@@ -40,6 +40,24 @@ export default withNuxt(
         'error',
         { order: ['script', 'template', 'style'] },
       ],
+      'vue/html-indent': [
+        'error',
+        2, // 2 spaces indentation
+        {
+          attribute: 1,
+          baseIndent: 1,
+          closeBracket: 0,
+          alignAttributesVertically: true,
+          ignores: [],
+        },
+      ],
+      'vue/max-attributes-per-line': ['error', {
+        singleline: 1,
+        multiline: {
+          max: 1,
+        },
+      }],
+
     },
 
   },
