@@ -1,9 +1,27 @@
+<!-- eslint-disable no-console -->
 <script lang="ts" setup>
 const isMenuOpen = ref(false)
+const isCommandPaletteOpen = ref(false)
 const isSmallScreen = ref<boolean>(false)
 // const activeTab = ref('home')
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
+}
+
+const toggleCommandPaletteButton = () => {
+  isCommandPaletteOpen.value = !isCommandPaletteOpen.value
+}
+
+const toggleCommandPaletteKey = (event: KeyboardEvent) => {
+  if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+    event.preventDefault()
+
+    isCommandPaletteOpen.value = !isCommandPaletteOpen.value
+  }
+}
+
+const closeCommandPalette = () => {
+  isCommandPaletteOpen.value = false
 }
 
 onMounted(() => {
@@ -22,8 +40,12 @@ onMounted(() => {
 
   window.addEventListener('resize', handleResize)
 
+  window.addEventListener('keydown', toggleCommandPaletteKey)
+
   onUnmounted(() => {
     window.removeEventListener('resize', handleResize)
+
+    window.removeEventListener('keydown', toggleCommandPaletteKey)
   })
 })
 </script>
@@ -107,6 +129,7 @@ onMounted(() => {
             hover:border-theme-border-color
             hover:bg-theme-bg-secondary-color
           "
+          @click="toggleCommandPaletteButton"
         >
           <span
             class="i-material-symbols-keyboard-command-key
@@ -114,11 +137,15 @@ onMounted(() => {
               text-xl"
           />
         </button>
-
+        <CommandPalette
+          :is-visible="isCommandPaletteOpen"
+          @close="closeCommandPalette"
+        />
         <ThemeSwitcher />
       </div>
     </div>
   </nav>
+
   <DropMenu
     v-if="isMenuOpen"
     :menu-items="['Home', 'About', 'Blog']"
@@ -156,6 +183,19 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.btn-toggle {
+  padding: 8px 16px;
+  background-color: #3490dc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-toggle:hover {
+  background-color: #2779bd;
+}
+
 /* .background {
   background-color: var(--bg-color);
 } */
