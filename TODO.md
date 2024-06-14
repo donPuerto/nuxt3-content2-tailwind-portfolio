@@ -21,6 +21,8 @@
 - Integrate to Pinia for persist storing
 
 # In Progress
+2024-June-13 (Thurs)
+- Created Command Palette, on going work
 2024-June-09 (Thurs)
 - Installed TSparticles which already in my system
 - To add theme
