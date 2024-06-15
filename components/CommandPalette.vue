@@ -108,6 +108,7 @@ onMounted(() => {
         relative
         flex
         item-center
+        pd-2
       "
       >
         <!-- Heroicon name: solid/search -->
@@ -214,7 +215,7 @@ onMounted(() => {
       >
         <li>
           <h2 class="bg-gray-100 py-2.5 px-4 text-xs font-semibold text-gray-900">
-            Clients
+            NAVIGATION
           </h2>
           <ul class="mt-2 text-sm text-gray-800">
             <!-- Active: "bg-indigo-600 text-white" -->
@@ -224,7 +225,7 @@ onMounted(() => {
               role="option"
               tabindex="-1"
             >
-              Workflow Inc.
+              Home
             </li>
             <li
               id="option-2"
@@ -232,23 +233,42 @@ onMounted(() => {
               role="option"
               tabindex="-1"
             >
-              Multinational LLC.
+              Blog
+            </li>
+            <li
+              id="option-2"
+              class="cursor-default select-none px-4 py-2"
+              role="option"
+              tabindex="-1"
+            >
+              About
             </li>
           </ul>
         </li>
         <li>
           <h2 class="bg-gray-100 py-2.5 px-4 text-xs font-semibold text-gray-900">
-            Projects
+            SOCIAL CONNECTION
           </h2>
-          <ul class="mt-2 text-sm text-gray-800">
+          <ul class="mt-2 text-sm text-gray-800 text-opacity-80">
             <!-- Active: "bg-indigo-600 text-white" -->
             <li
-              id="option-3"
-              class="cursor-default select-none px-4 py-2"
+              class="
+                group
+                cursor-default
+                select-none
+                items-center
+                rounded-md
+                px-3
+                py-2"
               role="option"
               tabindex="-1"
             >
-              Workflow Inc. / Website Redesign
+              <span class="i-mdi-github h-6 w-6 flex-none text-gray-900 text-opacity-40" />
+              <span class="ml-3 flex-auto truncate">Github</span>
+              <span class="ml-3 flex-none text-xs font-semibold text-gray-500">
+                <KBD>⌘</KBD>
+                <KBD custom-class="bg-blue-500">N</KBD>
+              </span>
             </li>
             <li
               id="option-3"
@@ -256,7 +276,7 @@ onMounted(() => {
               role="option"
               tabindex="-1"
             >
-              Multinational LLC. / Animation
+              Twitter
             </li>
           </ul>
         </li>
