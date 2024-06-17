@@ -52,7 +52,20 @@ export default <Partial<Config>> {
   plugins: [
     typography(),
     iconsPlugin({
-      collections: getIconCollections(['mdi', 'lucide', 'logos', 'iconamoon', 'material-symbols', 'ph', 'tdesign']),
+      collections: getIconCollections([
+        'mdi',
+        'lucide',
+        'logos',
+        'iconamoon',
+        'material-symbols',
+        'ph',
+        'tdesign',
+        'ri',
+        'arcticons',
+        'hugeicons',
+        'clarity',
+        'line-md',
+      ]),
     }),
   ],
 }

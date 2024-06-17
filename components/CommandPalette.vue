@@ -1,3 +1,4 @@
+import { KBD } from '../.nuxt/components';
 <!-- eslint-disable no-console -->
 <script setup lang="ts">
 /**
@@ -6,10 +7,16 @@
 const searchQuery = ref('')
 
 /**
- * * Defining Props "isVisible" as boolean
+ * * Defining Props "isVisible" as boolean and "menuItems" as array
  */
+interface MenuItem {
+  category: string
+  items: { icon: string, name: string, shortcut: string[] }[]
+}
+
 interface Props {
   isVisible: boolean
+  menuItems: MenuItem[]
 }
 
 const props = defineProps<Props>()
@@ -55,6 +62,20 @@ const handleEscape = (event: KeyboardEvent) => {
 }
 
 /**
+ * * Method to return the appropriate color class
+ */
+const getColorClass = (item: { icon: string, name: string, shortcut: string[] }) => {
+  // Define your color logic here
+  // Example: return 'text-red-500' for red color
+  // Adjust the condition based on your use case
+  if (item.name === 'Home') return 'text-blue-500'
+  if (item.name === 'Blog') return 'text-green-500'
+  if (item.name === 'About') return 'text-yellow-500'
+  // Add more conditions as needed
+  return 'text-theme-text-primary-color'
+}
+
+/**
  * * Mount keydown
  */
 onMounted(() => {
@@ -67,82 +88,26 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- Background overlay, show/hide modal state based on v-if statement "isVisible" -->
   <div
     v-if="props.isVisible"
-    class="
-      fixed
-      inset-0
-      z-10
-      overflow-y-auto
-      p-4
-      sm:p-6
-      md:p-20
-    "
-    role="dialog"
-    aria-modal="true"
+    class="palette-overlay"
     @click="handleClickOutside"
     @keydown.escape="handleEscape"
   >
-    <!-- Background Overlay -->
+    <!-- Palette container -->
     <div
-      class="
-        mx-auto
-        max-w-xl
-        transform
-        divide-y
-        divide-gray-100
-        overflow-hidden
-        rounded-xl
-        bg-theme-bg-primary-color
-        shadow-2xl
-        ring-1
-        ring-black
-        ring-opacity-5
-        transition-all
-      "
+      class="palette-container"
     >
       <!-- Search box container -->
       <div
-        class="
-        relative
-        flex
-        item-center
-        pd-2
-      "
+        class="relative flex items-center pd-2"
       >
-        <!-- Heroicon name: solid/search -->
-        <svg
-          class="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-            clip-rule="evenodd"
-          />
-        </svg>
-
+        <span class="i-material-symbols-search pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-theme-text-primary-color" />
         <input
           v-model="searchQuery"
           type="text"
           placeholder="Search or type a command..."
-          class="
-            h-12
-            w-full
-            border-0
-            border-transparent
-            pl-11
-            pr-4
-            text-sm
-            text-theme-text-primary-color
-            placeholder-gray-400
-            focus:ring-0
-
-          "
+          class="search-input"
           @input="search"
         >
         <div
@@ -154,156 +119,80 @@ onMounted(() => {
             py-2
           "
         >
-          <!-- Close (ESC) icon -->
           <button
-            class="
-              px-2
-              py-0
-              flex
-              items-center
-              justify-center
-              border-2
-              rounded-md
-              border-theme-border-color
-              bg-theme-bg-secondary-color
-              text-theme-text-primary-color
-          "
+            class="close-button-container"
             @click="closeCommandPalette"
           >
-            <span
-              class="
-                 i-mdi-keyboard-esc
-                 text-sm
-
-              "
-            />
+            <KBD><span class="close-icon" /></KBD>
           </button>
         </div>
       </div>
 
-      <!-- Default state, show/hide based on command palette state -->
-      <div class="border-t border-gray-100 py-14 px-6 text-center text-sm sm:px-14">
-        <!-- Heroicon name: outline/globe -->
-        <svg
-          class="mx-auto h-6 w-6 text-gray-400"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        <p class="mt-4 font-semibold text-gray-900">
-          Search for clients and projects
-        </p>
-        <p class="mt-2 text-gray-500">
-          Quickly access clients and projects by running a global search.
-        </p>
-      </div>
-
       <!-- Results, show/hide based on command palette state -->
       <ul
-        id="options"
-        class="max-h-80 scroll-pt-11 scroll-pb-2 space-y-2 overflow-y-auto pb-2"
-        role="listbox"
+        class="results-list"
       >
-        <li>
-          <h2 class="bg-gray-100 py-2.5 px-4 text-xs font-semibold text-gray-900">
-            NAVIGATION
+        <li
+          v-for="(category, index) in props.menuItems"
+          :key="index"
+          class="result-category"
+        >
+          <h2
+            class="category-title"
+          >
+            {{ category.category }}
           </h2>
-          <ul class="mt-2 text-sm text-gray-800">
-            <!-- Active: "bg-indigo-600 text-white" -->
+          <ul
+            class="category-items"
+          >
             <li
-              id="option-1"
-              class="cursor-default select-none px-4 py-2"
-              role="option"
-              tabindex="-1"
+              v-for="(item, subIndex) in category.items"
+              :key="subIndex"
+              class="category-item"
             >
-              Home
-            </li>
-            <li
-              id="option-2"
-              class="cursor-default select-none px-4 py-2"
-              role="option"
-              tabindex="-1"
-            >
-              Blog
-            </li>
-            <li
-              id="option-2"
-              class="cursor-default select-none px-4 py-2"
-              role="option"
-              tabindex="-1"
-            >
-              About
-            </li>
-          </ul>
-        </li>
-        <li>
-          <h2 class="bg-gray-100 py-2.5 px-4 text-xs font-semibold text-gray-900">
-            SOCIAL CONNECTION
-          </h2>
-          <ul class="mt-2 text-sm text-gray-800 text-opacity-80">
-            <!-- Active: "bg-indigo-600 text-white" -->
-            <li
-              class="
-                group
-                cursor-default
-                select-none
-                items-center
-                rounded-md
-                px-3
-                py-2"
-              role="option"
-              tabindex="-1"
-            >
-              <span class="i-mdi-github h-6 w-6 flex-none text-gray-900 text-opacity-40" />
-              <span class="ml-3 flex-auto truncate">Github</span>
-              <span class="ml-3 flex-none text-xs font-semibold text-gray-500">
-                <KBD>⌘</KBD>
-                <KBD custom-class="bg-blue-500">N</KBD>
+              <span
+                v-if="item.icon"
+                :class="[item.icon, getColorClass(item)]"
+                class="item-icon text-theme-text-primary-color"
+                @click="console.log(item.icon)"
+              />
+
+              <span>{{ item.icon }}</span>
+
+              <span
+                class="item-name"
+              >{{ item.name }}</span>
+              <span
+                class="item-shortcuts"
+              >
+                <KBD
+                  v-for="key in item.shortcut"
+                  :key="key"
+                  class="font-sans"
+                >{{ key }}</KBD>
               </span>
-            </li>
-            <li
-              id="option-3"
-              class="cursor-default select-none px-4 py-2"
-              role="option"
-              tabindex="-1"
-            >
-              Twitter
             </li>
           </ul>
         </li>
       </ul>
 
       <!-- Empty state, show/hide based on command palette state -->
-      <div class="border-t border-gray-100 py-14 px-6 text-center text-sm sm:px-14">
+      <div class="border-t border-theme-border-color py-8 px-6 text-center text-sm sm:px-14">
         <!-- Heroicon name: outline/emoji-sad -->
-        <svg
-          class="mx-auto h-6 w-6 text-gray-400"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          aria-hidden="true"
+        <span
+          class="
+            i-material-symbols-account-circle-outline
+            text-3xl
+            flex-none
+            text-theme-text-primary-color
+            text-opacity-40"
+        />
+        <p
+          class="mt-4 font-semibold text-theme-text-primary-color"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        <p class="mt-4 font-semibold text-gray-900">
           No results found
         </p>
-        <p class="mt-2 text-gray-500">
+        <p class="mt-2 text-theme-text-primary-color">
           We couldn’t find anything with that term. Please try again.
         </p>
       </div>
@@ -311,6 +200,72 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
-/* Additional styles if needed */
+<style>
+.palette-overlay {
+    @apply fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20;
+  }
+
+.palette-container {
+  @apply mx-auto max-w-xl transform divide-y divide-theme-border-color overflow-hidden rounded-xl bg-theme-bg-primary-color shadow-2xl ring-1 ring-black ring-opacity-5 transition-all;
+}
+
+.search-input {
+  @apply h-12 w-full border-0 border-transparent pl-11 pr-4 text-sm text-theme-text-secondary-color bg-theme-bg-primary-color placeholder-theme-text-secondary-color focus:outline-none;
+}
+
+.close-button-container {
+  @apply absolute inset-y-0 right-3 flex py-4 mt-1;
+}
+
+.close-icon {
+    @apply i-mdi-keyboard-esc text-sm;
+}
+
+.results-list {
+    @apply max-h-80 scroll-py-2 divide-gray-500 divide-opacity-10 overflow-y-auto;
+  }
+
+  .result-category {
+    @apply p-2;
+  }
+
+  .category-title {
+    @apply bg-theme-bg-secondary-color p-2 text-xs font-semibold text-theme-text-primary-color;
+  }
+
+  .category-items {
+    @apply mt-2 text-sm text-theme-text-primary-color;
+  }
+
+  .category-item {
+    @apply flex cursor-default select-none items-center px-3 py-1;
+  }
+
+  .item-icon {
+    @apply h-5 w-5 flex-none text-theme-text-primary-color text-opacity-40;
+  }
+
+  .item-name {
+    @apply ml-3 flex-auto truncate;
+  }
+
+  .item-shortcuts {
+    @apply ml-3 flex-none text-xs font-semibold text-theme-text-primary-color space-x-1;
+  }
+
+  .empty-state {
+    @apply border-t border-theme-border-color py-8 px-6 text-center text-sm sm:px-14;
+  }
+
+  .empty-icon {
+    @apply i-material-symbols-account-circle-outline text-3xl flex-none text-theme-text-primary-color text-opacity-40;
+  }
+
+  .empty-title {
+    @apply mt-4 font-semibold text-theme-text-primary-color;
+  }
+
+  .empty-message {
+    @apply mt-2 text-theme-text-primary-color;
+  }
 </style>

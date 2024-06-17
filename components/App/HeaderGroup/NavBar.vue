@@ -1,5 +1,7 @@
 <!-- eslint-disable no-console -->
 <script lang="ts" setup>
+import { menuItems } from '@/data/commandPaletteMenuItems'
+
 const isMenuOpen = ref(false)
 const isCommandPaletteOpen = ref(false)
 const isSmallScreen = ref<boolean>(false)
@@ -138,6 +140,7 @@ onMounted(() => {
           />
         </button>
         <CommandPalette
+          :menu-items="menuItems"
           :is-visible="isCommandPaletteOpen"
           @close="closeCommandPalette"
         />
