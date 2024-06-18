@@ -2,6 +2,11 @@
 import type { Container } from '@tsparticles/engine'
 import { MoveDirection, OutMode } from '@tsparticles/engine'
 
+// Utility function to get CSS variable value
+const getCssVariable = (variable: string) => {
+  return getComputedStyle(document.documentElement).getPropertyValue(variable).trim()
+}
+
 const particlesLoaded = (container?: Container) => {
   // eslint-disable-next-line no-console
   console.log(container)
@@ -9,12 +14,12 @@ const particlesLoaded = (container?: Container) => {
 const options = ref({
   background: {
     color: {
-      value: 'var(--background-color)',
+      value: 'var(--bg-primary-color)',
     },
   },
   particles: {
     color: {
-      value: '#ffffff',
+      value: '#333333',
     },
     number: {
       value: 100,
@@ -42,6 +47,13 @@ const options = ref({
     },
   },
 
+})
+
+onMounted(() => {
+  // Update the particle color with the CSS variable once the component is mounted
+  options.value.particles.color.value = getCssVariable('--text-primary-color')
+  // eslint-disable-next-line no-console
+  console.log('Particles options updated with theme color:', options.value.particles.color.value)
 })
 </script>
 
