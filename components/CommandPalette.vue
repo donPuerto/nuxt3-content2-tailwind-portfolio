@@ -4,13 +4,14 @@
  * * Initialize variables
  */
 const searchQuery = ref('')
+const router = useRouter()
 
 /**
  * * Defining Props "isVisible" as boolean and "menuItems" as array
  */
 interface MenuItem {
   category: string
-  items: { icon: string, name: string, shortcut: string[] }[]
+  items: { icon: string, name: string, shortcut: string[], route: string }[]
 }
 
 interface Props {
@@ -69,13 +70,35 @@ const handleEscape = (event: KeyboardEvent) => {
 }
 
 /**
- * * Mount keydown
+ * * Handle shortcut key events
+ */
+const handleShortcut = (event: KeyboardEvent) => {
+  const pressedKey = event.key.toUpperCase()
+
+  props.menuItems.forEach((category) => {
+    category.items.forEach((item) => {
+      if (item.shortcut.includes(pressedKey)) {
+        if (item.route.startsWith('http')) {
+          window.location.href = item.route
+        }
+        else {
+          router.push(item.route)
+        }
+      }
+    })
+  })
+}
+
+/**
+ * *  Mount keydown and keyboard shortcuts
  */
 onMounted(() => {
   window.addEventListener('keydown', handleEscape)
+  window.addEventListener('keydown', handleShortcut)
 
   onUnmounted(() => {
     window.removeEventListener('keydown', handleEscape)
+    window.removeEventListener('keydown', handleShortcut)
   })
 })
 </script>
