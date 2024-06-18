@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@pinia/nuxt',
     '@nuxt/fonts',
+    'nuxt-icon',
   ],
   eslint: {
     config: {

@@ -62,20 +62,6 @@ const handleEscape = (event: KeyboardEvent) => {
 }
 
 /**
- * * Method to return the appropriate color class
- */
-const getColorClass = (item: { icon: string, name: string, shortcut: string[] }) => {
-  // Define your color logic here
-  // Example: return 'text-red-500' for red color
-  // Adjust the condition based on your use case
-  if (item.name === 'Home') return 'text-blue-500'
-  if (item.name === 'Blog') return 'text-green-500'
-  if (item.name === 'About') return 'text-yellow-500'
-  // Add more conditions as needed
-  return 'text-theme-text-primary-color'
-}
-
-/**
  * * Mount keydown
  */
 onMounted(() => {
@@ -150,27 +136,27 @@ onMounted(() => {
               :key="subIndex"
               class="category-item"
             >
-              <span
-                v-if="item.icon"
-                :class="[item.icon, getColorClass(item)]"
-                class="item-icon text-theme-text-primary-color"
-                @click="console.log(item.icon)"
-              />
+              <div class="item-icon">
+                <Icon
+                  :name="item.icon"
+                  color="text-theme-text-primary-color"
+                  size="1.4em"
+                />
+              </div>
 
-              <span>{{ item.icon }}</span>
+              <div class="item-name">
+                <span>{{ item.name }}</span>
+              </div>
 
-              <span
-                class="item-name"
-              >{{ item.name }}</span>
-              <span
-                class="item-shortcuts"
-              >
-                <KBD
-                  v-for="key in item.shortcut"
-                  :key="key"
-                  class="font-sans"
-                >{{ key }}</KBD>
-              </span>
+              <div>
+                <span class="item-shortcuts">
+                  <KBD
+                    v-for="key in item.shortcut"
+                    :key="key"
+                    class="font-sans"
+                  >{{ key }}</KBD>
+                </span>
+              </div>
             </li>
           </ul>
         </li>
@@ -179,6 +165,10 @@ onMounted(() => {
       <!-- Empty state, show/hide based on command palette state -->
       <div class="border-t border-theme-border-color py-8 px-6 text-center text-sm sm:px-14">
         <!-- Heroicon name: outline/emoji-sad -->
+        <Icon
+          name="i-uil-twitter"
+          color="text-theme-text-primary-color"
+        />
         <span
           class="
             i-material-symbols-account-circle-outline

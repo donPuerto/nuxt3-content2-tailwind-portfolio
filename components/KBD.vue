@@ -22,7 +22,7 @@ const { customClass, size } = props
 
 // configuration
 const UIconfig: UIConfig = {
-  base: 'inline-flex items-center justify-center text-gray-900 dark:text-white',
+  base: 'inline-flex items-center justify-center text-theme-text-primary-color',
   padding: 'px-1',
   size: {
     xs: 'h-4 min-w-[16px] text-[10px]',
