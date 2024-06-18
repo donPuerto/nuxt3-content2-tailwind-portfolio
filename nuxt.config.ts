@@ -36,6 +36,7 @@ export default defineNuxtConfig({
     },
 
   },
+
   pinia: {
     storesDirs: ['./stores/**'],
   },
@@ -46,6 +47,7 @@ export default defineNuxtConfig({
     storageKey: 'nuxt-color-mode', // key used to store the value in local storage
 
   },
+
   typescript: {
     typeCheck: true,
   },
