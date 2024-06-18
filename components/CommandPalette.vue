@@ -1,4 +1,3 @@
-import { KBD } from '../.nuxt/components';
 <!-- eslint-disable no-console -->
 <script setup lang="ts">
 /**
@@ -30,9 +29,16 @@ const emit = defineEmits(['close'])
 /**
  * * Search Function
  */
-const search = () => {
-  console.log(searchQuery.value)
-}
+const filteredMenuItems = computed(() => {
+  if (!searchQuery.value) return props.menuItems
+
+  return props.menuItems.map(category => ({
+    ...category,
+    items: category.items.filter(item =>
+      item.name.toLowerCase().includes(searchQuery.value.toLowerCase()),
+    ),
+  })).filter(category => category.items.length > 0)
+})
 
 /**
  * * Emit an event to parent component to close modal form
@@ -46,7 +52,8 @@ const closeCommandPalette = () => {
  */
 
 const handleClickOutside = (event: MouseEvent) => {
-  if (!(event.target as HTMLElement).closest('.bg-white')) {
+  const target = event.target as HTMLElement
+  if (!target.closest('.palette-container')) {
     closeCommandPalette()
   }
 }
@@ -94,7 +101,6 @@ onMounted(() => {
           type="text"
           placeholder="Search or type a command..."
           class="search-input"
-          @input="search"
         >
         <div
           class="
@@ -119,7 +125,7 @@ onMounted(() => {
         class="results-list"
       >
         <li
-          v-for="(category, index) in props.menuItems"
+          v-for="(category, index) in filteredMenuItems"
           :key="index"
           class="result-category"
         >
@@ -163,23 +169,17 @@ onMounted(() => {
       </ul>
 
       <!-- Empty state, show/hide based on command palette state -->
-      <div class="border-t border-theme-border-color py-8 px-6 text-center text-sm sm:px-14">
-        <!-- Heroicon name: outline/emoji-sad -->
+      <div
+        v-if="filteredMenuItems.length === 0"
+        class="empty-state"
+      >
         <Icon
-          name="i-uil-twitter"
+          class="flex-none"
+          name="i-line-md-person-search-twotone"
           color="text-theme-text-primary-color"
+          size="2.3em"
         />
-        <span
-          class="
-            i-material-symbols-account-circle-outline
-            text-3xl
-            flex-none
-            text-theme-text-primary-color
-            text-opacity-40"
-        />
-        <p
-          class="mt-4 font-semibold text-theme-text-primary-color"
-        >
+        <p class="mt-4 font-semibold text-theme-text-primary-color">
           No results found
         </p>
         <p class="mt-2 text-theme-text-primary-color">
