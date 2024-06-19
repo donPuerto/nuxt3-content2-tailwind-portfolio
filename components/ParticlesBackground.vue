@@ -2,12 +2,11 @@
 <script setup lang="ts">
 import type { Container } from '@tsparticles/engine'
 import { MoveDirection, OutMode } from '@tsparticles/engine'
+import { onMounted } from 'vue'
 
 // Utility function to get CSS variable value
 const getCssVariable = (variable: string) => {
-  const value = getComputedStyle(document.documentElement).getPropertyValue(variable).trim()
-  console.log(`Fetched CSS variable ${variable}: ${value}`) // Debugging log
-  return value
+  return getComputedStyle(document.documentElement).getPropertyValue(variable).trim()
 }
 
 const particlesLoaded = (container?: Container) => {
@@ -54,37 +53,12 @@ const particleOptions = ref({
 
 })
 
-const themeColors = {
-  textPrimaryColor: ref(getCssVariable('--text-primary-color')),
-  bgPrimaryColor: ref(getCssVariable('--bg-primary-color')),
-}
-
 const updateParticleColors = () => {
-  particleOptions.value.particles.color.value = themeColors.textPrimaryColor.value
-  particleOptions.value.background.color.value = themeColors.bgPrimaryColor.value
-
-  console.log('Particle options updated with theme colors:', {
-    particlesColor: particleOptions.value.particles.color.value,
-    backgroundColor: particleOptions.value.background.color.value,
-  })
+  const themeColor = getCssVariable('--text-primary-color')
+  particleOptions.value.particles.color.value = themeColor
 }
 
-const watchThemeChanges = () => {
-  watchEffect(() => {
-    // Ensure getComputedStyle is available and run only on client side
-    if (import.meta.client) {
-      themeColors.textPrimaryColor.value = getComputedStyle(document.documentElement).getPropertyValue('--text-primary-color').trim()
-      themeColors.bgPrimaryColor.value = getComputedStyle(document.documentElement).getPropertyValue('--bg-primary-color').trim()
-
-      updateParticleColors()
-    }
-  })
-}
-
-// Watch for theme changes
-onMounted(() => {
-  watchThemeChanges()
-})
+onMounted(() => updateParticleColors())
 </script>
 
 <template>

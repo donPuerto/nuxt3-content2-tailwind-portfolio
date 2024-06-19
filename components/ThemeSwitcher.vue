@@ -11,6 +11,7 @@ interface ThemeOption {
 
 const switchTheme = (theme: string) => {
   colorMode.preference = theme
+  window.location.reload()
   closeDropdown()
 }
 

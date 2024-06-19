@@ -14,6 +14,7 @@
 2024-May-22 (Wed)
 - Removing Nuxt Logo and replace with my prepared one
 2024-May-18 (Sat)
+- (2024-June-07) To Rework on Navbar, expose styling for customization
 - (2024-June-07) Working on the Navbar, theming 
 - (2024-May-18) Navbar (Partial Implementation)
 2024-May-15 (Wed)
@@ -21,7 +22,10 @@
 - Integrate to Pinia for persist storing
 
 # In Progress
+2024-June-17 (Thurs)
+- Added KBG component, almost done, need to re-polish
 2024-June-13 (Thurs)
+- (2024-June-20) Stuck with theming on TSparticles, need to resolve on how to detect the changes in switching theme
 - (2024-June-19) Almost done, polishing the component
 - (2024-June-13) Created Command Palette, on going work
 2024-June-09 (Thurs)
