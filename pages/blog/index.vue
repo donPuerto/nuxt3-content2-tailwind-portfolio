@@ -1,25 +1,33 @@
-<script lang="ts" setup>
-const { data: posts } = await useAsyncData('posts', () =>
-  queryContent('posts').find(),
+<!-- eslint-disable no-console -->
+<script setup lang="ts">
+// Option 1
+// const posts = await queryContent('blog').sort({ published_on: -1 }).find()
+
+// Option 2
+// Fetch all blog posts
+const { pending, data: posts } = await useLazyAsyncData('all-posts', () =>
+  queryContent('blog', 'layer1').sort({ published_on: -1 }).find(),
 )
+console.log('posts', posts)
 </script>
 
 <template>
-  <div>
-    <h1>Blog</h1>
+  <main>
     <ul>
       <li
         v-for="post in posts"
-        :key="post._path"
+        :key="post.id"
       >
-        <nuxt-link :to="`/blog/${post.slug}`">
+        <!-- <pre>
+          {{ post }}
+        </pre> -->
+        <NuxtLink :to="`blog/${post.slug}`">
           {{ post.title }}
-        </nuxt-link>
+        </NuxtLink>
       </li>
     </ul>
-  </div>
+    <!-- <div v-if="pending">
+      {{ pending }}
+    </div> -->
+  </main>
 </template>
-
-<style>
-
-</style>

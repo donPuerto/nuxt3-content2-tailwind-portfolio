@@ -54,4 +54,16 @@ export default defineNuxtConfig({
   },
   plugins: [{ src: '~/plugins/particles.client.ts', mode: 'client' }],
 
+  content: {
+    contentHead: false,
+    documentDriven: false,
+    highlight: {
+      theme: 'github-dark',
+      preload: ['py'],
+    },
+    markdown: {
+      toc: { depth: 1, searchDepth: 2 },
+    },
+  },
+
 })
