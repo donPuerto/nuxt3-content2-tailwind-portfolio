@@ -12,6 +12,7 @@
     "lint:fix": "eslint \"**/*.{js,cjs,mjs,ts,cts,mts,vue}\" --fix"
   },
   "dependencies": {
+    "@nuxt/content": "^2.12.1",
     "nuxt": "latest",
     "vue": "latest",
     "vue-router": "latest"

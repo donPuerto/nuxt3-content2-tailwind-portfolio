@@ -1,10 +1,22 @@
 <script lang="ts" setup>
-
+const { data: posts } = await useAsyncData('posts', () =>
+  queryContent('posts').find(),
+)
 </script>
 
 <template>
   <div>
-    Blog Page
+    <h1>Blog</h1>
+    <ul>
+      <li
+        v-for="post in posts"
+        :key="post._path"
+      >
+        <nuxt-link :to="`/blog/${post.slug}`">
+          {{ post.title }}
+        </nuxt-link>
+      </li>
+    </ul>
   </div>
 </template>
 

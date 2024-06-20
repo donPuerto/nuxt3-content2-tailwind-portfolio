@@ -1,9 +1,16 @@
+<!-- eslint-disable no-console -->
 <script lang="ts" setup>
 
 </script>
 
 <template>
-  <div />
+  <ContentDoc
+    :path="$route.params.slug ? `/blog/${$route.params.slug[0]}` : '/blog'"
+  >
+    <template #not-found>
+      <h2>Blog slug ({{ $route.params.slug }}) not found</h2>
+    </template>
+  </ContentDoc>
 </template>
 
 <style>

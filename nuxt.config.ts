@@ -25,6 +25,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxt/fonts',
     'nuxt-icon',
+    '@nuxt/content',
   ],
   eslint: {
     config: {

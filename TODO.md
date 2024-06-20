@@ -22,6 +22,16 @@
 - Integrate to Pinia for persist storing
 
 # In Progress
+2024-June-20 (Thurs)
+- (2024-June-20, Thurs) Added Blog Page
+2024-June-20 (Thurs)
+- (2024-June-20, Thurs) Added Project Page
+2024-June-20 (Thurs)
+- (2024-June-20, Thurs) Added Contact Page
+2024-June-20 (Thurs)
+- (2024-June-20, Thurs) Added About Page
+2024-June-20 (Thurs)
+- (2024-June-20, Thurs) Added Donate Page
 2024-June-17 (Thurs)
 - Added KBG component, almost done, need to re-polish
 2024-June-13 (Thurs)
