@@ -99,7 +99,7 @@ onMounted(() => {
         <Logo />
       </div>
       <Menu
-        :menu-items="['Home', 'About', 'Blog']"
+        :menu-items="['', 'About', 'Blog']"
         :is-menu-open="isMenuOpen"
       />
       <!-- <div class="md:flex md:items-center md:space-x-4 hidden ">
@@ -151,7 +151,7 @@ onMounted(() => {
 
   <DropMenu
     v-if="isMenuOpen"
-    :menu-items="['Home', 'About', 'Blog']"
+    :menu-items="['', 'About', 'Blog']"
     :is-menu-open="isMenuOpen"
     class="bg-theme-bg-primary-color text-theme-text-primary-color border-theme-border-color container max-w-full md:hidden p-4 shadow-lg border-b"
   />

@@ -11,7 +11,7 @@ export const menuItems: Ref<MenuItem[]> = ref([
   {
     category: 'NAVIGATION',
     items: [
-      { icon: 'line-md:home-md', name: 'Home', shortcut: ['⌘', 'H'], route: '/home' },
+      { icon: 'line-md:home-md', name: 'Home', shortcut: ['⌘', 'H'], route: '/' },
       { icon: 'line-md:document-list-twotone', name: 'Blog', shortcut: ['⌘', 'B'], route: '/blog' },
       { icon: 'line-md:person', name: 'About', shortcut: ['⌘', 'A'], route: '/about' },
     ],
