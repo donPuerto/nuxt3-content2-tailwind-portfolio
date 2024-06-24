@@ -14,7 +14,7 @@ const updateCategory = (category: string) => {
 </script>
 
 <template>
-  <div class="mb-8 border border-1">
+  <div class="mb-8 border border-1 p-3">
     <!-- Categories -->
     <p class="font-bold mb-2">
       Category:
@@ -23,12 +23,12 @@ const updateCategory = (category: string) => {
       <span
         v-for="category in props.categories"
         :key="category"
-        class="cursor-pointer text-blue-500 flex items-center mb-2 md:mb-0 md:mr-4 capitalize "
-        :class="{ 'font-bold': props.updatedCategory === category }"
+        class="cursor-pointer flex items-center mb-2 md:mb-0 md:mr-1 capitalize "
+        :class="{ 'font-extrabold': props.updatedCategory === category }"
         @click="updateCategory(category)"
       >
 
-        <KBD class="space-x-0">
+        <KBD class="">
           {{ category }}
 
         </KBD>

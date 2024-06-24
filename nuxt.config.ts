@@ -56,14 +56,20 @@ export default defineNuxtConfig({
   plugins: [{ src: '~/plugins/particles.client.ts', mode: 'client' }],
 
   content: {
-    contentHead: false,
-    documentDriven: false,
     highlight: {
-      theme: 'github-dark',
-      preload: ['py'],
-    },
-    markdown: {
-      toc: { depth: 1, searchDepth: 2 },
+      theme: {
+        // Default theme (same as single string)
+        default: 'github-light',
+        // Theme used if `html.dark`
+        dark: 'github-dark',
+        // Theme used if `html.sepia`
+        sepia: 'monokai',
+      },
+      langs: [
+        'c',
+        'cpp',
+        'java',
+      ],
     },
   },
 
