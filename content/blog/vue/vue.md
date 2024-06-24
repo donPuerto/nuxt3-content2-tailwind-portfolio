@@ -1,12 +1,12 @@
 ---
-id: vue
 slug: "my-vue"
 title: "Vue Post"
-description: "This is Vue post"
+subtitle: "This is Subtitle"
+description: "This is description"
+image: "/content/blank-image.png"
 tag:
   - Vue Post
-image: "/content/nuxt/intro.jpg"
-published_on: "2024-06-20"
+publishedOn: "2024-06-20"
 published: true
 ---
 
