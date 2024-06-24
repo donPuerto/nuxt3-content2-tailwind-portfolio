@@ -72,6 +72,8 @@ export default defineNuxtConfig({
         'css',
         'json',
         'markdown',
+        'vue',
+        'bash',
       ],
     },
   },
