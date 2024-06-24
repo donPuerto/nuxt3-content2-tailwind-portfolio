@@ -74,6 +74,8 @@ export default defineNuxtConfig({
         'markdown',
         'vue',
         'bash',
+        'python',
+        'php',
       ],
     },
   },
