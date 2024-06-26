@@ -1,15 +1,19 @@
 # TODO
 
 ## Todo-list
+2024-June-26 (Wed)
+- I tried to use Nuxt UI itself but I think it is much premature, so I want to switch again Shadcn-vue which is very impressive and top of this, I want to create Tailwind Blocks with Nuxt of course
+2024-June-25 (Tues)
+- Im thinking which platform to be use, planning with my own UI, but I want also to harness the power of Nuxt and Nuxt UI rather than inventing the wheel from scratch
 2024-June-07 (Thurs)
-- How to become Responsive Layout using Tailwind
+- How to become Responsive Layout using Tailwind 
 2024-June-07 (Thurs)
 - Will be working on the Layout, or How to work on proper layout in tailwind
 2024-June-06 (Thurs)
 - How to setup PostCSS configuration
 2024-June-06 (Thurs)
 - To study further .stylelintrc.json and on how to integrate in eslint config
-2024-June-02 (Wed)
+2024-June-02 (Wed)P
 - How to resolve Font warning 
 2024-May-22 (Wed)
 - Removing Nuxt Logo and replace with my prepared one

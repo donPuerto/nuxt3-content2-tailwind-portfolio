@@ -1,6 +1,6 @@
 {
   // Enable the ESlint flat config support
-  "eslint.experimental.useFlatConfig": true,
+  //"eslint.experimental.useFlatConfig": true,
 
   // Disable the default formatter, use eslint instead
   "prettier.enable": false,
@@ -40,12 +40,15 @@
   ],
   "cSpell.words": [
     "arcticons",
+    "clsx",
     "iconamoon",
     "lucide",
+    "monokai",
     "nocheck",
     "nuxtjs",
     "olupos",
     "pinia",
+    "shadcn",
     "spacegrotesk",
     "stylelintrc",
     "tdesign",
@@ -53,14 +56,25 @@
   ],
 
   // Tailwind Editor Config
-  "tailwindCSS.experimental.configFile": ".nuxt/tailwind.config.cjs",
-  "tailwindCSS.experimental.classRegex": ["tw`(.*?)`", "tw\\('(.*?)'\\)", "tw\\(\\s*('(.*?)'|\"(.*?)\")\\s*\\)"],
-    "files.associations": {
-        "*.css": "tailwindcss"
-    },
-    "editor.quickSuggestions": {
-      "strings": true
+  "tailwindCSS.experimental.configFile": "tailwind.config.t",
+  "tailwindCSS.experimental.classRegex": [
+    ["ui:\\s*{([^)]*)\\s*}", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["/\\*\\s?ui\\s?\\*/\\s*{([^;]*)}", ":\\s*[\"'`]([^\"'`]*).*?[\"'`]"]
+  ],
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "ui"
+  ],
+  "files.associations": {
+      "*.css": "tailwindcss"
   },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+
+
   "experimentalDisableTemplateSupport": true,
   "[scss]": {
 

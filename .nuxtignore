@@ -11,3 +11,4 @@ pages/ignore/*.vue
 # ignore route middleware files under foo folder except foo/bar.js
 middleware/foo/*.js
 !middleware/foo/bar.js
+r

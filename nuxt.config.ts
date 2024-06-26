@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
 
   },
-  css: ['~/assets/css/tailwind.css', '~/assets/scss/main.scss'],
+  css: ['~/assets/scss/main.scss'],
 
   postcss: {
     plugins: {
@@ -27,7 +27,19 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@nuxt/content',
     '@nuxt/image',
+    'shadcn-nuxt',
   ],
+  shadcn: {
+    /**
+     * Prefix for all the imported component
+     */
+    prefix: 'Ui',
+    /**
+     * Directory that the component lives in.
+     * @default "./components/ui"
+     */
+    componentDir: './components/ui',
+  },
   eslint: {
     config: {
       stylistic: true,
@@ -51,7 +63,11 @@ export default defineNuxtConfig({
   },
 
   typescript: {
-    typeCheck: true,
+    tsConfig: {
+      compilerOptions: {
+        baseUrl: '.',
+      },
+    },
   },
   plugins: [{ src: '~/plugins/particles.client.ts', mode: 'client' }],
 
@@ -65,18 +81,19 @@ export default defineNuxtConfig({
         // Theme used if `html.sepia`
         sepia: 'monokai',
       },
-      langs: [
-        'javascript',
-        'typescript',
-        'html',
-        'css',
-        'json',
-        'markdown',
-        'vue',
-        'bash',
-        'python',
-        'php',
-      ],
+      // langs: [
+      //   'javascript',
+      //   'typescript',
+      //   'html',
+      //   'css',
+      //   'json',
+      //   'markdown',
+      //   'vue',
+      //   'bash',
+      //   'python',
+      //   'php',
+      // ],
+      preload: ['json', 'js', 'ts', 'html', 'css', 'vue', 'diff', 'shell', 'markdown', 'yaml', 'bash', 'ini'],
     },
   },
 
