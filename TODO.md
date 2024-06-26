@@ -1,8 +1,8 @@
 # TODO
 
 ## Todo-list
-2024-June-26 (Wed)
-- I tried to use Nuxt UI itself but I think it is much premature, so I want to switch again Shadcn-vue which is very impressive and top of this, I want to create Tailwind Blocks with Nuxt of course
+2024-June-27 (Thurs)
+- I tried to Implement Shadcn-vue, its good but too much boilerplate, so jumping to another wagon which is UI Thing, which better version of Shadcn-vue but it is inclusive for Nuxt
 2024-June-25 (Tues)
 - Im thinking which platform to be use, planning with my own UI, but I want also to harness the power of Nuxt and Nuxt UI rather than inventing the wheel from scratch
 2024-June-07 (Thurs)
@@ -49,6 +49,11 @@
 2024-May-14 (Tues)
 - (2024-May-14): To polish Eslint configuration and set desired rules
 - (2024-June-06): Eslint config working partially, Im happy with it. But need to polish until I am comportable in setting up the configuration
+
+
+# Drop Plans
+2024-June-26 (Wed)
+- I tried to use Nuxt UI itself but I think it is much premature, so I want to switch again Shadcn-vue which is very impressive and top of this, I want to create Tailwind Blocks with Nuxt of course
 
 
 # DONE
