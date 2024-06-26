@@ -4,7 +4,8 @@
 <template>
   <div class="min-h-screen flex flex-col relative">
     <ParticlesBackground />
-    <div class="absolute inset-0 flex flex-col">
+    <div class="absolute inset-0 flex flex-col min-h-screen">
+      <TopBar />
       <main class="flex-grow">
         <slot />
       </main>

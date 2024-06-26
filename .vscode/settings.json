@@ -1,6 +1,6 @@
 {
   // Enable the ESlint flat config support
-  //"eslint.experimental.useFlatConfig": true,
+  "eslint.experimental.useFlatConfig": true,
 
   // Disable the default formatter, use eslint instead
   "prettier.enable": false,
@@ -49,6 +49,7 @@
     "olupos",
     "pinia",
     "shadcn",
+    "shiki",
     "spacegrotesk",
     "stylelintrc",
     "tdesign",
@@ -56,11 +57,13 @@
   ],
 
   // Tailwind Editor Config
-  "tailwindCSS.experimental.configFile": "tailwind.config.t",
-  "tailwindCSS.experimental.classRegex": [
-    ["ui:\\s*{([^)]*)\\s*}", "[\"'`]([^\"'`]*).*?[\"'`]"],
-    ["/\\*\\s?ui\\s?\\*/\\s*{([^;]*)}", ":\\s*[\"'`]([^\"'`]*).*?[\"'`]"]
-  ],
+  "tailwindCSS.experimental.configFile": ".nuxt/tailwind.config.cjs",
+  // "tailwindCSS.experimental.classRegex": [
+  //   ["tw`(.*?)`", "tw\\('(.*?)'\\)", "tw\\(\\s*('(.*?)'|\"(.*?)\")\\s*\\)"],
+  //   ["ui:\\s*{([^)]*)\\s*}", "[\"'`]([^\"'`]*).*?[\"'`]"],
+  //   ["/\\*\\s?ui\\s?\\*/\\s*{([^;]*)}", ":\\s*[\"'`]([^\"'`]*).*?[\"'`]"]
+  // ],
+  "tailwindCSS.experimental.classRegex": ["tw`(.*?)`", "tw\\('(.*?)'\\)", "tw\\(\\s*('(.*?)'|\"(.*?)\")\\s*\\)"],
   "tailwindCSS.classAttributes": [
     "class",
     "className",

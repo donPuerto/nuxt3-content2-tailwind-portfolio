@@ -6,7 +6,14 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
 
   },
-  css: ['~/assets/scss/main.scss'],
+  // css: ['~/assets/scss/main.scss'],
+  nitro: {
+    esbuild: {
+      options: {
+        target: 'esnext',
+      },
+    },
+  },
 
   postcss: {
     plugins: {
@@ -29,6 +36,16 @@ export default defineNuxtConfig({
     '@nuxt/image',
     'shadcn-nuxt',
   ],
+  // Defaults options
+  tailwindcss: {
+    cssPath: ['~/assets/css/tailwind.css', { injectPosition: 'first' }],
+    configPath: 'tailwind.config',
+    exposeConfig: {
+      level: 2,
+    },
+    config: {},
+    viewer: true,
+  },
   shadcn: {
     /**
      * Prefix for all the imported component
@@ -55,7 +72,7 @@ export default defineNuxtConfig({
     storesDirs: ['./stores/**'],
   },
   colorMode: {
-    classSuffix: '-mode',
+    classSuffix: '',
     preference: 'system', // default value of $colorMode.preference
     fallback: 'light', // fallback value if not system preference found
     storageKey: 'nuxt-color-mode', // key used to store the value in local storage

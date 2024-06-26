@@ -1,13 +1,23 @@
+import type { Config } from 'tailwindcss'
 import animate from 'tailwindcss-animate'
 import typography from '@tailwindcss/typography'
-import { getIconCollections, iconsPlugin } from '@egoist/tailwindcss-icons'
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: ['class'],
+export default {
+  darkMode: 'class',
   safelist: ['dark'],
   prefix: '',
-
+  content: [
+    'components/**/*.{vue,js,ts}',
+    'layouts/**/*.vue',
+    'pages/**/*.vue',
+    'composables/**/*.{js,ts}',
+    'plugins/**/*.{js,ts}',
+    'App.{js,ts,vue}',
+    'app.{js,ts,vue}',
+    'Error.{js,ts,vue}',
+    'error.{js,ts,vue}',
+    'content/**/*.md',
+  ],
   theme: {
     container: {
       center: true,
@@ -17,22 +27,13 @@ module.exports = {
       },
     },
     extend: {
-      fontFamily: {
-        'inter': ['Inter Regular', 'sans-serif'],
-        'inter-light': ['Inter Light', 'sans-serif'],
-        'inter-bold': ['Inter Bold', 'sans-serif'],
-        'olupos': ['Olupos', 'sans-serif'],
-        'spacegrotesk-light': ['SpaceGrotesk-Light', 'sans-serif'],
-        'spacegrotesk-regular': ['SpaceGrotesk-Regular', 'sans-serif'],
-        'spacegrotesk-medium': ['SpaceGrotesk-Medium', 'sans-serif'],
-        'spacegrotesk-bold': ['SpaceGrotesk-Bold', 'sans-serif'],
-      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
+
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
@@ -70,20 +71,20 @@ module.exports = {
       },
       keyframes: {
         'accordion-down': {
-          from: { height: 0 },
+          from: { height: '0' },
           to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: 0 },
+          to: { height: '0' },
         },
         'collapsible-down': {
-          from: { height: 0 },
+          from: { height: '0' },
           to: { height: 'var(--radix-collapsible-content-height)' },
         },
         'collapsible-up': {
           from: { height: 'var(--radix-collapsible-content-height)' },
-          to: { height: 0 },
+          to: { height: '0' },
         },
       },
       animation: {
@@ -94,37 +95,6 @@ module.exports = {
       },
     },
   },
-  content: [
-    'docs/content/**/*.md',
-    'components/**/*.{vue,js,ts}',
-    'layouts/**/*.vue',
-    'pages/**/*.vue',
-    'composables/**/*.{js,ts}',
-    'plugins/**/*.{js,ts}',
-    'App.{js,ts,vue}',
-    'app.{js,ts,vue}',
-    'Error.{js,ts,vue}',
-    'error.{js,ts,vue}',
-    'content/**/*.md',
-  ],
-  plugins: [
-    typography(),
-    animate,
-    iconsPlugin({
-      collections: getIconCollections([
-        'mdi',
-        'lucide',
-        'logos',
-        'iconamoon',
-        'material-symbols',
-        'ph',
-        'tdesign',
-        'ri',
-        'arcticons',
-        'hugeicons',
-        'clarity',
-        'line-md',
-      ]),
-    }),
-  ],
-}
+
+  plugins: [typography(), animate],
+} satisfies Config

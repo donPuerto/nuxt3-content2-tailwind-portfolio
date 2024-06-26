@@ -1,18 +1,9 @@
-html.light {
+html {
   color-scheme: light;
 }
 
-
-html.light-mode {
-  color-scheme: light;
-}
-
-html.dark-mode {
+html.dark {
   color-scheme: dark;
-}
-
-html.sepia-mode {
-  color-scheme: sepia
 }
 
 .theme-zinc {
