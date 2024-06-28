@@ -1,6 +1,6 @@
 <template>
   <main id="main-content">
-    <header class="w-full max-w-3xl mx-auto">
+    <header class="mx-auto w-full max-w-3xl">
       <div>Nav</div>
     </header>
     <article>

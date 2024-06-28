@@ -9,6 +9,5 @@ export const useColorStore = defineStore({
     setPrimaryColor(newColor: string) {
       this.primaryColor = newColor
     },
-
   },
 })

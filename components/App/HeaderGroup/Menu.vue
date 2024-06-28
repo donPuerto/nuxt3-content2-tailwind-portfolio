@@ -1,7 +1,6 @@
 <script setup lang="ts">
 interface Props {
   menuItems: string[]
-
 }
 const props = defineProps<Props>()
 </script>
@@ -9,12 +8,12 @@ const props = defineProps<Props>()
 <template>
   <div>
     <!-- Navbar Menu -->
-    <div class="md:flex md:items-center md:space-x-1 hidden">
+    <div class="hidden md:flex md:items-center md:space-x-1">
       <NuxtLink
         v-for="(item, index) in props.menuItems"
         :key="index"
         :to="`/${item.toLowerCase()}`"
-        class="text-md font-bold font-inter-bold  transition duration-300 ease-in-out bg-transparent hover:bg-theme-bg-button-hover-color hover:text-theme-bg-anchor-tag-hover-color px-4 py-2 rounded-md"
+        class="text-md font-inter-bold hover:bg-theme-bg-button-hover-color hover:text-theme-bg-anchor-tag-hover-color rounded-md bg-transparent px-4 py-2 font-bold transition duration-300 ease-in-out"
       >
         {{ item }}
       </NuxtLink>
@@ -23,7 +22,7 @@ const props = defineProps<Props>()
 </template>
 
 <style scoped>
-.menu-item {
-  /* You can add additional styles here if needed */
-}
+  .menu-item {
+    /* You can add additional styles here if needed */
+  }
 </style>

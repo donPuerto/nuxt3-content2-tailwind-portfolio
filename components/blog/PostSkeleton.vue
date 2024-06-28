@@ -1,16 +1,12 @@
 <!-- Blog: Skeleton -->
 <template>
-  <div class="flex flex-col w-full h-auto p-0 mb-3 overflow-hidden">
+  <div class="mb-3 flex h-auto w-full flex-col overflow-hidden p-0">
     <div
-      class="flex-shrink-0 w-full h-24 mb-4 rounded-xl animate-pulse bg-zinc-200 dark:bg-zinc-700"
+      class="mb-4 h-24 w-full flex-shrink-0 animate-pulse rounded-xl bg-zinc-200 dark:bg-zinc-700"
     />
     <div class="w-full">
-      <div
-        class="w-5/6 h-4 mb-4 rounded-full animate-pulse bg-zinc-200 dark:bg-zinc-700"
-      />
-      <div
-        class="w-7/12 h-4 mb-4 rounded-full animate-pulse bg-zinc-200 dark:bg-zinc-700"
-      />
+      <div class="mb-4 h-4 w-5/6 animate-pulse rounded-full bg-zinc-200 dark:bg-zinc-700" />
+      <div class="mb-4 h-4 w-7/12 animate-pulse rounded-full bg-zinc-200 dark:bg-zinc-700" />
     </div>
   </div>
 </template>

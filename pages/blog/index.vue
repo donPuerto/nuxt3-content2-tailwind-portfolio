@@ -82,13 +82,13 @@ watch(currentCategory, () => {
       v-model="searchQuery"
       type="text"
       placeholder="Search posts"
-      class="mb-4 p-2 border border-gray-300 rounded"
+      class="mb-4 rounded border border-gray-300 p-2"
     >
 
     <button @click="toggleSortOrder">
-      Sort by Date: {{ sortOrder === 'asc' ? 'Ascending' : 'Descending' }}
+      Sort by Date: {{ sortOrder === "asc" ? "Ascending" : "Descending" }}
     </button>
-    <h1 class="mb-4 text-3xl font-bold text-left">
+    <h1 class="mb-4 text-left text-3xl font-bold">
       Blog Posts
     </h1>
     <p class="mb-6 text-zinc-700 dark:text-zinc-300">
@@ -109,8 +109,8 @@ watch(currentCategory, () => {
 
     <!-- Container -->
     <div class="container mx-auto px-4">
-      <div class="flex flex-wrap -mx-4">
-        <div class="w-full lg:w-2/3 px-4">
+      <div class="-mx-4 flex flex-wrap">
+        <div class="w-full px-4 lg:w-2/3">
           <template v-if="pending">
             <PostSkeleton />
           </template>
@@ -118,17 +118,17 @@ watch(currentCategory, () => {
             <PostGrid :posts="paginatedPosts" />
           </template>
           <!-- Pagination controls -->
-          <div class="flex justify-between mt-4">
+          <div class="mt-4 flex justify-between">
             <button
               :disabled="currentPage === 1"
-              class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+              class="rounded bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
               @click="currentPage--"
             >
               Previous
             </button>
             <button
               :disabled="currentPage * postsPerPage >= filteredPosts.length"
-              class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+              class="rounded bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
               @click="currentPage++"
             >
               Next
@@ -136,9 +136,9 @@ watch(currentCategory, () => {
           </div>
         </div>
 
-        <div class="w-full lg:w-1/3 px-4">
-          <div class="comments-section p-4 bg-gray-100 rounded-lg">
-            <h2 class="text-xl font-bold mb-4">
+        <div class="w-full px-4 lg:w-1/3">
+          <div class="comments-section rounded-lg bg-gray-100 p-4">
+            <h2 class="mb-4 text-xl font-bold">
               Comments
             </h2>
             <!-- Your comments section here -->

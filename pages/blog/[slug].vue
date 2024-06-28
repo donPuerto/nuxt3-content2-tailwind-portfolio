@@ -1,8 +1,8 @@
 <!-- eslint-disable no-console -->
 <script lang="ts" setup>
 /**
- * route.path /blog/test
- */
+   * route.path /blog/test
+   */
 const route = useRoute()
 // const slugArray = route.params.slug
 // const slug = Array.isArray(slugArray) ? slugArray.join('/') : slugArray
@@ -24,6 +24,4 @@ if (error.value) {
   </main>
 </template>
 
-<style>
-
-</style>
+<style></style>

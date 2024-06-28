@@ -10,7 +10,7 @@ console.log('posts', personalPost)
 
 <template>
   <article>
-    <h1 class="mb-4 text-3xl font-bold text-left">
+    <h1 class="mb-4 text-left text-3xl font-bold">
       Blog
     </h1>
   </article>

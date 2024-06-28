@@ -1,5 +1,5 @@
 // _themes.scss
-@import 'base-colors';
+@import "base-colors";
 
 :root {
   // Default Color
@@ -7,12 +7,11 @@
   // --bg-color: #f3f5f4;
   // --border-color: #3bca83;
 
-
   --primary-color: $base-primary-color;
   --secondary-color: $base-secondary-color;
   --success-color: $base-success-color;
   --danger-color: $base-danger-color;
-  --warning-color:$base-warning-color;
+  --warning-color: $base-warning-color;
   --info-color: $base-info-color;
 }
 
@@ -36,7 +35,7 @@
   --border-color: #{$base-border-color-dark};
   --bg-anchor-tag-hover-color: #{$base-bg-anchor-tag-hover-color-dark};
   --bg-hover-color: #{$base-bg-hover-color-dark};
-  }
+}
 
 .sepia-mode {
   --text-primary-color: #{$base-text-primary-color-sepia};
@@ -47,7 +46,3 @@
   --bg-anchor-tag-hover-color: #{$base-bg-anchor-tag-hover-color-sepia};
   --bg-hover-color: #{$base-bg-hover-color-sepia};
 }
-
-
-
-

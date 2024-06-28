@@ -1,8 +1,8 @@
 <!-- eslint-disable no-console -->
 <script lang="ts" setup>
 /**
- * route.path /blog/test
- */
+   * route.path /blog/test
+   */
 const route = useRoute()
 console.log('route', route.path)
 </script>
@@ -20,10 +20,8 @@ console.log('route', route.path)
       <template #not-found>
         <h1>Document not found</h1>
       </template>
-    </contentdoc>
+    </ContentDoc>
   </main>
 </template>
 
-<style>
-
-</style>
+<style></style>

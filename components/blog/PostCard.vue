@@ -26,9 +26,7 @@ const props = defineProps<PostCardProps>()
 </script>
 
 <template>
-  <NuxtLink
-    :to="`/blog/${slug}`"
-  />
+  <NuxtLink :to="`/blog/${slug}`" />
   <!-- max-w-sm
         border-2
         border-theme-border-color
@@ -38,14 +36,12 @@ const props = defineProps<PostCardProps>()
         hover:bg-theme-text-secondary-color
         hover:border-theme-primary-color
         duration-100 -->
-  <div
-    class="post-card"
-  >
-    <div class="flex flex-col md:flex-row items-center">
+  <div class="post-card">
+    <div class="flex flex-col items-center md:flex-row">
       <div class="image md:w-1/2">
         <NuxtImg
           :src="props.image || '/content/black-image.png'"
-          class=" w-full object-cover"
+          class="w-full object-cover"
           width="1216"
           height="640"
         />
@@ -108,28 +104,28 @@ const props = defineProps<PostCardProps>()
 </template>
 
 <style scoped>
-.post-card {
-  border: 1px solid #ddd;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  background-color: #fff;
-}
-
-.post-card img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-@media (min-width: 768px) {
   .post-card {
-    flex-direction: row;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background-color: #fff;
   }
-}
 
-@media (max-width: 767px) {
-  .post-card {
-    flex-direction: column;
+  .post-card img {
+    width: 100%;
+    height: auto;
+    display: block;
   }
-}
+
+  @media (min-width: 768px) {
+    .post-card {
+      flex-direction: row;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .post-card {
+      flex-direction: column;
+    }
+  }
 </style>

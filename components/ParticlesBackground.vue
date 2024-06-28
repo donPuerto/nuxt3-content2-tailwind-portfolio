@@ -1,8 +1,8 @@
 <!-- eslint-disable no-console -->
 <script setup lang="ts">
-import type { Container } from '@tsparticles/engine'
 import { MoveDirection, OutMode } from '@tsparticles/engine'
 import { onMounted } from 'vue'
+import type { Container } from '@tsparticles/engine'
 
 // Utility function to get CSS variable value
 const getCssVariable = (variable: string) => {
@@ -50,11 +50,10 @@ const particleOptions = ref({
       value: { min: 1, max: 3 },
     },
   },
-
 })
 
 const updateParticleColors = () => {
-  const themeColor = getCssVariable('--text-primary-color')
+  const themeColor = getCssVariable('text-foreground')
   particleOptions.value.particles.color.value = themeColor
 }
 

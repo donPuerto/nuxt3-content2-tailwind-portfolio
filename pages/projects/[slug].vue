@@ -1,11 +1,7 @@
-<script lang="ts" setup>
-
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <div />
 </template>
 
-<style>
-
-</style>
+<style></style>

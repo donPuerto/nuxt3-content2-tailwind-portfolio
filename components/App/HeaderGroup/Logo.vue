@@ -9,7 +9,7 @@ onMounted(() => {
 <template>
   <NuxtLink
     to="/"
-    class="flex items-center "
+    class="flex items-center"
   >
     <div class="logo-container">
       <svg
@@ -74,7 +74,9 @@ onMounted(() => {
           alignment-baseline="middle"
           transform="rotate(-300, 100,100)"
           filter="url(#text-shadow)"
-        >d</text>
+        >
+          d
+        </text>
 
         <text
           x="128"
@@ -85,7 +87,9 @@ onMounted(() => {
           alignment-baseline="middle"
           transform="rotate(-275, 100,100)"
           filter="url(#text-shadow)"
-        >p</text>
+        >
+          p
+        </text>
       </svg>
     </div>
 
@@ -94,47 +98,47 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.outer {
-  font-family: 'olupos', sans-serif;
-  font-size: 120px;
-}
-.inner {
-  font-family: 'olupos', sans-serif;
-  font-size: 90px;
-}
-
-/* Custom animation keyframes for gradient border */
-@keyframes gradient-border {
-  0% {
-    stroke-dashoffset: 0;
+  .outer {
+    font-family: "olupos", sans-serif;
+    font-size: 120px;
   }
-  100% {
-    stroke-dashoffset: 600; /* Adjusted for circle */
+  .inner {
+    font-family: "olupos", sans-serif;
+    font-size: 90px;
   }
-}
 
-/* Tailwind classes for the gradient border animation */
-.animate-gradient-border {
-  stroke-dasharray: 300; /* Adjusted for circle */
-  animation: gradient-border 5s linear infinite;
-}
+  /* Custom animation keyframes for gradient border */
+  @keyframes gradient-border {
+    0% {
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: 600; /* Adjusted for circle */
+    }
+  }
 
-/* Logo container to control overall size */
-.logo-container {
-  width: 40px;  /* Adjust width as needed */
-  height: 40px; /* Adjust height as needed */
-  display: flex;
-  align-items: center;
-}
+  /* Tailwind classes for the gradient border animation */
+  .animate-gradient-border {
+    stroke-dasharray: 300; /* Adjusted for circle */
+    animation: gradient-border 5s linear infinite;
+  }
 
-/* Make SVG responsive */
-.logo-svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
+  /* Logo container to control overall size */
+  .logo-container {
+    width: 40px; /* Adjust width as needed */
+    height: 40px; /* Adjust height as needed */
+    display: flex;
+    align-items: center;
+  }
 
-/* .spacegrotesk-regular {
+  /* Make SVG responsive */
+  .logo-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* .spacegrotesk-regular {
   font-family: 'SpaceGrotesk-Regular', sans-serif;
 } */
 </style>

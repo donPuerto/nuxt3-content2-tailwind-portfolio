@@ -1,6 +1,4 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div>
@@ -10,11 +8,9 @@
     </NuxtLink>
     <ThemeSwitcher />
     <button
-      class="relative group transition-all duration-200 focus:overflow-visible w-max h-max p-2 overflow-hidden flex flex-row items-center justify-center bg-white gap-2 rounded-lg border border-zinc-200"
+      class="group relative flex h-max w-max flex-row items-center justify-center gap-2 overflow-hidden rounded-lg border border-zinc-200 bg-white p-2 transition-all duration-200 focus:overflow-visible"
     >
-      <span>
-        Dropdown
-      </span>
+      <span> Dropdown </span>
       <svg
         class="rotate-90 group-focus:rotate-180"
         xmlns="http://www.w3.org/2000/svg"
@@ -28,9 +24,9 @@
         />
       </svg>
       <div
-        class="absolute shadow-lg -bottom-40 left-0 w-full h-max p-2 bg-white border border-zinc-200 rounded-lg flex flex-col gap-2"
+        class="absolute -bottom-40 left-0 flex h-max w-full flex-col gap-2 rounded-lg border border-zinc-200 bg-white p-2 shadow-lg"
       >
-        <span class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg">
+        <span class="flex flex-row items-center gap-2 rounded-lg p-2 hover:bg-zinc-100">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="22"
@@ -44,7 +40,7 @@
           </svg>
           <p>Light</p>
         </span>
-        <span class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg">
+        <span class="flex flex-row items-center gap-2 rounded-lg p-2 hover:bg-zinc-100">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="22"
@@ -58,7 +54,7 @@
           </svg>
           <p>Dark</p>
         </span>
-        <span class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg">
+        <span class="flex flex-row items-center gap-2 rounded-lg p-2 hover:bg-zinc-100">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="22"
@@ -96,6 +92,4 @@
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

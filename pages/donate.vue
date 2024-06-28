@@ -1,13 +1,7 @@
-<script lang="ts" setup>
-
-</script>
+<script lang="ts" setup></script>
 
 <template>
-  <div>
-    Donate Page
-  </div>
+  <div>Donate Page</div>
 </template>
 
-<style>
-
-</style>
+<style></style>

@@ -1,11 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+
   app: {
     layoutTransition: { name: 'slide', mode: 'out-in' },
     pageTransition: { name: 'page', mode: 'out-in' },
-
   },
+
   // css: ['~/assets/scss/main.scss'],
   nitro: {
     esbuild: {
@@ -20,43 +21,39 @@ export default defineNuxtConfig({
       tailwindcss: { exposeConfig: true },
       autoprefixer: {},
     },
-
   },
 
   components: [{ path: '~/components', pathPrefix: false }],
+
   modules: [
     '@nuxt/devtools',
     '@nuxt/eslint',
     '@nuxtjs/tailwindcss',
+    'radix-vue/nuxt',
     '@nuxtjs/color-mode',
     '@pinia/nuxt',
     '@nuxt/fonts',
     'nuxt-icon',
     '@nuxt/content',
     '@nuxt/image',
-    'shadcn-nuxt',
+    '@vueuse/nuxt',
   ],
+
   // Defaults options
   tailwindcss: {
-    cssPath: ['~/assets/css/tailwind.css', { injectPosition: 'first' }],
-    configPath: 'tailwind.config',
-    exposeConfig: {
-      level: 2,
-    },
-    config: {},
-    viewer: true,
+    exposeConfig: true,
+    editorSupport: true,
+    cssPath: ['~/assets/css/tailwind.css', { injectPosition: 'last' }],
   },
-  shadcn: {
-    /**
-     * Prefix for all the imported component
-     */
-    prefix: 'Ui',
-    /**
-     * Directory that the component lives in.
-     * @default "./components/ui"
-     */
-    componentDir: './components/ui',
+  imports: {
+    // Add tv and VariantProps to the set of auto imported modules
+    imports: [
+      { from: 'tailwind-variants', name: 'tv' },
+      { from: 'tailwind-variants', name: 'VariantProps', type: true },
+      { from: 'vue-sonner', name: 'toast', as: 'useSonner' },
+    ],
   },
+
   eslint: {
     config: {
       stylistic: true,
@@ -65,52 +62,51 @@ export default defineNuxtConfig({
       lintOnStart: true,
       fix: true,
     },
-
   },
 
   pinia: {
     storesDirs: ['./stores/**'],
   },
+
   colorMode: {
     classSuffix: '',
-    preference: 'system', // default value of $colorMode.preference
-    fallback: 'light', // fallback value if not system preference found
-    storageKey: 'nuxt-color-mode', // key used to store the value in local storage
-
+    preference: 'system',
+    fallback: 'light',
+    storageKey: 'nuxt-color-mode',
   },
 
   typescript: {
     tsConfig: {
       compilerOptions: {
-        baseUrl: '.',
+        // baseUrl: '.',
+        allowSyntheticDefaultImports: true,
       },
     },
   },
+
   plugins: [{ src: '~/plugins/particles.client.ts', mode: 'client' }],
 
   content: {
     highlight: {
       theme: {
-        // Default theme (same as single string)
-        default: 'github-light',
-        // Theme used if `html.dark`
-        dark: 'github-dark',
-        // Theme used if `html.sepia`
+        default: 'material-theme-palenight',
+        dark: 'one-dark-pro',
         sepia: 'monokai',
       },
-      // langs: [
-      //   'javascript',
-      //   'typescript',
-      //   'html',
-      //   'css',
-      //   'json',
-      //   'markdown',
-      //   'vue',
-      //   'bash',
-      //   'python',
-      //   'php',
-      // ],
-      preload: ['json', 'js', 'ts', 'html', 'css', 'vue', 'diff', 'shell', 'markdown', 'yaml', 'bash', 'ini'],
+      preload: [
+        'json',
+        'js',
+        'ts',
+        'css',
+        'html',
+        'md',
+        'yaml',
+        'vue',
+        'vue-html',
+        'bash',
+        'typescript',
+        'javascript',
+      ],
     },
   },
 

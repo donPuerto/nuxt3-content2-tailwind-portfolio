@@ -1,11 +1,10 @@
 /** @type {import('tailwindcss').Config} */
+import { getIconCollections, iconsPlugin } from '@egoist/tailwindcss-icons'
 import typography from '@tailwindcss/typography'
 import type { Config } from 'tailwindcss'
 
-import { getIconCollections, iconsPlugin } from '@egoist/tailwindcss-icons'
-
 /** @type {import('tailwindcss').Config} */
-export default <Partial<Config>> {
+export default <Partial<Config>>{
   darkMode: 'class', // Enable class-based dark mode
   theme: {
     extend: {
@@ -74,9 +73,7 @@ export default <Partial<Config>> {
           900: '#450a7f',
           950: '#370072',
         },
-
       },
-
     },
   },
   content: [

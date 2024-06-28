@@ -1,23 +1,13 @@
 {
-  "extends": [
-    "stylelint-config-standard-scss",
-    "stylelint-config-idiomatic-order"
-  ],
-  "plugins": [
-    "stylelint-use-logical-spec",
-    "stylelint-codeguide"
-  ],
+  "extends": ["stylelint-config-standard-scss", "stylelint-config-idiomatic-order"],
+  "plugins": ["stylelint-use-logical-spec", "stylelint-codeguide"],
   "overrides": [
     {
-      "files": [
-        "**/*.scss"
-      ],
+      "files": ["**/*.scss"],
       "customSyntax": "postcss-scss"
     },
     {
-      "files": [
-        "**/*.vue"
-      ],
+      "files": ["**/*.vue"],
       "customSyntax": "postcss-html"
     }
   ],
@@ -35,9 +25,7 @@
     "annotation-no-unknown": [
       true,
       {
-        "ignoreAnnotations": [
-          "default"
-        ]
+        "ignoreAnnotations": ["default"]
       }
     ],
     "media-feature-range-notation": null

@@ -31,7 +31,7 @@
     </select>
 
     <br>
-    <div class="bg-theme-bg-primary-color  border-theme-border-color border border-border-color p-4">
+    <div class="bg-theme-bg-primary-color border-theme-border-color border-border-color border p-4">
       <span class="text-theme-text-primary-color">Tailwind Styling</span>
     </div>
     <div class="theme-background border p-4">
@@ -71,46 +71,30 @@
     <div>Iconify</div>
     <div>
       <p>Material Design Icon (MDI)</p>
-      <span class="i-mdi-home hover:i-mdi-home-alert text-5xl cursor-pointer text-green-800" />
+      <span class="i-mdi-home hover:i-mdi-home-alert cursor-pointer text-5xl text-green-800" />
       <br>
       <p>Lucile Icon</p>
-      <span
-        class="i-lucide-a-arrow-down
-        text-5xl
-        cursor-pointer
-        text-green-800"
-      />
+      <span class="i-lucide-a-arrow-down cursor-pointer text-5xl text-green-800" />
       <br>
       <p>Materials Symbols Icon</p>
-      <span
-        class="i-material-symbols-light-mode
-        text-5xl
-        cursor-pointer
-        text-green-800"
-      />
-      <span
-        class="i-material-symbols-dark-mode
-        text-5xl
-        cursor-pointer
-        text-green-800"
-      />
+      <span class="i-material-symbols-light-mode cursor-pointer text-5xl text-green-800" />
+      <span class="i-material-symbols-dark-mode cursor-pointer text-5xl text-green-800" />
 
       <br>
       <p>Iconamoon Icons</p>
-      <span
-        class="i-iconamoon-3d
-        text-5xl
-        cursor-pointer
-        text-green-800"
-      />
+      <span class="i-iconamoon-3d cursor-pointer text-5xl text-green-800" />
       <br>
       <p>SVG Logos</p>
-      <span class="i-logos-vue text-5xl text-green-800 cursor-pointer transition duration-300 ease-in-out transform hover:scale-110" />
+      <span
+        class="i-logos-vue transform cursor-pointer text-5xl text-green-800 transition duration-300 ease-in-out hover:scale-110"
+      />
       <br>
       <p class="bg-red-700">
         Tailwind IntelliSense
       </p>
-      <h1 class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-100">
+      <h1
+        class="bg-gradient-to-r from-blue-600 to-purple-100 bg-clip-text text-5xl font-bold text-transparent"
+      >
         Gradient title
       </h1>
     </div>
@@ -118,19 +102,19 @@
 </template>
 
 <style scoped>
-      .theme-background {
-      background-color: var(--bg-primary-color);
-      }
-      .theme-font-color {
-      color: var(--text-primary-color);
-      }
-      .custom-link {
-      text-decoration: underline;
-      /* Additional styling if needed */
-      }
-      .active-link {
-      /* Your active link styling here */
-      font-weight: bold;
-      color: #007bff;
-      }
+  .theme-background {
+    background-color: var(--bg-primary-color);
+  }
+  .theme-font-color {
+    color: var(--text-primary-color);
+  }
+  .custom-link {
+    text-decoration: underline;
+    /* Additional styling if needed */
+  }
+  .active-link {
+    /* Your active link styling here */
+    font-weight: bold;
+    color: #007bff;
+  }
 </style>

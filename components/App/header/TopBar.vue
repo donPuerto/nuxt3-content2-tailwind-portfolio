@@ -1,16 +1,29 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <header class="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-    <nav class="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-      <a
-        href="#"
-        class="text-foreground transition-colors hover:text-foreground"
-      >
-        Don Puerto
-      </a>
-    </nav>
+  <header class="sticky top-0 z-30 border-b bg-background/80 backdrop-blur">
+    <div class="container flex h-14 items-center justify-between">
+      <div class="flex items-center gap-10">
+        <div class="flex items-center gap-5">
+          <UiButton
+            size="icon-sm"
+            variant="outline"
+            class="h-9 w-9 lg:hidden"
+          >
+            <Icon
+              name="line-md:close-to-menu-transition"
+              class="h-4 w-4"
+            />
+          </UiButton>
+          <NuxtLink
+            to="/"
+            class="text-lg font-bold"
+          >
+            Don Puerto
+          </NuxtLink>
+        </div>
+      </div>
+    </div>
+    <MobileBarMenu />
   </header>
 </template>

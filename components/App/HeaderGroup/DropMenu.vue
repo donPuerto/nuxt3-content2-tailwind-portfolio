@@ -13,33 +13,14 @@ console.log('isMenuOpen', props.menuItems)
 <template>
   <div
     v-if="isMenuOpen"
-    class="
-      bg-theme-bg-secondary-color
-      p-2
-      border-b-0
-      drop-shadow-sm"
+    class="bg-theme-bg-secondary-color border-b-0 p-2 drop-shadow-sm"
   >
     <div class="flex flex-col items-center space-y-2">
       <NuxtLink
         v-for="(item, index) in props.menuItems"
         :key="index"
         :to="`/${item.toLowerCase()}`"
-        class="
-          w-full
-          border
-          p-3
-          rounded-md
-          shadow-md
-          text-theme-text-primary-color
-          text-md
-          font-bold
-          font-inter-bold
-          transition-transform
-          duration-200
-          ease-in-out
-          hover:bg-theme-bg-secondary-color
-          bg-clip-text
-        "
+        class="text-theme-text-primary-color text-md font-inter-bold hover:bg-theme-bg-secondary-color w-full rounded-md border bg-clip-text p-3 font-bold shadow-md transition-transform duration-200 ease-in-out"
       >
         {{ item }}
       </NuxtLink>
@@ -48,7 +29,7 @@ console.log('isMenuOpen', props.menuItems)
 </template>
 
 <style scoped>
-.dropdown-item {
-  /* Add dropdown menu item styles here */
-}
+  .dropdown-item {
+    /* Add dropdown menu item styles here */
+  }
 </style>

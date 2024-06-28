@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { Button } from '@/components/ui/button'
-
 const colorMode = useColorMode()
 
 function setColorMode(mode: string) {
@@ -9,31 +7,35 @@ function setColorMode(mode: string) {
 </script>
 
 <template>
-  <div class="">
-    <h1>
+  <div>
+    <h1 class="bg-theme-test">
       Home Page
     </h1>
-    <Button
+    <UiButton
       class="bg-background text-foreground"
       @click="setColorMode('light')"
     >
       Light Theme
-    </Button>
-    <Button
+    </UiButton>
+    <UiButton variant="secondary">
+      Secondary
+    </UiButton>
+    <UiButton variant="outline">
+      Outline
+    </UiButton>
+    <UiButton
       class="bg-background text-foreground"
       @click="setColorMode('dark')"
     >
       Dark Theme
-    </Button>
-    <Button
+    </UiButton>
+    <UiButton
       class="bg-background text-foreground"
       @click="setColorMode('sepia')"
     >
       Sepia Theme
-    </Button>
+    </UiButton>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

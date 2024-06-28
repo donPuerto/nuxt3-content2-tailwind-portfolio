@@ -17,22 +17,22 @@ interface DefaultConfig {
       dark: string
     }
     darkModeToggle: boolean
-    nav: ({
+    nav: {
       title: string
       to: string
       target: string
-      links: ({
+      links: {
         title: string
         to: string
         target: string
         description: string
-      })[]
-    })[]
-    links: ({
+      }[]
+    }[]
+    links: {
       icon: string
       to: string
       target: string
-    })[]
+    }[]
   }
   aside: {
     useLevel: boolean
@@ -48,22 +48,22 @@ interface DefaultConfig {
   }
   footer: {
     credits: string
-    links: ({
+    links: {
       icon: string
       title: string
       to: string
       target: string
-    })[]
+    }[]
   }
   toc: {
     enable: boolean
     title: string
-    links: ({
+    links: {
       icon: string
       title: string
       to: string
       target: string
-    })[]
+    }[]
   }
   search: {
     enable: boolean

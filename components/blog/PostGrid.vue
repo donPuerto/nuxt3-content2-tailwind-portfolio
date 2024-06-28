@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Post } from '@/types'
+
 // Define the type for a post
 
 // Define props
@@ -9,9 +10,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div
-    class="post-grid"
-  >
+  <div class="post-grid">
     <PostCard
       v-for="post in props.posts"
       :key="post.slug"
@@ -29,14 +28,14 @@ const props = defineProps<{
 </template>
 
 <style scoped>
-.post-grid {
-  display: grid;
-  gap: 1rem;
-}
-
-@media (min-width: 768px) {
   .post-grid {
-    grid-template-columns: 1fr 1fr 1fr;
+    display: grid;
+    gap: 1rem;
   }
-}
+
+  @media (min-width: 768px) {
+    .post-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
 </style>

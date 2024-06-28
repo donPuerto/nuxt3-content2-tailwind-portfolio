@@ -11,47 +11,45 @@
 /* Fade transition */
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.2s;
+  transition: opacity 0.2s;
 }
 
 .fade-enter,
 .fade-leave-to {
-    opacity: 0;
+  opacity: 0;
 }
-
 
 /* Slide transition */
 .slide-enter-active,
 .slide-leave-enter {
-    transform: translateY(0);
-    transition: all 0.3s linear;
+  transform: translateY(0);
+  transition: all 0.3s linear;
 }
 .slide-enter,
 .slide-leave-to {
-    transform: translateY(100%);
+  transform: translateY(100%);
 }
 
 .slide-left-enter-active,
 .slide-left-leave-enter {
-    transform: translateX(0);
-    transition: transform 0.2s;
+  transform: translateX(0);
+  transition: transform 0.2s;
 }
 .slide-left-enter,
 .slide-left-leave-to {
-    transform: translateX(100%);
-    transition: transform 0.2s;
+  transform: translateX(100%);
+  transition: transform 0.2s;
 }
-
 
 /* Scale transition */
 .scale-enter-active,
 .scale-leave-enter {
-    transform: scale(1);
-    transition: transform 0.3s linear;
+  transform: scale(1);
+  transition: transform 0.3s linear;
 }
 .scale-enter,
 .scale-leave-to {
-    transform: scale(0);
+  transform: scale(0);
 }
 
 /* You can also add a hover effect to scale */
@@ -59,7 +57,6 @@
   transition: transform 0.3s linear;
 
   &:hover {
-      transform: scale(1.1);
+    transform: scale(1.1);
   }
 }
-

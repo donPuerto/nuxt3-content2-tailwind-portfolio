@@ -1,6 +1,6 @@
 // data/menuItems.ts
-import type { Ref } from 'vue'
 import { ref } from 'vue'
+import type { Ref } from 'vue'
 
 export interface MenuItem {
   category: string
@@ -19,8 +19,18 @@ export const menuItems: Ref<MenuItem[]> = ref([
   {
     category: 'SOCIAL CONNECTION',
     items: [
-      { icon: 'line-md:github-loop', name: 'Github', shortcut: ['⌘', 'G'], route: 'https://github.com' },
-      { icon: 'line-md:twitter-x-alt', name: 'Twitter X', shortcut: ['⌘', 'X'], route: 'https://twitter.com' },
+      {
+        icon: 'line-md:github-loop',
+        name: 'Github',
+        shortcut: ['⌘', 'G'],
+        route: 'https://github.com',
+      },
+      {
+        icon: 'line-md:twitter-x-alt',
+        name: 'Twitter X',
+        shortcut: ['⌘', 'X'],
+        route: 'https://twitter.com',
+      },
     ],
   },
 ])

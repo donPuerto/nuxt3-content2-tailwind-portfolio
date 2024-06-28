@@ -55,67 +55,23 @@ const themeOptions: ThemeOption[] = [
   <div class="relative">
     <button
       data-twe-ripple-init
-      class="
-        p-2
-        flex
-        items-center
-        justify-center
-        bg-transparent
-        border-transparent
-        border-2
-        rounded-md
-        hover:border-theme-border-color
-        hover:bg-theme-bg-secondary-color
-      "
+      class="hover:border-theme-border-color hover:bg-theme-bg-secondary-color flex items-center justify-center rounded-md border-2 border-transparent bg-transparent p-2"
       @click="toggleDropdown"
     >
-      <span
-        class="i-mdi-cog-outline
-        text-xl
-        cursor-pointer
-        hover:text-primary
-        "
-      />
+      <span class="i-mdi-cog-outline cursor-pointer text-xl hover:text-primary" />
     </button>
     <ul
       v-if="dropdownOpen"
-      class="
-        absolute
-        z-10
-        shadow-xl
-        w-32
-        h-max
-        bg-theme-bg-primary-color
-        p-2
-        rounded-lg
-        flex
-        flex-col
-        mt-5
-        right-0
-        border-1
-        border-theme-border-color
-        text-sm
-        font-inter
-      "
+      class="bg-theme-bg-primary-color border-1 border-theme-border-color font-inter absolute right-0 z-10 mt-5 flex h-max w-32 flex-col rounded-lg p-2 text-sm shadow-xl"
     >
       <li
         v-for="(option, index) in themeOptions"
         :key="index"
-        class="
-          flex
-          flex-row
-          gap-2
-          items-center
-          hover:bg-theme-bg-hover-color
-          p-3
-          rounded-lg
-          cursor-pointer
-        "
+        class="hover:bg-theme-bg-hover-color flex cursor-pointer flex-row items-center gap-2 rounded-lg p-3"
         @mousedown.prevent="option.action"
       >
         <span
-
-          :class="option.iconClass + ' text-2xl cursor-pointer text-theme-text-primary-color'"
+          :class="option.iconClass + ' text-theme-text-primary-color cursor-pointer text-2xl'"
         />
         <p class="text-theme-text-secondary-color">
           {{ option.label }}

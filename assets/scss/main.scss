@@ -1,17 +1,16 @@
 /* custom styles */
 // @import 'base-colors';
-@import 'variables';
-@import 'typography';
+@import "variables";
+@import "typography";
 // @use 'spacing';
 // @use 'breakpoints';
 // @use 'z-index';
 
-
 /* Partial and themes below */
-@import 'transitions';
-@import 'fonts';
-@import 'custom-loading';
-@import 'themes';
+@import "transitions";
+@import "fonts";
+@import "custom-loading";
+@import "themes";
 
 // body {
 //   background-color: var(--bg-secondary-color);

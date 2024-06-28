@@ -14,30 +14,27 @@ const updateCategory = (category: string) => {
 </script>
 
 <template>
-  <div class="mb-8 border border-1 p-3">
+  <div class="border-1 mb-8 border p-3">
     <!-- Categories -->
-    <p class="font-bold mb-2">
+    <p class="mb-2 font-bold">
       Category:
     </p>
-    <div class="flex flex-wrap ">
+    <div class="flex flex-wrap">
       <span
         v-for="category in props.categories"
         :key="category"
-        class="cursor-pointer flex items-center mb-2 md:mb-0 md:mr-1 capitalize "
+        class="mb-2 flex cursor-pointer items-center capitalize md:mb-0 md:mr-1"
         :class="{ 'font-extrabold': props.updatedCategory === category }"
         @click="updateCategory(category)"
       >
-
         <KBD class="">
           {{ category }}
-
         </KBD>
-
       </span>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* Add scoped styles here if needed */
+  /* Add scoped styles here if needed */
 </style>

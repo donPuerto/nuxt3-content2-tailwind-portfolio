@@ -1,10 +1,9 @@
-<script lang="ts" setup>
-</script>
+<script lang="ts" setup></script>
 
 <template>
-  <div class="min-h-screen flex flex-col relative">
+  <div class="relative flex min-h-screen flex-col">
     <ParticlesBackground />
-    <div class="absolute inset-0 flex flex-col min-h-screen">
+    <div class="absolute inset-0 flex min-h-screen flex-col">
       <TopBar />
       <main class="flex-grow">
         <slot />
@@ -14,6 +13,4 @@
   </div>
 </template>
 
-<style>
-
-</style>
+<style></style>

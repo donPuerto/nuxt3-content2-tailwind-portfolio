@@ -1,13 +1,7 @@
-<script lang="ts" setup>
-
-</script>
+<script lang="ts" setup></script>
 
 <template>
-  <div>
-    Project Page
-  </div>
+  <div>Project Page</div>
 </template>
 
-<style>
-
-</style>
+<style></style>

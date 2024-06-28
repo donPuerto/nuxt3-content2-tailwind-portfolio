@@ -3,7 +3,7 @@ interface Props {
   customClass?: string
   size?: 'xs' | 'sm' | 'md'
 }
-type SizeOptions = 'xs' | 'sm' | 'md'
+  type SizeOptions = 'xs' | 'sm' | 'md'
 interface UIConfig {
   base: string
   padding: string
@@ -64,12 +64,9 @@ const kbdClasses = computed(() => {
 </script>
 
 <template>
-  <kbd
-    :class="[kbdClasses, customClass]"
-  >
+  <kbd :class="[kbdClasses, customClass]">
     <slot />
   </kbd>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
