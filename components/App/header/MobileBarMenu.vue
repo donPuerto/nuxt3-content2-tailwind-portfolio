@@ -1,31 +1,37 @@
 <script lang="ts" setup>
+import type { ListData } from '~/types/ui/MobileBarMenu/listData'
 
+// Define props
+const props = defineProps<{
+  listData: ListData
+}>()
 </script>
 
 <template>
-  <div class="flex items-center justify-center">
-    <UiList class="max-w px-4">
+  <div class="flex items-center justify-center ">
+    <UiList class="max-w px-5 border border-sky-500 rounded-md mt-2">
+      <h4>{{ props.listData.header }}</h4>
       <template
-        v-for="n in 5"
-        :key="n"
+        v-for="item in props.listData.items"
+        :key="item.name"
       >
-        <UiListItem class="items-center px-0 ">
+        <UiListItem class="items-center px-4 hover:bg-primary rounded-md border">
           <Icon
-            name="line-md:close-to-menu-transition"
+            :name="item.icon"
             class="h-4 w-4"
           />
           <UiListContent>
-            <UiListTitle :title="`List item #${n}`" />
+            <NuxtLink :to="item.route">
+              {{ item.name }}
+            </NuxtLink>
           </UiListContent>
-          <UiButton
-            size="icon-sm"
-            variant="ghost"
-            class="ml-auto shrink-0 self-center rounded-full"
+
+          <UiKbd
+            size="md"
+            class="ml-auto"
           >
-            <UiKbd size="md">
-              ⌘P
-            </UiKbd>
-          </UiButton>
+            {{ item.shortcut }}
+          </UiKbd>
         </UiListItem>
         <UiSeparator class="my-2.5 ml-auto w-[85%] last:hidden" />
       </template>
@@ -34,5 +40,5 @@
 </template>
 
 <style>
-
+/* Add your custom styles here */
 </style>

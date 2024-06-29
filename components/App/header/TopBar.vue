@@ -1,4 +1,16 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { ListData } from '~/types/ui/MobileBarMenu/listData'
+
+const listData: ListData = {
+  header: 'Pages',
+  items: [
+    { name: 'Home', route: '/', icon: 'line-md:close-to-menu-transition', shortcut: '⌘P' },
+    { name: 'Blog', route: '/blog', icon: 'line-md:close-to-menu-transition', shortcut: '⌘P' },
+    { name: 'Projects', route: 'projects', icon: 'line-md:close-to-menu-transition', shortcut: '⌘P' },
+    { name: 'About', route: 'about', icon: 'line-md:close-to-menu-transition', shortcut: '⌘P' },
+  ],
+}
+</script>
 
 <template>
   <header class="sticky top-0 z-30 border-b bg-background/80 backdrop-blur">
@@ -24,6 +36,6 @@
         </div>
       </div>
     </div>
-    <MobileBarMenu />
+    <MobileBarMenu :list-data="listData" />
   </header>
 </template>
