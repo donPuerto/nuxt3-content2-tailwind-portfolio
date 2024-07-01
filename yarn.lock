@@ -3015,7 +3015,7 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.4.30.tgz#72acfe8df65139dcf298e965fb2ab1cff419e400"
   integrity sha512-CLg+f8RQCHQnKvuHY9adMsMaQOcqclh6Z5V9TaoMgy0ut0tz848joZ7/CYFFyF/yZ5i2yaw7Fn498C+CNZVHIg==
 
-"@vueuse/core@10.11.0", "@vueuse/core@^10.10.0", "@vueuse/core@^10.11.0", "@vueuse/core@^10.5.0":
+"@vueuse/core@10.11.0", "@vueuse/core@^10.11.0", "@vueuse/core@^10.5.0":
   version "10.11.0"
   resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-10.11.0.tgz#b042585a8bf98bb29c177b33999bd0e3fcd9e65d"
   integrity sha512-x3sD4Mkm7PJ+pcq3HX8PLPBadXCAlSDR/waK87dz0gQE+qJnaaFhc/dZVfJz+IUYzTMVGum2QlR7ImiJQN4s6g==
@@ -3034,6 +3034,14 @@
     "@unhead/schema" "^1.7.0"
     "@unhead/ssr" "^1.7.0"
     "@unhead/vue" "^1.7.0"
+
+"@vueuse/math@^10.11.0":
+  version "10.11.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/math/-/math-10.11.0.tgz#54658238dc53b1903eb0b5535b2e05fe9ccb4acb"
+  integrity sha512-Ocb6ldMQDDh0jEItW+0vhlFQI8c8Dje2aawRoUL1Ui9u+SZSLRNdDjONi21V98VLyNecfMyrDnT2oaYfc3FqGw==
+  dependencies:
+    "@vueuse/shared" "10.11.0"
+    vue-demi ">=0.14.8"
 
 "@vueuse/metadata@10.11.0":
   version "10.11.0"

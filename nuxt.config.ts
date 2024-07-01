@@ -27,6 +27,7 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxt/devtools',
+    '@vueuse/nuxt',
     '@nuxt/eslint',
     '@nuxtjs/tailwindcss',
     'radix-vue/nuxt',

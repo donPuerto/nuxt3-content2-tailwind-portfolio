@@ -1,3 +1,4 @@
+<!-- eslint-disable no-console -->
 <script lang="ts" setup>
 import type { ListData } from '~/types/ui/MobileBarMenu/listData'
 
@@ -5,17 +6,39 @@ import type { ListData } from '~/types/ui/MobileBarMenu/listData'
 const props = defineProps<{
   listData: ListData
 }>()
+
+const router = useRouter()
+
+const navigateTo = (route: string) => {
+  router.push(route)
+}
+
+// Define shortcuts based on list items
+const shortcuts = props.listData.items.reduce((acc, item) => {
+  acc[item.shortcut.toLowerCase()] = () => navigateTo(item.route)
+  console.log('acc', acc)
+  return acc
+}, {} as Record<string, () => void>)
+
+defineShortcuts(shortcuts)
 </script>
 
 <template>
-  <div class="flex items-center justify-center ">
-    <UiList class="max-w px-5 border border-sky-500 rounded-md mt-2">
-      <h4>{{ props.listData.header }}</h4>
+  <div class="container flex items-center justify-center px-4">
+    <UiList class="max-w ">
+      <h4
+        class="class=
+        text-[17px]
+        font-medium
+        sm:text-sm"
+      >
+        {{ props.listData.header }}
+      </h4>
       <template
         v-for="item in props.listData.items"
         :key="item.name"
       >
-        <UiListItem class="items-center px-4 hover:bg-primary rounded-md border">
+        <UiListItem class="items-center px-4 hover:bg-primary hover:rounded-md">
           <Icon
             :name="item.icon"
             class="h-4 w-4"
