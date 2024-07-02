@@ -1,11 +1,11 @@
-export interface ListItem {
+export interface MenuListItem {
   name: string
   icon: string
   route: string
   shortcut: string
 }
 
-export interface ListData {
+export interface MenuList {
   header: string
-  items: ListItem[]
+  items: MenuListItem[]
 }

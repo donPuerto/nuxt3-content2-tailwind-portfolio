@@ -34,6 +34,7 @@ interface Shortcut {
 }
 
 export const defineShortcuts = (config: ShortcutsConfig, options: ShortcutsOptions = {}) => {
+  console.log('defineShortcuts')
   const { macOS, usingInput } = useShortcuts()
 
   let shortcuts: Shortcut[] = []

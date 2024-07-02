@@ -23,7 +23,7 @@ export default defineNuxtConfig({
     },
   },
 
-  components: [{ path: '~/components', pathPrefix: false }],
+  components: [{ path: '~/components', pathPrefix: true }],
 
   modules: [
     '@nuxt/devtools',
@@ -81,6 +81,7 @@ export default defineNuxtConfig({
       compilerOptions: {
         // baseUrl: '.',
         allowSyntheticDefaultImports: true,
+        allowImportingTsExtensions: true,
       },
     },
   },

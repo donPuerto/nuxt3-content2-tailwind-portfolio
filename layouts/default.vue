@@ -4,7 +4,7 @@
   <div class="relative flex min-h-screen flex-col">
     <ParticlesBackground />
     <div class="absolute inset-0 flex min-h-screen flex-col">
-      <TopBar />
+      <AppHeaderTopBar />
       <main class="flex-grow">
         <slot />
       </main>
