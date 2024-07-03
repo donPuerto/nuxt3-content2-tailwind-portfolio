@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { menuList } from '~/data/index.ts'
+import { fetchMenuListByHeader, modes } from '~/data'
+import type { MenuList } from '~/types/components/header/menu'
+
+const pages: MenuList | undefined = fetchMenuListByHeader('Pages')
 
 const colorMode = useColorMode()
 const mobileNav = ref(false)
@@ -21,13 +24,6 @@ const currentIcon = computed(() => {
 })
 
 const menuIcon = computed(() => mobileNav.value ? 'line-md:menu-to-close-transition' : 'line-md:close-to-menu-transition')
-
-const modes = [
-  { icon: 'lucide:laptop', title: 'System', value: 'system' },
-  { icon: 'lucide:moon', title: 'Dark', value: 'dark' },
-  { icon: 'lucide:sun', title: 'Light', value: 'light' },
-  { icon: 'lucide:coffee', title: 'Sepia', value: 'sepia' },
-]
 </script>
 
 <template>
@@ -58,7 +54,7 @@ const modes = [
       <!-- Middle -->
       <div class="hidden md:flex flex-grow  items-center justify-center gap-3">
         <template
-          v-for="item in menuList.items"
+          v-for="item in pages?.items"
           :key="item.name"
         >
           <UiButton
@@ -77,32 +73,16 @@ const modes = [
       <!-- Right Side -->
       <div class="flex items-center">
         <UiButton
-          size="sm"
-          class="mr-2 hidden min-w-[300px] font-normal text-muted-foreground md:flex"
-          variant="outline"
-          @click="isOpen = true"
-        >
-          <Icon name="lucide:search" />
-          Search...
-          <UiKbd class="ml-auto">
-            {{ metaSymbol }}+K
-          </UiKbd>
-        </UiButton>
-
-        <UiButton
-          size="icon"
-          class="text-muted-foreground md:hidden"
+          class="h-9 w-9"
           variant="ghost"
+          size="icon"
           @click="isOpen = true"
         >
           <Icon
-            name="lucide:search"
+            name="material-symbols:keyboard-command-key"
             class="h-[18px] w-[18px]"
           />
         </UiButton>
-
-        <CommandSearch v-model="isOpen" />
-
         <UiDropdownMenu>
           <UiDropdownMenuTrigger as-child>
             <UiButton
@@ -134,7 +114,8 @@ const modes = [
     </div>
     <AppHeaderMobileBarMenu
       v-model="mobileNav"
-      :menu-list="menuList"
+      :menu-list="pages"
     />
+    <CommandSearch v-model="isOpen" />
   </header>
 </template>

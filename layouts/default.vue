@@ -8,7 +8,7 @@
       <main class="flex-grow">
         <slot />
       </main>
-      <div>Footer</div>
+      <AppFooter />
     </div>
   </div>
 </template>

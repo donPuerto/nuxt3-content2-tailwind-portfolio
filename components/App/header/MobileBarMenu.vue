@@ -1,10 +1,10 @@
 <!-- eslint-disable no-console -->
 <script lang="ts" setup>
-import type { MenuList } from '~/types/ui/MobileBarMenu/menuList'
+import type { MenuList } from '~/types/components/header/menu'
 
 // Define props
 const props = defineProps<{
-  menuList: MenuList
+  menuList?: MenuList
   modelValue?: boolean
 }>()
 
@@ -32,7 +32,7 @@ const navigateTo = (route: string) => {
 // Handle keyboard shortcuts
 const handleShortcut = (event: KeyboardEvent) => {
   const shortcutKey = event.key.toLowerCase()
-  const item = props.menuList.items.find(i => i.shortcut.toLowerCase() === shortcutKey)
+  const item = props.menuList?.items.find(i => i.shortcut.toLowerCase() === shortcutKey)
 
   if (item) {
     navigateTo(item.route)
@@ -69,10 +69,10 @@ onUnmounted(() => {
         font-medium
         sm:text-sm"
       >
-        {{ props.menuList.header }}
+        {{ props.menuList?.header }}
       </h4>
       <template
-        v-for="item in props.menuList.items"
+        v-for="item in props.menuList?.items"
         :key="item.name"
       >
         <NuxtLink :to="item.route">
