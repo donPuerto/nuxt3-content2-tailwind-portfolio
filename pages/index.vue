@@ -4,7 +4,6 @@
 <template>
   <div class="flex h-screen justify-center items-center">
     <AppHeroH1 />
-    <AppHeroH1 />
   </div>
 </template>
 
