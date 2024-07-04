@@ -61,6 +61,31 @@ export default defineAppConfig({
         },
       ],
     },
+    hero: {
+      hireInfo: [
+        { text: 'For Hire', highlight: true },
+        { text: 'Visit my', link: false },
+        { text: 'contact', link: true, url: '/contact' },
+        { text: 'page 💪', link: false },
+      ],
+      header: [
+        { text: 'Looking to hire a developer', link: false },
+        { text: 'for your', link: false },
+        { text: 'web and mobile', highlight: true },
+        { text: 'applications?', link: false },
+      ],
+      developerInfo: 'Full stack Developer',
+      name: 'Don Puerto',
+      description: 'Revolutionize your web and mobile projects with Vue, Ionic, Supabase, Adonis, and Laravel, ready to deliver excellence!',
+      technologies: [
+        { name: 'Vue', url: 'https://vuejs.org/', icon: 'logos:vue' },
+        { name: 'Nuxt', url: 'https://nuxt.com/', icon: 'logos:nuxt-icon' },
+        { name: 'Ionic', url: 'https://ionicframework.com/', icon: 'logos:ionic-icon' },
+        { name: 'Supabase', url: 'https://supabase.com/', icon: 'logos:supabase-icon' },
+        { name: 'Laravel', url: 'https://laravel.com/', icon: 'logos:laravel' },
+        { name: 'Adonis', url: 'https://adonisjs.com/', icon: 'logos:adonisjs-icon' },
+      ],
+    },
     footer: {
       credits: '© 2024. All rights reserved.',
       links: [
