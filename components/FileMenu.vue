@@ -1,4 +1,3 @@
-import { KBD } from '../.nuxt/components';
 <!-- eslint-disable no-console -->
 <script setup lang="ts">
 const props = defineProps({

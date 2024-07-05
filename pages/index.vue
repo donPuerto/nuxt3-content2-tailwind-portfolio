@@ -1,4 +1,6 @@
+<!-- eslint-disable no-console -->
 <script lang="ts" setup>
+
 </script>
 
 <template>

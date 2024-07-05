@@ -89,6 +89,16 @@ export default defineNuxtConfig({
   plugins: [{ src: '~/plugins/particles.client.ts', mode: 'client' }],
 
   content: {
+    // documentDriven: true,
+    // navigation: { fields: ['icon', 'label'] },
+    // markdown: {
+    //   toc: { depth: 4, searchDepth: 4 },
+    // },
+    experimental: {
+      search: {
+        indexed: true,
+      },
+    },
     highlight: {
       theme: {
         default: 'material-theme-palenight',

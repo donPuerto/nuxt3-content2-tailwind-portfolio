@@ -68,7 +68,41 @@ watch(currentCategory, () => {
 
 <template>
   <article>
-    <!-- Set background or background styling here -->
+    <div class=" grid grid-cols-1 gap-2 px-4 md:grid-cols-12 ">
+      <div class="hidden h-32 rounded-lg bg-gray-200 md:col-span-2 md:block">
+        <!-- <CategoryList /> -->
+        Category
+      </div>
+      <div class="h-full rounded-lg bg-gray-500 p-2 md:col-span-8">
+        <!-- Large Card -->
+        <div class="mb-2 h-32 rounded-lg bg-gray-300 md:h-64">
+          Large Card
+        </div>
+
+        <!-- Small Cards Grid -->
+        <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4">
+          <!-- Small Card 1 -->
+          <div class="h-32 rounded-lg bg-gray-200">
+            Small Card 1
+          </div>
+          <!-- Small Card 2 -->
+          <div class="h-32 rounded-lg bg-gray-200">
+            Small Card 2
+          </div>
+          <!-- Small Card 3 -->
+          <div class="h-32 rounded-lg bg-gray-200">
+            Small Card 3
+          </div>
+          <!-- Small Card 4 -->
+          <div class="h-32 rounded-lg bg-gray-200">
+            Small Card 4
+          </div>
+        </div>
+      </div>
+      <div class="h-32 rounded-lg bg-gray-200 md:col-span-2">
+        Comments
+      </div>
+    </div>
 
     <!-- SearchBar Component -->
     <SearchBar />
