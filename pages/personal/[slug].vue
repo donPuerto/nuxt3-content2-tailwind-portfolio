@@ -1,27 +1,19 @@
-<!-- eslint-disable no-console -->
-<script lang="ts" setup>
-/**
-   * route.path /blog/test
-   */
+<script setup lang="ts">
 const route = useRoute()
-console.log('route', route.path)
+const slug = route.params.slug
+
+// Fetch post content
+const { data: post, fetch } = useContent()
+
+// Fetch post data on component mount
+onMounted(async () => {
+  await fetch(`/blog/personal/${slug}`)
+})
 </script>
 
 <template>
-  <main>
-    <ContentDoc>
-      <template #default="{ doc }">
-        <article>
-          <h1>{{ doc.title }}</h1>
-          <!-- <ContentRenderer :value="doc" /> -->
-        </article>
-      </template>
-
-      <template #not-found>
-        <h1>Document not found</h1>
-      </template>
-    </ContentDoc>
-  </main>
+  <div>
+    <h1>{{ post.title }}</h1>
+    <div v-html="post.bodyHtml" />
+  </div>
 </template>
-
-<style></style>

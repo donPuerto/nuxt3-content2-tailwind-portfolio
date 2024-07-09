@@ -1,17 +1,26 @@
-<!-- eslint-disable no-console -->
 <script setup lang="ts">
-definePageMeta({
-  layout: 'blog',
-})
-const personalPost = await queryContent('personal').sort({ published_on: -1 }).find()
-
-console.log('posts', personalPost)
+// Fetch all posts in the 'personal' category
+const { data: posts } = useContent('blog/personal')
 </script>
 
 <template>
-  <article>
-    <h1 class="mb-4 text-left text-3xl font-bold">
-      Blog
+  <div>
+    <h1 class="text-2xl font-bold mb-4">
+      Personal Blog Posts
     </h1>
-  </article>
+    <ul>
+      <li
+        v-for="post in posts"
+        :key="post.slug"
+        class="mb-4"
+      >
+        <NuxtLink
+          :to="`/blog/personal/${post.slug}`"
+          class="text-blue-600 hover:underline"
+        >
+          {{ post.title }}
+        </NuxtLink>
+      </li>
+    </ul>
+  </div>
 </template>

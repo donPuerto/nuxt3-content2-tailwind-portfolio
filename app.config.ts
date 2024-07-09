@@ -87,7 +87,7 @@ export default defineAppConfig({
       ],
     },
     footer: {
-      credits: '© 2024. All rights reserved.',
+      credits: '© 2024. All rights reserved',
       links: [
         {
           title: 'Nuxt',

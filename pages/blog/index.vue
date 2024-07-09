@@ -14,15 +14,20 @@ const { pending, data: posts } = await useLazyAsyncData<Post[]>('all-posts', () 
 const sortOrder = ref<'asc' | 'desc'>('asc')
 const currentCategory = ref<string | null>(null)
 const currentPage = ref<number>(1)
-const postsPerPage = 10
+const postsPerPage = ref<number>(9)
 const searchQuery = ref<string>('')
+
+interface Card {
+  title: string
+  date: string
+}
 
 // Function to toggle sort order
 const toggleSortOrder = () => {
   sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
 }
 
-// Extract unique categories
+// Compute unique categories
 const categories = computed((): string[] => {
   if (!posts.value) return []
   const uniqueCategories = new Set<string>()
@@ -54,131 +59,139 @@ const filteredPosts = computed((): Post[] => {
     })
 })
 
-// Paginate posts
+// Compute Paginated Posts
 const paginatedPosts = computed((): Post[] => {
-  const start = (currentPage.value - 1) * postsPerPage
-  return filteredPosts.value.slice(start, start + postsPerPage)
+  const start = (currentPage.value - 1) * postsPerPage.value
+  const end = start + postsPerPage.value
+  return filteredPosts.value.slice(start, end)
 })
 
-// Watch for changes in currentCategory and reset currentPage to 1
-watch(currentCategory, () => {
-  currentPage.value = 1
+const totalPages = computed(() => {
+  // eslint-disable-next-line no-console
+  console.log('totalPages', filteredPosts.value.length)
+  return Math.ceil(filteredPosts.value.length / postsPerPage.value)
+})
+
+// Add Methods to Handle Pagination
+const goToNextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++
+  }
+}
+
+const goToPreviousPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--
+  }
+}
+
+onMounted(async () => {
+  const postsBlog = await queryContent('blog', 'personal')
+    .sort({ publishedAt: -1 })
+    .find()
+  // eslint-disable-next-line no-console
+  console.log('postsBlog', postsBlog)
 })
 </script>
 
 <template>
   <article>
+    <div class="flex justify-center my-2">
+      <!-- Search input -->
+      <input
+        v-model="searchQuery"
+        type="text"
+        placeholder="Search posts"
+        class="mb-4 rounded border border-gray-300 p-2"
+      >
+    </div>
+
     <div class=" grid grid-cols-1 gap-2 px-4 md:grid-cols-12 ">
       <div class="hidden h-32 rounded-lg bg-gray-200 md:col-span-2 md:block">
-        <!-- <CategoryList /> -->
-        Category
+        <ul>
+          <li
+            v-for="category in categories"
+            :key="category"
+          >
+            <NuxtLink
+              :to="`/categories/${category}`"
+              class="flex items-center gap-2 border-s-[3px] border-transparent px-4 py-3 text-gray-500 hover:border-gray-100 hover:bg-gray-50 hover:text-gray-700"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="size-5 opacity-75"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+              <span class="text-sm font-medium">{{ category }}</span>
+            </NuxtLink>
+          </li>
+        </ul>
       </div>
       <div class="h-full rounded-lg bg-gray-500 p-2 md:col-span-8">
-        <!-- Large Card -->
-        <div class="mb-2 h-32 rounded-lg bg-gray-300 md:h-64">
-          Large Card
-        </div>
-
-        <!-- Small Cards Grid -->
-        <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4">
-          <!-- Small Card 1 -->
-          <div class="h-32 rounded-lg bg-gray-200">
-            Small Card 1
-          </div>
-          <!-- Small Card 2 -->
-          <div class="h-32 rounded-lg bg-gray-200">
-            Small Card 2
-          </div>
-          <!-- Small Card 3 -->
-          <div class="h-32 rounded-lg bg-gray-200">
-            Small Card 3
-          </div>
-          <!-- Small Card 4 -->
-          <div class="h-32 rounded-lg bg-gray-200">
-            Small Card 4
-          </div>
+        <UiButton
+          class="mb-2"
+          @click="toggleSortOrder"
+        >
+          Sort by Date: {{ sortOrder === "asc" ? "Ascending" : "Descending" }}
+        </UiButton>
+        <!-- Cards Grid -->
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+          <template
+            v-for="(card, index) in paginatedPosts"
+            :key="card.title"
+          >
+            <!-- Large Card -->
+            <NuxtLink
+              v-if="index === 0 && currentPage === 1"
+              :to="`/blog/${card.slug}`"
+              class="col-span-1 sm:col-span-2 md:col-span-4 h-64 rounded-lg bg-gray-300"
+            >
+              {{ card.title }} - {{ card.publishedOn }}
+            </NuxtLink>
+            <!-- Small Cards -->
+            <NuxtLink
+              v-else
+              :to="`/blog/${card.slug}`"
+              class="h-32 rounded-lg bg-gray-200"
+            >
+              {{ card.title }} - {{ card.publishedOn }}
+            </NuxtLink>
+          </template>
         </div>
       </div>
       <div class="h-32 rounded-lg bg-gray-200 md:col-span-2">
         Comments
       </div>
     </div>
-
-    <!-- SearchBar Component -->
-    <SearchBar />
-    <FileMenu
-      v-model:updatedCategory="currentCategory"
-      :categories="categories"
-    />
-
-    <!-- Search input -->
-    <input
-      v-model="searchQuery"
-      type="text"
-      placeholder="Search posts"
-      class="mb-4 rounded border border-gray-300 p-2"
-    >
-
-    <button @click="toggleSortOrder">
-      Sort by Date: {{ sortOrder === "asc" ? "Ascending" : "Descending" }}
-    </button>
-    <h1 class="mb-4 text-left text-3xl font-bold">
-      Blog Posts
-    </h1>
-    <p class="mb-6 text-zinc-700 dark:text-zinc-300">
-      Explore how writing can help clarify your thoughts and boost your cognitive abilities.
-    </p>
-
-    <!-- Categories as tags -->
-    <!-- <div class="mb-4 space-x-2 flex flex-wrap">
-      <span
-        v-for="category in categories"
-        :key="category"
-        class="cursor-pointer text-blue-500 flex flex-col md:flex-row items-center mb-8 hover:underline"
-        @click="currentCategory = category"
+    <!-- Pagination Controls -->
+    <div class="flex justify-center my-6">
+      <UiButton
+        :disabled="currentPage === 1"
+        @click="goToPreviousPage"
       >
-        {{ category }}
-      </span>
-    </div> -->
-
-    <!-- Container -->
-    <div class="container mx-auto px-4">
-      <div class="-mx-4 flex flex-wrap">
-        <div class="w-full px-4 lg:w-2/3">
-          <template v-if="pending">
-            <PostSkeleton />
-          </template>
-          <template v-else>
-            <PostGrid :posts="paginatedPosts" />
-          </template>
-          <!-- Pagination controls -->
-          <div class="mt-4 flex justify-between">
-            <button
-              :disabled="currentPage === 1"
-              class="rounded bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
-              @click="currentPage--"
-            >
-              Previous
-            </button>
-            <button
-              :disabled="currentPage * postsPerPage >= filteredPosts.length"
-              class="rounded bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
-              @click="currentPage++"
-            >
-              Next
-            </button>
-          </div>
-        </div>
-
-        <div class="w-full px-4 lg:w-1/3">
-          <div class="comments-section rounded-lg bg-gray-100 p-4">
-            <h2 class="mb-4 text-xl font-bold">
-              Comments
-            </h2>
-            <!-- Your comments section here -->
-          </div>
-        </div>
-      </div>
+        Previous
+      </UiButton>
+      <span class="px-2 mt-2">Page {{ currentPage }} of {{ totalPages }}</span>
+      <UiButton
+        :disabled="currentPage === totalPages"
+        @click="goToNextPage"
+      >
+        Next
+      </UiButton>
     </div>
   </article>
 </template>
