@@ -15,15 +15,18 @@ onMounted(async () => {
       post.value = {
         _path: result._path ?? '',
         slug: result.slug ?? '',
+        headline: result.headline ?? '',
         title: result.title ?? '',
-        subtitle: result.subtitle ?? undefined,
-        series: result.series ?? undefined,
-        image: result.image ?? '',
+        subtitle: result.subtitle ?? '',
+        series: result.series ?? '',
         description: result.description ?? '',
-        publishedOn: result.publishedOn ?? '',
-        published: result.published ?? false,
+        image: result.image ?? '',
+        alt: result.alt ?? '',
+        published_on: result.published_on ?? '',
+        is_publish: result.published ?? false,
         author: result.author ?? '',
-        readingTime: result.readingTime ?? '',
+        author_avatar: result.author_avatar ?? '',
+        reading_time: result.reading_time ?? '',
         tag: result.tag ?? [],
       }
     }
@@ -43,8 +46,7 @@ onMounted(async () => {
 
 <template>
   <main>
-    {{ post }}
-    <ContentPost :post="post" />
+    <BlogPostCard :post="post" />
   </main>
 </template>
 

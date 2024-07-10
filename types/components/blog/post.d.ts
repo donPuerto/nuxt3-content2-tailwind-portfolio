@@ -1,14 +1,17 @@
 export interface Post {
   _path: string
   slug: string
+  headline: string
   title: string
   subtitle?: string
   series?: string
+  description?: string
   image: string
-  description: string
-  publishedOn: string
-  published: boolean
+  alt?: string
+  published_on: string
+  is_publish: boolean
   author: string
-  readingTime: string
+  author_avatar: string
+  reading_time: string
   tag: string[]
 }

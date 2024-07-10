@@ -14,13 +14,8 @@ const { pending, data: posts } = await useLazyAsyncData<Post[]>('all-posts', () 
 const sortOrder = ref<'asc' | 'desc'>('asc')
 const currentCategory = ref<string | null>(null)
 const currentPage = ref<number>(1)
-const postsPerPage = ref<number>(9)
+const postsPerPage = ref<number>(10)
 const searchQuery = ref<string>('')
-
-interface Card {
-  title: string
-  date: string
-}
 
 // Function to toggle sort order
 const toggleSortOrder = () => {
@@ -53,8 +48,8 @@ const filteredPosts = computed((): Post[] => {
       )
     })
     .sort((a, b) => {
-      const dateA = new Date(a.publishedOn).getTime()
-      const dateB = new Date(b.publishedOn).getTime()
+      const dateA = new Date(a.published_on).getTime()
+      const dateB = new Date(b.published_on).getTime()
       return sortOrder.value === 'asc' ? dateA - dateB : dateB - dateA
     })
 })
@@ -87,7 +82,7 @@ const goToPreviousPage = () => {
 
 onMounted(async () => {
   const postsBlog = await queryContent('blog', 'personal')
-    .sort({ publishedAt: -1 })
+    .sort({ published_on: -1 })
     .find()
   // eslint-disable-next-line no-console
   console.log('postsBlog', postsBlog)
@@ -106,8 +101,8 @@ onMounted(async () => {
       >
     </div>
 
-    <div class=" grid grid-cols-1 gap-2 px-4 md:grid-cols-12 ">
-      <div class="hidden h-32 rounded-lg bg-gray-200 md:col-span-2 md:block">
+    <div class=" grid grid-cols-1 gap-2 px-4 md:grid-cols-6 lg:grid-cols-12">
+      <div class="hidden h-32 rounded-lg  lg:col-span-2 md:block">
         <ul>
           <li
             v-for="category in categories"
@@ -141,7 +136,7 @@ onMounted(async () => {
           </li>
         </ul>
       </div>
-      <div class="h-full rounded-lg bg-gray-500 p-2 md:col-span-8">
+      <div class="h-full md:col-span-8">
         <UiButton
           class="mb-2"
           @click="toggleSortOrder"
@@ -149,49 +144,54 @@ onMounted(async () => {
           Sort by Date: {{ sortOrder === "asc" ? "Ascending" : "Descending" }}
         </UiButton>
         <!-- Cards Grid -->
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
           <template
-            v-for="(card, index) in paginatedPosts"
-            :key="card.title"
+            v-for="(post, index) in paginatedPosts"
+            :key="index"
           >
             <!-- Large Card -->
             <NuxtLink
               v-if="index === 0 && currentPage === 1"
-              :to="`/blog/${card.slug}`"
-              class="col-span-1 sm:col-span-2 md:col-span-4 h-64 rounded-lg bg-gray-300"
+              :to="`/blog/${post.slug}`"
+              class="col-span-1 h-[240px] md:col-span-3 lg:col-span-3"
             >
-              {{ card.title }} - {{ card.publishedOn }}
+              <BlogPostCard
+                :post="post"
+                card-style="cardStyle1"
+              />
             </NuxtLink>
             <!-- Small Cards -->
             <NuxtLink
-              v-else
-              :to="`/blog/${card.slug}`"
-              class="h-32 rounded-lg bg-gray-200"
+              v-else-if="index > 0 && index <= 9"
+              :to="`/blog/${post.slug}`"
             >
-              {{ card.title }} - {{ card.publishedOn }}
+              <BlogPostCard
+                :post="post"
+                card-style="cardStyle2"
+              />
             </NuxtLink>
           </template>
+        </div>
+        <!-- Pagination Controls -->
+        <div class="flex justify-center my-6">
+          <UiButton
+            :disabled="currentPage === 1"
+            @click="goToPreviousPage"
+          >
+            Previous
+          </UiButton>
+          <span class="px-2 mt-2">Page {{ currentPage }} of {{ totalPages }}</span>
+          <UiButton
+            :disabled="currentPage === totalPages"
+            @click="goToNextPage"
+          >
+            Next
+          </UiButton>
         </div>
       </div>
       <div class="h-32 rounded-lg bg-gray-200 md:col-span-2">
         Comments
       </div>
-    </div>
-    <!-- Pagination Controls -->
-    <div class="flex justify-center my-6">
-      <UiButton
-        :disabled="currentPage === 1"
-        @click="goToPreviousPage"
-      >
-        Previous
-      </UiButton>
-      <span class="px-2 mt-2">Page {{ currentPage }} of {{ totalPages }}</span>
-      <UiButton
-        :disabled="currentPage === totalPages"
-        @click="goToNextPage"
-      >
-        Next
-      </UiButton>
     </div>
   </article>
 </template>
