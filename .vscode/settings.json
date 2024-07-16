@@ -100,6 +100,32 @@
   // Enable Emmet completions for Tailwind CSS
   "tailwindCSS.emmetCompletions": true,
 
+  "colorize.languages": [
+    "javascript",
+    // ...
+  ],
+  "colorize.colorized_variables": [
+    "LESS",
+    "CSS"
+  ],
+
+  "colorInfo.languages": [
+    {
+        "selector": "css",
+        "colors": "css"
+    }, {
+        "selector": "sass",
+        "colors": "css"
+    }, {
+        "selector": "scss",
+        "colors": "css"
+    }, {
+        "selector": "less",
+        "colors": "css"
+    }
+],
+
+
 
   "experimentalDisableTemplateSupport": true,
   "[scss]": {

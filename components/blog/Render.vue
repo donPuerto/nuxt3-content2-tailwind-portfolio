@@ -43,61 +43,62 @@ const authors = computed((): Author[] => {
 <template>
   <article class=" container mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Breadcrumb -->
-    <nav class="text-sm font-medium mb-4">
+    <nav class="font-medium my-6">
       <NuxtLink
         to="/blog"
-        class="text-blue-600 hover:text-blue-800"
+        class="hover:text-ring"
       >
+        <Icon
+          name="ph:newspaper-duotone"
+          class="flex-shrink-0 w-6 h-6"
+        />
         Blog
       </NuxtLink>
-      <span class="mx-2">&gt;</span>
-      <span class="text-gray-500">{{ props.post.title }}</span>
+      <span class="mx-1">&gt;</span>
+      <span class="text-primary hover:text-ring">{{ props.post.title }}</span>
     </nav>
 
-    <!-- Spacing -->
-    <div class="my-8" />
-
     <!-- Posted Date -->
-    <p class="text-gray-600 mb-4">
+    <p class=" text-secondary my-2">
       Posted Date: {{ formattedDate }}
     </p>
 
     <!-- Blog Title -->
-    <h1 class="mt-5 text-4xl font-black text-gray-100">
+    <h1 class="text-4xl font-black text-foreground">
       {{ title }}
     </h1>
 
     <!-- Blog Title -->
-    <p class="mt-3 text-lg text-gray-200">
+    <p class="mt-3 text-lg text-foreground">
       {{ post.description }}
     </p>
 
     <!-- Authors Info -->
-    <div class="flex flex-wrap items-center mb-8 mt-2">
+    <div class="flex flex-wrap items-center mb-8 my-3">
       <div
         v-for="(author, index) in authors"
         :key="index"
-        class="flex items-center mr-6 mb-4"
+        class="flex items-center mr-6"
       >
         <img
           :src="author.avatar"
           :alt="author.name"
-          class="w-10 h-10 rounded-full mr-1"
+          class="w-9 h-9 rounded-full mr-2"
         >
         <div class="flex flex-col">
           <NuxtLink
             :to="`/author/${author.slug}`"
-            class="font-medium text-blue-600 hover:text-blue-800"
+            class="font-medium text-primary hover:text-ring"
           >
             {{ author.name }}
           </NuxtLink>
-          <span class="text-sm text-gray-500">{{ author.slug }}</span>
+          <span class="text-sm text-secondary">{{ author.slug }}</span>
         </div>
       </div>
     </div>
 
     <!-- Horizontal line -->
-    <hr class="my-8 border-t border-gray-300">
+    <hr class="my-4 border-t border-secondary">
 
     <!-- Content -->
     <div class=" prose prose-lg blog-content">
