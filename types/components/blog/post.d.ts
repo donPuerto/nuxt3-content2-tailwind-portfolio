@@ -6,6 +6,7 @@ export interface Post {
   subtitle?: string
   series?: string
   description?: string
+  body: string | MarkdownRoot
   image: string
   alt?: string
   published_on: string

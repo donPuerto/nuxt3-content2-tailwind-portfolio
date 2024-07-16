@@ -51,6 +51,10 @@ module.exports = {
           from: { height: 'var(--radix-collapsible-content-height)' },
           to: { height: '0px' },
         },
+        'background': {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -59,6 +63,7 @@ module.exports = {
         'fadeOut': 'fadeOut 0.2s ease-out',
         'collapse-down': 'collapse-down 0.2s ease-out',
         'collapse-up': 'collapse-up 0.2s ease-out',
+        'border': 'background ease infinite',
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -95,7 +100,16 @@ module.exports = {
           foreground: 'hsl(var(--card-foreground))',
         },
       },
+      lineClamp: {
+        7: '7',
+        8: '8',
+        9: '9',
+        10: '10',
+      },
     },
+  },
+  variants: {
+    lineClamp: ['responsive', 'hover'],
   },
   plugins: [
     tailwindcss(),
