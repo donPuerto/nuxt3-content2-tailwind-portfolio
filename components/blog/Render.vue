@@ -100,22 +100,58 @@ const authors = computed((): Author[] => {
     <!-- Horizontal line -->
     <hr class="my-4 border-t border-secondary">
 
-    <!-- Content -->
-    <div class=" prose prose-lg blog-content">
-      <ContentRenderer
-        :value="post"
-      >
-        <template #empty>
-          <p>No content found.</p>
-        </template>
-      </ContentRenderer>
+    <!-- Content with full-width background and padding -->
+    <div class="bg-secondary/10 w-full py-6 rounded-xl shadow-xl">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="prose prose-lg max-w-none blog-content">
+          <ContentRenderer :value="post">
+            <template #empty>
+              <p>No content found.</p>
+            </template>
+          </ContentRenderer>
+        </div>
+      </div>
     </div>
   </article>
 </template>
 
 <style scoped>
-.blog-content :deep(p) {
-  margin-bottom: 1em;
+.blog-content :deep(pre) {
+  margin: 1.5em -.5rem;  /* Negative margin to extend to container edges */
+  padding: 1.5em 2rem;  /* Padding to match container padding */
+  background-color: hsl(var(--background));
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  box-shadow: 0 1px 1px 2px hsl(var(--ring)), 0 1px 1px 2px hsl(var(--ring));  /* Optional: adds subtle shadow */
+}
+
+.blog-content :deep(code) {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.875em;
+  color: #1f2937;  /* Dark gray text */
+}
+
+.blog-content :deep(pre code) {
+  display: block;
+  padding: 0;
+  background-color: transparent;
+}
+
+/* Inline code */
+.blog-content :deep(:not(pre) > code) {
+  padding: 0.2em 0.4em;
+  background-color: hsl(var(--background));
+  border-radius: 0.25em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .blog-content :deep(pre) {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
 .blog-content :deep(h2),
