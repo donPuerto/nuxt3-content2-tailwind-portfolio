@@ -2,11 +2,20 @@
 import type { Author } from '../../types/components/blog/post'
 import type { Post } from '~/types/components/blog/post'
 
+// Define an interface for table of contents items
+interface TOCItem {
+  id: string
+  text: string | null
+  level: number
+  isActive: boolean
+}
+
 const props = defineProps<{
   post: Post
 }>()
 
-const tableOfContents = ref([])
+const tableOfContents = ref<TOCItem[]>([])
+const activeId = ref<string | null>(null)
 
 const title = computed(() => props.post.title)
 
@@ -49,8 +58,31 @@ onMounted(() => {
       id: header.id,
       text: header.textContent,
       level: parseInt(header.tagName.charAt(1)),
+      isActive: false,
     }))
+
+    // Set up Intersection Observer
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            activeId.value = entry.target.id
+          }
+        })
+      },
+      { rootMargin: '-5% 0px -95% 0px' },
+    )
+
+    headers.forEach(header => observer.observe(header))
   }
+})
+
+// Update active state of TOC items when activeId changes
+watch(activeId, (newActiveId) => {
+  tableOfContents.value = tableOfContents.value.map(item => ({
+    ...item,
+    isActive: item.id === newActiveId,
+  }))
 })
 </script>
 
@@ -132,6 +164,7 @@ onMounted(() => {
       </article>
 
       <!-- Table of Contents (right side) -->
+      <!-- Table of Contents (right side) -->
       <aside class="lg:w-1/4 mt-8 lg:mt-0">
         <div class="sticky top-8">
           <div
@@ -149,7 +182,8 @@ onMounted(() => {
               >
                 <a
                   :href="`#${header.id}`"
-                  class="text-primary hover:text-ring"
+                  class="text-primary hover:text-ring transition-colors duration-200"
+                  :class="{ 'font-bold text-ring': header.isActive }"
                 >
                   {{ header.text }}
                 </a>
