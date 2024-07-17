@@ -6,6 +6,8 @@ const props = defineProps<{
   post: Post
 }>()
 
+const tableOfContents = ref([])
+
 const title = computed(() => props.post.title)
 
 const formattedDate = computed(() => {
@@ -38,81 +40,126 @@ const authors = computed((): Author[] => {
   }
   return []
 })
+
+onMounted(() => {
+  const article = document.querySelector('.blog-content')
+  if (article) {
+    const headers = article.querySelectorAll('h2, h3, h4, h5, h6')
+    tableOfContents.value = Array.from(headers).map(header => ({
+      id: header.id,
+      text: header.textContent,
+      level: parseInt(header.tagName.charAt(1)),
+    }))
+  }
+})
 </script>
 
 <template>
-  <article class=" container mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Breadcrumb -->
-    <nav class="font-medium my-6">
-      <NuxtLink
-        to="/blog"
-        class="hover:text-ring"
-      >
-        <Icon
-          name="ph:newspaper-duotone"
-          class="flex-shrink-0 w-6 h-6"
-        />
-        Blog
-      </NuxtLink>
-      <span class="mx-1">&gt;</span>
-      <span class="text-primary hover:text-ring">{{ props.post.title }}</span>
-    </nav>
-
-    <!-- Posted Date -->
-    <p class=" text-secondary my-2">
-      Posted Date: {{ formattedDate }}
-    </p>
-
-    <!-- Blog Title -->
-    <h1 class="text-4xl font-black text-foreground">
-      {{ title }}
-    </h1>
-
-    <!-- Blog Title -->
-    <p class="mt-3 text-lg text-foreground">
-      {{ post.description }}
-    </p>
-
-    <!-- Authors Info -->
-    <div class="flex flex-wrap items-center mb-8 my-3">
-      <div
-        v-for="(author, index) in authors"
-        :key="index"
-        class="flex items-center mr-6"
-      >
-        <img
-          :src="author.avatar"
-          :alt="author.name"
-          class="w-9 h-9 rounded-full mr-2"
-        >
-        <div class="flex flex-col">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div class="flex flex-col lg:flex-row">
+      <!-- Main content -->
+      <article class=" container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Breadcrumb -->
+        <nav class="font-medium my-6">
           <NuxtLink
-            :to="`/author/${author.slug}`"
-            class="font-medium text-primary hover:text-ring"
+            to="/blog"
+            class="hover:text-ring"
           >
-            {{ author.name }}
+            <Icon
+              name="ph:newspaper-duotone"
+              class="flex-shrink-0 w-6 h-6"
+            />
+            Blog
           </NuxtLink>
-          <span class="text-sm text-secondary">{{ author.slug }}</span>
-        </div>
-      </div>
-    </div>
+          <span class="mx-1">&gt;</span>
+          <span class="text-primary hover:text-ring">{{ props.post.title }}</span>
+        </nav>
 
-    <!-- Horizontal line -->
-    <hr class="my-4 border-t border-secondary">
+        <!-- Posted Date -->
+        <p class=" text-secondary my-2">
+          Posted Date: {{ formattedDate }}
+        </p>
 
-    <!-- Content with full-width background and padding -->
-    <div class="bg-secondary/10 w-full py-6 rounded-xl shadow-xl">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="prose prose-lg max-w-none blog-content">
-          <ContentRenderer :value="post">
-            <template #empty>
-              <p>No content found.</p>
-            </template>
-          </ContentRenderer>
+        <!-- Blog Title -->
+        <h1 class="text-4xl font-black text-foreground">
+          {{ title }}
+        </h1>
+
+        <!-- Blog Description  -->
+        <p class="mt-3 text-lg text-foreground">
+          {{ post.description }}
+        </p>
+
+        <!-- Authors Info -->
+        <div class="flex flex-wrap items-center mb-8 my-3">
+          <div
+            v-for="(author, index) in authors"
+            :key="index"
+            class="flex items-center mr-6"
+          >
+            <img
+              :src="author.avatar"
+              :alt="author.name"
+              class="w-9 h-9 rounded-full mr-2"
+            >
+            <div class="flex flex-col">
+              <NuxtLink
+                :to="`/author/${author.slug}`"
+                class="font-medium text-primary hover:text-ring"
+              >
+                {{ author.name }}
+              </NuxtLink>
+              <span class="text-sm text-secondary">{{ author.slug }}</span>
+            </div>
+          </div>
         </div>
-      </div>
+
+        <!-- Horizontal line -->
+        <hr class="my-4 border-t border-secondary">
+
+        <!-- Content with full-width background and padding -->
+        <div class="bg-secondary/10 w-full py-6 rounded-xl shadow-xl">
+          <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="prose prose-lg max-w-none blog-content">
+              <ContentRenderer :value="post">
+                <template #empty>
+                  <p>No content found.</p>
+                </template>
+              </ContentRenderer>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Table of Contents (right side) -->
+      <aside class="lg:w-1/4 mt-8 lg:mt-0">
+        <div class="sticky top-8">
+          <div
+            v-if="tableOfContents.length > 0"
+            class="bg-secondary/10 p-4 rounded-xl"
+          >
+            <h2 class="text-xl font-bold mb-4">
+              Table of Contents
+            </h2>
+            <ul class="space-y-2">
+              <li
+                v-for="header in tableOfContents"
+                :key="header.id"
+                :class="{ 'ml-2': header.level === 3, 'ml-4': header.level > 3 }"
+              >
+                <a
+                  :href="`#${header.id}`"
+                  class="text-primary hover:text-ring"
+                >
+                  {{ header.text }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </aside>
     </div>
-  </article>
+  </div>
 </template>
 
 <style scoped>
@@ -122,7 +169,9 @@ const authors = computed((): Author[] => {
   background-color: hsl(var(--background));
   border-radius: 0.5rem;
   overflow-x: auto;
-  box-shadow: 0 1px 1px 2px hsl(var(--ring)), 0 1px 1px 2px hsl(var(--ring));  /* Optional: adds subtle shadow */
+  /* border: 1px solid hsl(var(--ring)); */
+  box-shadow: -1px 1px 4px -1px  hsl(var(--ring)) inset, 2px -1px 4px -2px  hsl(var(--ring)) inset;
+
 }
 
 .blog-content :deep(code) {
