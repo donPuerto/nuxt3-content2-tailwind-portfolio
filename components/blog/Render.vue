@@ -162,7 +162,7 @@ watch(activeId, (newActiveId) => {
         <div class="flex flex-col lg:flex-row">
           <!-- Main content -->
           <div class="w-full md:w-full lg:w-3/4 pr-0 lg:pr-8">
-            <div class="bg-secondary/10 w-full px-8 py-6 rounded-xl shadow-xl">
+            <div class="bg-background/10 w-full px-8 py-6 rounded-xl shadow-xl">
               <div class="prose prose-lg max-w-none blog-content">
                 <ContentRenderer :value="post">
                   <template #empty>
@@ -179,7 +179,7 @@ watch(activeId, (newActiveId) => {
               <!-- Table of Contents -->
               <div
                 v-if="tableOfContents.length > 0"
-                class="bg-secondary/10 p-6 rounded-xl "
+                class="bg-secondary p-6 rounded-xl "
               >
                 <h2 class="text-sm font-bold mb-4">
                   Table of Contents
@@ -202,7 +202,7 @@ watch(activeId, (newActiveId) => {
               </div>
 
               <!-- Quick Links -->
-              <div class="bg-secondary/10 p-4 rounded-xl">
+              <div class="bg-secondary p-4 rounded-xl">
                 <h2 class="text-sm font-bold mb-4">
                   Quick Links
                 </h2>
@@ -231,7 +231,7 @@ watch(activeId, (newActiveId) => {
               </div>
 
               <!-- Ad Space -->
-              <div class="bg-secondary/10 p-4 rounded-xl">
+              <div class="bg-secondary p-4 rounded-xl">
                 <h2 class="text-sm font-bold mb-4">
                   Advertisement
                 </h2>
@@ -256,22 +256,26 @@ watch(activeId, (newActiveId) => {
   margin: 1.5em -.5rem;
   padding: 1.5em 3rem;
   background-color: hsl(var(--background));
-  border-color: hsl(var(--primary));
+  border-style: solid;
+  border-width: 2px;
+  border-color: hsl(var(--border));
   border-radius: 0.5rem;
   overflow-x: auto;
-  /* box-shadow: -1px 1px 4px -1px  hsl(var(--ring)) inset, 2px -1px 4px -2px  hsl(var(--ring)) inset; */
+
 }
 
 .blog-content :deep(code) {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 0.875em;
   color: #1f2937;
+
 }
 
 .blog-content :deep(pre code) {
   display: block;
   padding: 0;
   background-color: transparent;
+
 }
 
 .blog-content :deep(h1) {
