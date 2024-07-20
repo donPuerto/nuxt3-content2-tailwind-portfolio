@@ -30,6 +30,7 @@ logs
 !.env.example
 
 # 👉 Custom Git ignores
+.data
 
 # Editor directories and files
 .vscode/*

@@ -21,7 +21,7 @@ const props = defineProps<{
       :series="post.series"
       :image="post.image"
       :description="post.description"
-      :published-on="post.publishedOn"
+      :published-on="post.published_on"
       :published="true"
     />
   </div>

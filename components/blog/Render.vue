@@ -2,17 +2,14 @@
 import type { Author } from '../../types/components/blog/post'
 import type { Post } from '~/types/components/blog/post'
 
+const { app: { quickLinks } } = useAppConfig()
+
 // Define an interface for table of contents items
 interface TOCItem {
   id: string
   text: string | null
   level: number
   isActive: boolean
-}
-interface QuickLink {
-  icon: string
-  text: string
-  url: string
 }
 
 const props = defineProps<{
@@ -21,22 +18,17 @@ const props = defineProps<{
 
 const tableOfContents = ref<TOCItem[]>([])
 const activeId = ref<string | null>(null)
-// Sample quick links (you can replace these with your actual links)
-const quickLinks = ref<QuickLink[]>([
-  { icon: 'ph:pen-duotone', text: 'Edit this article', url: 'https://github.com/donPuerto/nuxt3-content2-tailwind-portfolio/blob/master/content/blog/2.nuxt/1.nuxt.md' },
-  { icon: 'ph:shooting-star-duotone', text: 'Star on Github', url: 'https://github.com/donPuerto' },
-  { icon: 'ph:chat-centered-text-duotone', text: 'Chat on Discord', url: 'https://discord.gg/6eGKS3En' },
-  { icon: 'ph:hand-heart-duotone', text: 'Become Sponsor', url: 'https://github.com/sponsors' },
-])
 
 const title = computed(() => props.post.title)
 
 const formattedDate = computed(() => {
   if (props.post.published_on) {
     return new Date(props.post.published_on).toLocaleDateString('en-US', {
+      weekday: 'long',
       year: 'numeric',
       month: 'long',
       day: 'numeric',
+      timeZone: 'UTC',
     })
   }
   return ''
@@ -102,7 +94,7 @@ watch(activeId, (newActiveId) => {
   <template>
     <article>
       <!-- Header Section -->
-      <div class="w-full pt-6">
+      <div class="w-full py-12">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
           <!-- Breadcrumb -->
           <nav class="font-medium mb-4">
@@ -121,8 +113,8 @@ watch(activeId, (newActiveId) => {
           </nav>
 
           <!-- Posted Date -->
-          <p class="text-secondary mb-2">
-            Posted Date: {{ formattedDate }}
+          <p class="text-foreground/80 mt-12 mb-2 text-sm">
+            {{ formattedDate }}
           </p>
 
           <!-- Blog Title -->
@@ -145,32 +137,32 @@ watch(activeId, (newActiveId) => {
               <img
                 :src="author.avatar"
                 :alt="author.name"
-                class="w-9 h-9 rounded-full mr-2"
+                class="w-12 h-12 rounded-full mr-1"
               >
               <div class="flex flex-col">
                 <NuxtLink
                   :to="`/author/${author.slug}`"
-                  class="font-medium text-primary hover:text-ring"
+                  class="font-normal text-sm text-secondary-foreground/80 hover:text-ring"
                 >
                   {{ author.name }}
                 </NuxtLink>
-                <span class="text-sm text-secondary">{{ author.slug }}</span>
+                <span class="font-normal text-sm text-primary">{{ author.slug }}</span>
               </div>
             </div>
           </div>
 
           <!-- Horizontal line -->
-          <hr class="border-t border-secondary">
+          <hr class="border-t border-secondary mt-10">
         </div>
       </div>
 
       <!-- Content and TOC Section -->
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Content and TOC -->
         <div class="flex flex-col lg:flex-row">
           <!-- Main content -->
           <div class="w-full md:w-full lg:w-3/4 pr-0 lg:pr-8">
-            <div class="bg-secondary/10 w-full px-8 pt-1 rounded-xl shadow-xl">
+            <div class="bg-secondary/10 w-full px-8 py-6 rounded-xl shadow-xl">
               <div class="prose prose-lg max-w-none blog-content">
                 <ContentRenderer :value="post">
                   <template #empty>
@@ -182,25 +174,25 @@ watch(activeId, (newActiveId) => {
           </div>
 
           <!-- Table of Contents (right side) -->
-          <aside class="w-full lg:w-1/4 mt-8 lg:mt-0 block md:hidden lg:block">
+          <aside class="w-full lg:w-1/4 lg:mt-0 block md:hidden lg:block">
             <div class="sticky top-8 space-y-6">
               <!-- Table of Contents -->
               <div
                 v-if="tableOfContents.length > 0"
-                class="bg-secondary/10 p-4 rounded-xl "
+                class="bg-secondary/10 p-6 rounded-xl "
               >
                 <h2 class="text-sm font-bold mb-4">
                   Table of Contents
                 </h2>
-                <ul class="space-y-2">
+                <ul class="space-y-1">
                   <li
                     v-for="header in tableOfContents"
                     :key="header.id"
-                    :class="{ 'ml-2': header.level === 3, 'ml-4': header.level > 3 }"
+                    :class="{ 'ml-1': header.level === 3, 'ml-8': header.level > 3 }"
                   >
                     <a
                       :href="`#${header.id}`"
-                      class="text-primary hover:text-ring transition-colors duration-200"
+                      class="text-sm text-primary hover:text-ring transition-colors duration-200"
                       :class="{ 'font-bold text-ring': header.isActive }"
                     >
                       {{ header.text }}
@@ -257,21 +249,23 @@ watch(activeId, (newActiveId) => {
 </template>
 
 <style scoped>
+.blog-content{
+  font-family: "Inter","Liberation Mono", "Courier New", monospace;
+}
 .blog-content :deep(pre) {
-  margin: 1.5em -.5rem;  /* Negative margin to extend to container edges */
-  padding: 1.5em 2rem;  /* Padding to match container padding */
+  margin: 1.5em -.5rem;
+  padding: 1.5em 3rem;
   background-color: hsl(var(--background));
+  border-color: hsl(var(--primary));
   border-radius: 0.5rem;
   overflow-x: auto;
-  /* border: 1px solid hsl(var(--ring)); */
-  box-shadow: -1px 1px 4px -1px  hsl(var(--ring)) inset, 2px -1px 4px -2px  hsl(var(--ring)) inset;
-
+  /* box-shadow: -1px 1px 4px -1px  hsl(var(--ring)) inset, 2px -1px 4px -2px  hsl(var(--ring)) inset; */
 }
 
 .blog-content :deep(code) {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 0.875em;
-  color: #1f2937;  /* Dark gray text */
+  color: #1f2937;
 }
 
 .blog-content :deep(pre code) {
@@ -280,11 +274,55 @@ watch(activeId, (newActiveId) => {
   background-color: transparent;
 }
 
-/* Inline code */
-.blog-content :deep(:not(pre) > code) {
-  padding: 0.2em 0.4em;
-  background-color: hsl(var(--background));
-  border-radius: 0.25em;
+.blog-content :deep(h1) {
+  font-size: 3rem; /* text-5xl */
+  font-weight: 700; /* font-bold */
+  margin-left: -0.5rem; /* -mx-2 */
+  margin-right: -0.5rem; /* -mx-2 */
+  margin-top: 1rem; /* my-4 */
+  margin-bottom: 1rem; /* my-4 */
+}
+
+.blog-content :deep(h2) {
+  font-size: 2.25rem; /* text-4xl */
+  font-weight: 800; /* font-bold */
+  margin-left: -0.5rem; /* -mx-2 */
+  margin-right: -0.5rem; /* -mx-2 */
+  margin-top: 2rem; /* my-8 */
+}
+
+.blog-content :deep(h3) {
+  font-size: 1.875rem; /* text-3xl */
+  margin-bottom: 1rem;
+  margin-left: -0.5rem; /* -mx-2 */
+  margin-right: -0.5rem; /* -mx-2 */
+}
+
+.blog-content :deep(h4) {
+  font-size: 1.2rem; /* text-2xl */
+  font-weight: 600; /* font-semibold */
+  margin-top: 0.5rem; /* mt-2 */
+}
+
+.blog-content :deep(h5) {
+  font-size: 1.25rem; /* text-xl */
+}
+
+.blog-content :deep(h6) {
+  font-size: 1.125rem; /* text-lg */
+}
+
+/* Assuming blog-content-heading includes these properties: */
+.blog-content :deep(h1),
+.blog-content :deep(h2),
+.blog-content :deep(h3),
+.blog-content :deep(h4),
+.blog-content :deep(h5),
+.blog-content :deep(h6) {
+  /* Add properties from blog-content-heading here */
+  /* For example: */
+  line-height: 1;
+  color: hsl(var(--foreground));
 }
 
 /* Responsive adjustments */
@@ -295,14 +333,5 @@ watch(activeId, (newActiveId) => {
     padding-left: 1rem;
     padding-right: 1rem;
   }
-}
-
-.blog-content :deep(h2),
-.blog-content :deep(h3),
-.blog-content :deep(h4),
-.blog-content :deep(h5),
-.blog-content :deep(h6) {
-  margin-top: 1.5em;
-  margin-bottom: 0.5em;
 }
 </style>
