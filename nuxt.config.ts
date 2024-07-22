@@ -46,6 +46,7 @@ export default defineNuxtConfig({
     editorSupport: true,
     cssPath: ['~/assets/css/tailwind.css', { injectPosition: 'last' }],
   },
+
   imports: {
     // Add tv and VariantProps to the set of auto imported modules
     imports: [
@@ -86,14 +87,12 @@ export default defineNuxtConfig({
     },
   },
 
-  plugins: [{ src: '~/plugins/particles.client.ts', mode: 'client' }],
+  plugins: [
+    { src: '~/plugins/particles.client.ts', mode: 'client' },
+
+  ],
 
   content: {
-    // documentDriven: true,
-    // navigation: { fields: ['icon', 'label'] },
-    // markdown: {
-    //   toc: { depth: 4, searchDepth: 4 },
-    // },
     experimental: {
       search: {
         indexed: true,
@@ -101,25 +100,16 @@ export default defineNuxtConfig({
     },
     highlight: {
       theme: {
-        default: 'material-theme-palenight',
-        dark: 'one-dark-pro',
+        default: 'github-light',
+        dark: 'github-dark',
         sepia: 'monokai',
       },
-      preload: [
-        'json',
-        'js',
-        'ts',
-        'css',
-        'html',
-        'md',
-        'yaml',
-        'vue',
-        'vue-html',
-        'bash',
-        'typescript',
-        'javascript',
+      langs: [
+        'json', 'js', 'ts', 'html', 'css', 'vue', 'shell', 'mdc', 'md', 'yaml',
       ],
+
     },
   },
 
+  compatibilityDate: '2024-07-22',
 })

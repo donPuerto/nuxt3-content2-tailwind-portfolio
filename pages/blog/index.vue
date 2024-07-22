@@ -6,7 +6,7 @@ definePageMeta({
 })
 
 // Fetch all blog posts
-const { pending, data: posts } = await useLazyAsyncData<Post[]>('all-posts', () =>
+const { data: posts } = await useLazyAsyncData<Post[]>('all-posts', () =>
   queryContent<Post>('/blog').sort({ published_on: -1 }).find(),
 )
 

@@ -1,9 +1,11 @@
 <script lang="ts" setup>
+import type { Post } from '~/types/components/blog/post'
+
 const route = useRoute()
 const category = route.params.slug
 
 // Fetch all posts
-const { pending, data: posts } = await useLazyAsyncData<Post[]>('all-posts', () =>
+const { data: posts } = await useLazyAsyncData<Post[]>('all-posts', () =>
   queryContent<Post>('/blog').find(),
 )
 

@@ -94,7 +94,7 @@ watch(activeId, (newActiveId) => {
   <template>
     <article>
       <!-- Header Section -->
-      <div class="w-full py-12">
+      <div class="w-full mt-4">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
           <!-- Breadcrumb -->
           <nav class="font-medium mb-4">
@@ -113,7 +113,7 @@ watch(activeId, (newActiveId) => {
           </nav>
 
           <!-- Posted Date -->
-          <p class="text-foreground/80 mt-12 mb-2 text-sm">
+          <p class="text-foreground/80 mt-8 mb-2 text-sm">
             {{ formattedDate }}
           </p>
 
@@ -152,7 +152,7 @@ watch(activeId, (newActiveId) => {
           </div>
 
           <!-- Horizontal line -->
-          <hr class="border-t border-secondary mt-10">
+          <hr class="border-t border-secondary mt-2 mb-6">
         </div>
       </div>
 
@@ -162,8 +162,8 @@ watch(activeId, (newActiveId) => {
         <div class="flex flex-col lg:flex-row">
           <!-- Main content -->
           <div class="w-full md:w-full lg:w-3/4 pr-0 lg:pr-8">
-            <div class="bg-background/10 w-full px-8 py-6 rounded-xl shadow-xl">
-              <div class="prose prose-lg max-w-none blog-content">
+            <div class="bg-secondary w-full px-12 py-6 rounded-xl shadow-xl">
+              <div class="blog-content">
                 <ContentRenderer :value="post">
                   <template #empty>
                     <p>No content found.</p>
@@ -250,15 +250,16 @@ watch(activeId, (newActiveId) => {
 
 <style scoped>
 .blog-content{
-  font-family: "Inter","Liberation Mono", "Courier New", monospace;
+  font-family: "Inter var","Liberation Mono", "Courier New", monospace;
+  line-height: 1.3333;
 }
 .blog-content :deep(pre) {
   margin: 1.5em -.5rem;
-  padding: 1.5em 3rem;
+  padding: 1em 2rem;
   background-color: hsl(var(--background));
   border-style: solid;
-  border-width: 2px;
-  border-color: hsl(var(--border));
+  border-width: 1px;
+  border-color: hsl(var(--border, 200 200 200));
   border-radius: 0.5rem;
   overflow-x: auto;
 
@@ -267,7 +268,6 @@ watch(activeId, (newActiveId) => {
 .blog-content :deep(code) {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 0.875em;
-  color: #1f2937;
 
 }
 
@@ -279,33 +279,45 @@ watch(activeId, (newActiveId) => {
 }
 
 .blog-content :deep(h1) {
+  font-color: hsl(var(--text-primary));
   font-size: 3rem; /* text-5xl */
   font-weight: 700; /* font-bold */
   margin-left: -0.5rem; /* -mx-2 */
   margin-right: -0.5rem; /* -mx-2 */
   margin-top: 1rem; /* my-4 */
   margin-bottom: 1rem; /* my-4 */
+  letter-spacing: -0.025em;
 }
 
 .blog-content :deep(h2) {
   font-size: 2.25rem; /* text-4xl */
-  font-weight: 800; /* font-bold */
+  font-weight: 700; /* font-bold */
   margin-left: -0.5rem; /* -mx-2 */
   margin-right: -0.5rem; /* -mx-2 */
   margin-top: 2rem; /* my-8 */
+  letter-spacing: -0.025em;
 }
 
 .blog-content :deep(h3) {
   font-size: 1.875rem; /* text-3xl */
+  font-weight: 600; /* font-bold */
   margin-bottom: 1rem;
   margin-left: -0.5rem; /* -mx-2 */
   margin-right: -0.5rem; /* -mx-2 */
+  letter-spacing: -0.05em;
+  border: 1px solid blue;
 }
 
 .blog-content :deep(h4) {
-  font-size: 1.2rem; /* text-2xl */
-  font-weight: 600; /* font-semibold */
-  margin-top: 0.5rem; /* mt-2 */
+  font-color: hsl(var(--text-primary));
+  font-size: 1.2rem;
+  /* font-weight: 500; */
+  margin-top: 0.5rem;
+  letter-spacing: -0.025em;
+  border: 1px solid red;
+  text-shadow: none;
+  -webkit-text-stroke: 0;
+  font-variation-settings: normal;
 }
 
 .blog-content :deep(h5) {
@@ -327,6 +339,14 @@ watch(activeId, (newActiveId) => {
   /* For example: */
   line-height: 1;
   color: hsl(var(--foreground));
+}
+
+.blog-content :deep(p) {
+  margin-bottom: 1.5rem;
+}
+
+.blog-content :deep(h3 + h3) {
+  margin-top: 6.5rem !important;
 }
 
 /* Responsive adjustments */

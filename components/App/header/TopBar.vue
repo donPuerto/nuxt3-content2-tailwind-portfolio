@@ -7,7 +7,6 @@ const pages: MenuList | undefined = fetchMenuListByHeader('Pages')
 const colorMode = useColorMode()
 const mobileNav = ref(false)
 const isOpen = ref(false)
-const { metaSymbol } = useShortcuts()
 
 defineShortcuts({
   meta_k: () => {
