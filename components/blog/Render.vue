@@ -254,7 +254,7 @@ watch(activeId, (newActiveId) => {
   line-height: 1.3333;
 }
 .blog-content :deep(pre) {
-  margin: 1.5em -.5rem;
+  margin: 0em -.5rem;
   padding: 1em 2rem;
   background-color: hsl(var(--background));
   border-style: solid;
@@ -342,7 +342,7 @@ watch(activeId, (newActiveId) => {
 }
 
 .blog-content :deep(p) {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.0rem;
 }
 
 .blog-content :deep(h3 + h3) {
@@ -350,12 +350,12 @@ watch(activeId, (newActiveId) => {
 }
 
 /* Responsive adjustments */
-@media (max-width: 640px) {
+/* @media (max-width: 640px) {
   .blog-content :deep(pre) {
     margin-left: -1rem;
     margin-right: -1rem;
     padding-left: 1rem;
     padding-right: 1rem;
   }
-}
+} */
 </style>

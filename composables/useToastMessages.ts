@@ -1,13 +1,47 @@
 /**
  * Usage:
-  <UiButton variant="outline" class="mr-5" @click="showMessage()">Show Toast</UiButton>
-  <UiButton variant="outline" class="mr-5" @click="showMessage('success')">Success Toast</UiButton>
-  <UiButton variant="outline" class="mr-5" @click="showMessage('info')">Info Toast</UiButton>
-  <UiButton variant="outline" class="mr-5" @click="showMessage('warning')">Warning Toast</UiButton>
-  <UiButton variant="outline" class="mr-5" @click="showMessage('destructive')">Error Toast</UiButton>
-  <UiButton variant="outline" class="mr-5" @click="showMessage('action')">Action Toast</UiButton>
-
+ *
+ * import { useToastMessages } from '@/path-to-composables/useToastMessages' // Adjust the path as necessary
+ *
+ * const { showMessage } = useToastMessages()
+ *
+ * // Basic usage
+ * showMessage({
+ *   description: 'Your message has been sent',
+ * })
+ *
+ * // With type
+ * showMessage({
+ *   type: 'success',
+ *   description: 'Your message has been sent',
+ * })
+ *
+ * // With title and icon
+ * showMessage({
+ *   type: 'info',
+ *   title: 'Information',
+ *   icon: 'lucide:info',
+ *   description: 'This is an informational message',
+ * })
+ *
+ * // With action
+ * showMessage({
+ *   type: 'action',
+ *   title: 'Action Required',
+ *   icon: 'lucide:alert',
+ *   description: 'Please take action on this item',
+ *   action: h(resolveComponent('UiToastAction'), { altText: 'Undo' }, { default: () => 'Undo' })
+ * })
  */
+
+interface ToastMessageOptions {
+  type?: string
+  title?: string
+  icon?: string
+  description?: string
+  action?: VNode
+}
+
 export const useToastMessages = () => {
   const getToastIcon = (type: string) => {
     switch (type) {
@@ -24,7 +58,7 @@ export const useToastMessages = () => {
     }
   }
 
-  const showMessage = (type?: string) => {
+  const showMessage = ({ type, title, icon, description, action: _action }: ToastMessageOptions) => {
     const toast = useToast()
 
     if (!type) {
@@ -35,9 +69,9 @@ export const useToastMessages = () => {
 
     if (type === 'action') {
       return toast.toast({
-        title: 'Message Sent',
-        icon: 'lucide:mail',
-        description: 'Your message has been sent. Click undo to revert the action',
+        title: title || 'Title',
+        icon: icon || 'lucide:mail',
+        description: description || 'description',
         action: h(
           resolveComponent('UiToastAction'),
           {
@@ -51,10 +85,10 @@ export const useToastMessages = () => {
     }
 
     return toast.toast({
-      title: 'Message Sent',
-      description: 'Your message has been sent',
+      title: title || 'Title',
+      description: description || 'Your message has been sent',
       variant: type,
-      icon: getToastIcon(type),
+      icon: icon || getToastIcon(type),
     })
   }
 
