@@ -188,6 +188,7 @@ watch(activeId, (newActiveId) => {
                   <li
                     v-for="header in tableOfContents"
                     :key="header.id"
+                    class="leading-[1.3rem]"
                     :class="{ 'ml-1': header.level === 3, 'ml-8': header.level > 3 }"
                   >
                     <a
@@ -206,7 +207,7 @@ watch(activeId, (newActiveId) => {
                 <h2 class="text-sm font-bold mb-4">
                   Quick Links
                 </h2>
-                <ul class="space-y-2">
+                <ul class="space-y-1">
                   <li
                     v-for="link in quickLinks"
                     :key="link.url"
