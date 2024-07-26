@@ -123,9 +123,24 @@ watch(activeId, (newActiveId) => {
           </h1>
 
           <!-- Blog Description -->
-          <p class="text-lg text-foreground mb-4">
+          <p class="text-lg text-foreground mb-2">
             {{ post.description }}
           </p>
+
+          <!-- Tags -->
+          <div
+            v-if="post.tags && post.tags.length > 0"
+            class="flex flex-wrap gap-2 mb-4"
+          >
+            <NuxtLink
+              v-for="tag in post.tags"
+              :key="tag"
+              :to="`/blog/tag/${encodeURIComponent(tag)}`"
+              class="px-3 py-1 text-sm font-medium bg-secondary text-primary rounded-full hover:bg-primary hover:text-secondary transition-colors duration-200"
+            >
+              #{{ tag }}
+            </NuxtLink>
+          </div>
 
           <!-- Authors Info -->
           <div class="flex flex-wrap items-center mb-4">
@@ -147,6 +162,27 @@ watch(activeId, (newActiveId) => {
                   {{ author.name }}
                 </NuxtLink>
                 <span class="font-normal text-sm text-primary">{{ author.slug }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Featured Image -->
+          <div
+            v-if="post.image"
+            class="mb-6"
+          >
+            <div
+              class="relative w-full"
+              style="max-width: min(800px, 100%); margin: 0 auto;"
+            >
+              <div style="padding-top: 56.25%;">
+                <img
+                  :src="post.image.url"
+                  :width="post.image.width"
+                  :height="post.image.height"
+                  :alt="post.title"
+                  class="absolute top-0 left-0 w-full h-full object-cover rounded-lg shadow-lg"
+                >
               </div>
             </div>
           </div>
@@ -349,14 +385,4 @@ watch(activeId, (newActiveId) => {
 .blog-content :deep(h3 + h3) {
   margin-top: 6.5rem !important;
 }
-
-/* Responsive adjustments */
-/* @media (max-width: 640px) {
-  .blog-content :deep(pre) {
-    margin-left: -1rem;
-    margin-right: -1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-} */
 </style>

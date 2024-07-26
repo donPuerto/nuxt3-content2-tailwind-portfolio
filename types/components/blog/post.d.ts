@@ -12,11 +12,16 @@ export interface Post {
   subtitle?: string
   series?: string
   description?: string
-  image: string
+  image?: {
+    url: string
+    width: number
+    height: number
+  }
   alt?: string
   published_on: string
+  updated_on: string
   is_publish: boolean
   authors: Author | Author[] | string
   reading_time: string
-  tag: string[]
+  tags: string[]
 }
