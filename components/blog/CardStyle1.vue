@@ -24,9 +24,10 @@ defineProps<{
         :to="`/blog/${slug}`"
         class="shrink-0"
       >
+        {{ image }}
         <img
           v-if="image"
-          :src="image"
+
           :alt="alt"
           class="h-[240px] w-full object-cover rounded-lg shadow-md"
         >
