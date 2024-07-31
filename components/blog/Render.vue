@@ -181,7 +181,7 @@ watch(activeId, (newActiveId) => {
                   :width="post.image.width"
                   :height="post.image.height"
                   :alt="post.title"
-                  class="absolute top-0 left-0 w-full h-full object-cover rounded-lg shadow-lg"
+                  class="absolute top-0 left-0 w-full h-full transition-all duration-300 object-cover rounded-lg shadow-lg blur-sm hover:blur-none"
                 >
               </div>
             </div>
