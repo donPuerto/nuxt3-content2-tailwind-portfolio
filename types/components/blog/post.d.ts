@@ -6,6 +6,7 @@ export interface Author {
 
 export interface Post {
   _path: string
+  doc_url: string
   slug: string
   headline: string
   title: string
@@ -18,8 +19,8 @@ export interface Post {
     height: number
   }
   alt?: string
-  published_on: string
-  updated_on: string
+  published_at: string
+  updated_at: string
   is_publish: boolean
   authors: Author | Author[] | string
   reading_time: string

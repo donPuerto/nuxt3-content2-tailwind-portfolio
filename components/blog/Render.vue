@@ -21,18 +21,23 @@ const activeId = ref<string | null>(null)
 
 const title = computed(() => props.post.title)
 
-const formattedDate = computed(() => {
-  if (props.post.published_on) {
-    return new Date(props.post.published_on).toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      timeZone: 'UTC',
-    })
-  }
-  return ''
-})
+const formatDate = (date: string | Date) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  })
+}
+
+const publishedDate = computed(() =>
+  props.post.published_at ? formatDate(props.post.published_at) : '',
+)
+
+const updatedDate = computed(() =>
+  props.post.updated_at ? formatDate(props.post.updated_at) : '',
+)
 
 // Ensure authors is always an array of Author objects
 const authors = computed((): Author[] => {
@@ -114,7 +119,7 @@ watch(activeId, (newActiveId) => {
 
           <!-- Posted Date -->
           <p class="text-foreground/80 mt-8 mb-2 text-sm">
-            {{ formattedDate }}
+            {{ publishedDate }}
           </p>
 
           <!-- Blog Title -->
@@ -142,30 +147,6 @@ watch(activeId, (newActiveId) => {
             </NuxtLink>
           </div>
 
-          <!-- Authors Info -->
-          <div class="flex flex-wrap items-center mb-4">
-            <div
-              v-for="(author, index) in authors"
-              :key="index"
-              class="flex items-center mr-6 mb-2"
-            >
-              <img
-                :src="author.avatar"
-                :alt="author.name"
-                class="w-12 h-12 rounded-full mr-1"
-              >
-              <div class="flex flex-col">
-                <NuxtLink
-                  :to="`/author/${author.slug}`"
-                  class="font-normal text-sm text-secondary-foreground/80 hover:text-ring"
-                >
-                  {{ author.name }}
-                </NuxtLink>
-                <span class="font-normal text-sm text-primary">{{ author.slug }}</span>
-              </div>
-            </div>
-          </div>
-
           <!-- Featured Image -->
           <div
             v-if="post.image"
@@ -181,9 +162,108 @@ watch(activeId, (newActiveId) => {
                   :width="post.image.width"
                   :height="post.image.height"
                   :alt="post.title"
-                  class="absolute top-0 left-0 w-full h-full transition-all duration-300 object-cover rounded-lg shadow-lg blur-sm hover:blur-none"
+                  class="absolute top-0 left-0 w-full h-full rounded-xl shadow-xl  object-cover
+                    transition-all duration-300  cursor-pointer filter grayscale hover:grayscale-0"
                 >
               </div>
+            </div>
+          </div>
+
+          <!-- Authors Info -->
+          <div class="md:flex md:justify-between md:items-center mb-4">
+            <!-- Left Column: Authors -->
+            <div class="flex flex-wrap items-center mb-4 md:mb-0">
+              <div
+                v-for="(author, index) in authors"
+                :key="index"
+                class="flex items-center mr-6 mb-2"
+              >
+                <img
+                  :src="author.avatar"
+                  :alt="author.name"
+                  class="w-12 h-12 rounded-full mr-1"
+                >
+                <div class="flex flex-col">
+                  <NuxtLink
+                    :to="`/author/${author.slug}`"
+                    class="font-normal text-sm text-secondary-foreground/80 hover:text-ring"
+                  >
+                    {{ author.name }}
+                  </NuxtLink>
+                  <span class="font-normal text-sm text-primary">{{ author.slug }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Social Media Icons -->
+            <div class="flex items-center space-x-4">
+              <a
+                target="_blank"
+                href="https://x.com/donpuerto_"
+                class="text-gray-600 hover:text-gray-800 transition-colors"
+              >
+                <Icon
+                  name="ri:twitter-x-fill"
+                  size="20"
+                />
+              </a>
+              <a
+                target="_blank"
+                href="https://www.facebook.com/diybuddy18"
+                class="text-gray-600 hover:text-gray-800 transition-colors"
+              >
+                <Icon
+                  name="mdi:facebook"
+                  size="24"
+                />
+              </a>
+              <a
+                target="_blank"
+                href="https://www.linkedin.com/in/don-puerto-115790110/"
+                class="text-gray-600 hover:text-gray-800 transition-colors"
+              >
+                <Icon
+                  name="mdi:linkedin"
+                  size="24"
+                />
+              </a>
+            </div>
+          </div>
+
+          <!-- Updated Date -->
+          <div class="md:flex md:justify-between md:items-center">
+            <!-- Left Column -->
+            <div class="md:mb-0">
+              <NuxtLink
+                :to="post.doc_url"
+                class="inline-flex items-center text-sm text-gray-600 hover:text-gray-800 transition-colors"
+              >
+                <Icon
+                  name="ph:pen-duotone"
+                  class="mr-2"
+                />
+                Edit this page
+                <Icon
+                  name="ph:arrow-up-right"
+                  class="ml-1 mb-1"
+                />
+
+              </NuxtLink>
+            </div>
+
+            <!-- Right Column -->
+            <div class="text-sm text-gray-600">
+              <span>
+                Updated at {{ updatedDate }}
+              </span>
+              <span class="mx-3">|</span>
+              <span class="inline-flex items-center">
+                <Icon
+                  name="streamline:interface-time-clock-circle-clock-loading-measure-time-circle"
+                  class="mr-2"
+                />
+                {{ post.reading_time }}
+              </span>
             </div>
           </div>
 
