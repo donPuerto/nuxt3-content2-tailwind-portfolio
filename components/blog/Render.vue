@@ -2,7 +2,7 @@
 import type { Author } from '../../types/components/blog/post'
 import type { Post } from '~/types/components/blog/post'
 
-const { app: { quickLinks } } = useAppConfig()
+const { app: { quickLinks, projectLinks } } = useAppConfig()
 
 // Define an interface for table of contents items
 interface TOCItem {
@@ -99,186 +99,250 @@ watch(activeId, (newActiveId) => {
   <template>
     <article>
       <!-- Header Section -->
-      <div class="w-full mt-4">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-          <!-- Breadcrumb -->
-          <nav class="font-medium mb-4">
-            <NuxtLink
-              to="/blog"
-              class="hover:text-ring"
+      <div class="mt-4 container mx-auto p-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 2xl:px-[10rem]">
+        <!-- Breadcrumb -->
+        <nav class="font-medium mb-4">
+          <NuxtLink
+            to="/blog"
+            class="hover:text-ring"
+          >
+            <Icon
+              name="ph:newspaper-duotone"
+              class="flex-shrink-0 w-6 h-6"
+            />
+            Blog
+          </NuxtLink>
+          <span class="mx-1">&gt;</span>
+          <span class="text-primary hover:text-ring">{{ props.post.title }}</span>
+        </nav>
+
+        <!-- Posted Date -->
+        <p class="text-foreground/80 mt-8 mb-2 text-sm">
+          {{ publishedDate }}
+        </p>
+
+        <!-- Blog Title -->
+        <h1 class="text-4xl font-black text-foreground mb-3">
+          {{ title }}
+        </h1>
+
+        <!-- Blog Description -->
+        <p class="text-lg text-foreground mb-2">
+          {{ post.description }}
+        </p>
+
+        <!-- Tags -->
+        <div
+          v-if="post.tags && post.tags.length > 0"
+          class="flex flex-wrap gap-2 mb-4"
+        >
+          <NuxtLink
+            v-for="tag in post.tags"
+            :key="tag"
+            :to="`/blog/tag/${encodeURIComponent(tag)}`"
+            class="px-3 py-1 text-sm font-medium bg-secondary text-primary rounded-full hover:bg-primary hover:text-secondary transition-colors duration-200"
+          >
+            #{{ tag }}
+          </NuxtLink>
+        </div>
+
+        <!-- Featured Image -->
+        <div
+          v-if="post.image"
+          class="mb-6"
+        >
+          <div
+            class="relative w-full"
+            style="max-width: 100%; margin: 0;"
+          >
+            <div style="padding-top: 56.25%;">
+              <img
+                :src="post.image.url"
+                :width="post.image.width"
+                :height="post.image.height"
+                :alt="post.title"
+                class="absolute top-0 left-0 w-full h-full rounded-xl shadow-xl object-cover transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0"
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Authors Info -->
+        <div class="md:flex md:justify-between md:items-center mb-4">
+          <!-- Left Column: Authors -->
+          <div class="flex flex-wrap items-center mb-4 md:mb-0">
+            <div
+              v-for="(author, index) in authors"
+              :key="index"
+              class="flex items-center mr-6 mb-2"
+            >
+              <img
+                :src="author.avatar"
+                :alt="author.name"
+                class="w-12 h-12 rounded-full mr-4"
+              >
+              <div class="flex flex-col">
+                <NuxtLink
+                  :to="`/author/${author.slug}`"
+                  class="font-normal text-sm text-secondary-foreground/80 hover:text-ring"
+                >
+                  {{ author.name }}
+                </NuxtLink>
+                <!-- <span class="font-normal text-sm text-primary">{{ author.slug }}</span> -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Social Media Icons -->
+          <div class="flex items-center space-x-4">
+            <a
+              target="_blank"
+              href="https://x.com/donpuerto_"
+              class="text-gray-600 hover:text-gray-800 transition-colors"
             >
               <Icon
-                name="ph:newspaper-duotone"
-                class="flex-shrink-0 w-6 h-6"
+                name="ri:twitter-x-fill"
+                size="20"
               />
-              Blog
-            </NuxtLink>
-            <span class="mx-1">&gt;</span>
-            <span class="text-primary hover:text-ring">{{ props.post.title }}</span>
-          </nav>
-
-          <!-- Posted Date -->
-          <p class="text-foreground/80 mt-8 mb-2 text-sm">
-            {{ publishedDate }}
-          </p>
-
-          <!-- Blog Title -->
-          <h1 class="text-4xl font-black text-foreground mb-3">
-            {{ title }}
-          </h1>
-
-          <!-- Blog Description -->
-          <p class="text-lg text-foreground mb-2">
-            {{ post.description }}
-          </p>
-
-          <!-- Tags -->
-          <div
-            v-if="post.tags && post.tags.length > 0"
-            class="flex flex-wrap gap-2 mb-4"
-          >
-            <NuxtLink
-              v-for="tag in post.tags"
-              :key="tag"
-              :to="`/blog/tag/${encodeURIComponent(tag)}`"
-              class="px-3 py-1 text-sm font-medium bg-secondary text-primary rounded-full hover:bg-primary hover:text-secondary transition-colors duration-200"
+            </a>
+            <a
+              target="_blank"
+              href="https://www.facebook.com/diybuddy18"
+              class="text-gray-600 hover:text-gray-800 transition-colors"
             >
-              #{{ tag }}
-            </NuxtLink>
-          </div>
-
-          <!-- Featured Image -->
-          <div
-            v-if="post.image"
-            class="mb-6"
-          >
-            <div
-              class="relative w-full"
-              style="max-width: min(800px, 100%); margin: 0 auto;"
+              <Icon
+                name="mdi:facebook"
+                size="24"
+              />
+            </a>
+            <a
+              target="_blank"
+              href="https://www.linkedin.com/in/don-puerto-115790110/"
+              class="text-gray-600 hover:text-gray-800 transition-colors"
             >
-              <div style="padding-top: 56.25%;">
-                <img
-                  :src="post.image.url"
-                  :width="post.image.width"
-                  :height="post.image.height"
-                  :alt="post.title"
-                  class="absolute top-0 left-0 w-full h-full rounded-xl shadow-xl  object-cover
-                    transition-all duration-300  cursor-pointer filter grayscale hover:grayscale-0"
-                >
-              </div>
-            </div>
+              <Icon
+                name="mdi:linkedin"
+                size="24"
+              />
+            </a>
           </div>
-
-          <!-- Authors Info -->
-          <div class="md:flex md:justify-between md:items-center mb-4">
-            <!-- Left Column: Authors -->
-            <div class="flex flex-wrap items-center mb-4 md:mb-0">
-              <div
-                v-for="(author, index) in authors"
-                :key="index"
-                class="flex items-center mr-6 mb-2"
-              >
-                <img
-                  :src="author.avatar"
-                  :alt="author.name"
-                  class="w-12 h-12 rounded-full mr-1"
-                >
-                <div class="flex flex-col">
-                  <NuxtLink
-                    :to="`/author/${author.slug}`"
-                    class="font-normal text-sm text-secondary-foreground/80 hover:text-ring"
-                  >
-                    {{ author.name }}
-                  </NuxtLink>
-                  <span class="font-normal text-sm text-primary">{{ author.slug }}</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Right Column: Social Media Icons -->
-            <div class="flex items-center space-x-4">
-              <a
-                target="_blank"
-                href="https://x.com/donpuerto_"
-                class="text-gray-600 hover:text-gray-800 transition-colors"
-              >
-                <Icon
-                  name="ri:twitter-x-fill"
-                  size="20"
-                />
-              </a>
-              <a
-                target="_blank"
-                href="https://www.facebook.com/diybuddy18"
-                class="text-gray-600 hover:text-gray-800 transition-colors"
-              >
-                <Icon
-                  name="mdi:facebook"
-                  size="24"
-                />
-              </a>
-              <a
-                target="_blank"
-                href="https://www.linkedin.com/in/don-puerto-115790110/"
-                class="text-gray-600 hover:text-gray-800 transition-colors"
-              >
-                <Icon
-                  name="mdi:linkedin"
-                  size="24"
-                />
-              </a>
-            </div>
-          </div>
-
-          <!-- Updated Date -->
-          <div class="md:flex md:justify-between md:items-center">
-            <!-- Left Column -->
-            <div class="md:mb-0">
-              <NuxtLink
-                :to="post.doc_url"
-                class="inline-flex items-center text-sm text-gray-600 hover:text-gray-800 transition-colors"
-              >
-                <Icon
-                  name="ph:pen-duotone"
-                  class="mr-2"
-                />
-                Edit this page
-                <Icon
-                  name="ph:arrow-up-right"
-                  class="ml-1 mb-1"
-                />
-
-              </NuxtLink>
-            </div>
-
-            <!-- Right Column -->
-            <div class="text-sm text-gray-600">
-              <span>
-                Updated at {{ updatedDate }}
-              </span>
-              <span class="mx-3">|</span>
-              <span class="inline-flex items-center">
-                <Icon
-                  name="streamline:interface-time-clock-circle-clock-loading-measure-time-circle"
-                  class="mr-2"
-                />
-                {{ post.reading_time }}
-              </span>
-            </div>
-          </div>
-
-          <!-- Horizontal line -->
-          <hr class="border-t border-secondary mt-2 mb-6">
         </div>
+
+        <!-- Updated Date -->
+        <div class="md:flex md:justify-between md:items-center">
+          <!-- Left Column -->
+          <div class="md:mb-0">
+            <NuxtLink
+              :to="post.doc_url"
+              class="inline-flex items-center text-sm text-gray-600 hover:text-gray-800 transition-colors"
+            >
+              <Icon
+                name="ph:pen-duotone"
+                class="mr-2"
+              />
+              Edit this page
+              <Icon
+                name="ph:arrow-up-right"
+                class="ml-1 mb-1"
+              />
+
+            </NuxtLink>
+          </div>
+
+          <!-- Right Column -->
+          <div class="text-sm text-gray-600">
+            <span>
+              Updated at {{ updatedDate }}
+            </span>
+            <span class="mx-3">|</span>
+            <span class="inline-flex items-center">
+              <Icon
+                name="streamline:interface-time-clock-circle-clock-loading-measure-time-circle"
+                class="mr-2"
+              />
+              {{ post.reading_time }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Horizontal line -->
+        <hr class="border-t border-secondary mt-2 mb-6">
       </div>
 
-      <!-- Content and TOC Section -->
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Full-width Wrapper with 3 Columns -->
+      <div class="container w-full mx-auto p-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 2xl:px-[10rem]">
+        <!-- Icons Row (for small devices) -->
+        <div class="flex justify-center mb-4 lg:hidden">
+          <div class="flex space-x-4">
+            <a
+              v-for="icon in projectLinks"
+              :key="icon.name"
+              :href="icon.url"
+              target="_blank"
+              class="text-gray-600 hover:text-gray-800 transition-colors"
+            >
+              <Icon
+                :name="icon.name"
+                :size="icon.size"
+              />
+            </a>
+          </div>
+        </div>
+
         <!-- Content and TOC -->
-        <div class="flex flex-col lg:flex-row">
-          <!-- Main content -->
-          <div class="w-full md:w-full lg:w-3/4 pr-0 lg:pr-8">
-            <div class="bg-secondary w-full px-12 py-6 rounded-xl shadow-xl">
+        <div class="flex flex-col lg:flex-row lg:space-x-8">
+          <!-- Icons Column (for large devices) -->
+          <div class="hidden lg:block">
+            <div class="sticky top-8 flex flex-col items-center space-y-2">
+              <a
+                v-for="icon in projectLinks"
+                :key="icon.name"
+                :href="icon.url"
+                target="_blank"
+                class="text-gray-600 hover:text-gray-800 transition-colors"
+              >
+                <Icon
+                  :name="icon.name"
+                  :size="icon.size"
+                />
+              </a>
+            </div>
+          </div>
+
+          <!-- Main Content and Table of Contents (Stacked on small screens) -->
+          <div class="w-full lg:w-2/3">
+            <!-- Table of Contents as Accordion (for small devices) -->
+            <div
+              v-if="tableOfContents.length > 0"
+              class="lg:hidden md:pb-3 pb-3 "
+            >
+              <div class="bg-secondary p-4 rounded-xl shadow-xl">
+                <details class="space-y-2">
+                  <summary class="text-sm font-bold cursor-pointer">
+                    Table of Contents
+                  </summary>
+                  <ul class="space-y-1 mt-2">
+                    <li
+                      v-for="header in tableOfContents"
+                      :key="header.id"
+                      class="leading-[1.3rem]"
+                      :class="{ 'ml-1': header.level === 3, 'ml-8': header.level > 3 }"
+                    >
+                      <a
+                        :href="`#${header.id}`"
+                        class="text-sm text-primary hover:text-ring transition-colors duration-200"
+                        :class="{ 'font-bold text-ring': header.isActive }"
+                      >
+                        {{ header.text }}
+                      </a>
+                    </li>
+                  </ul>
+                </details>
+              </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="bg-secondary w-full px-8 py-6 rounded-xl shadow-xl">
               <div class="blog-content">
                 <ContentRenderer :value="post">
                   <template #empty>
@@ -289,13 +353,12 @@ watch(activeId, (newActiveId) => {
             </div>
           </div>
 
-          <!-- Table of Contents (right side) -->
-          <aside class="w-full lg:w-1/4 lg:mt-0 block md:hidden lg:block">
+          <!-- Table of Contents (Visible on large devices) -->
+          <aside class="w-full lg:w-1/3 lg:block hidden">
             <div class="sticky top-8 space-y-6">
-              <!-- Table of Contents -->
               <div
                 v-if="tableOfContents.length > 0"
-                class="bg-secondary p-6 rounded-xl "
+                class="bg-secondary p-6 rounded-xl"
               >
                 <h2 class="text-sm font-bold mb-4">
                   Table of Contents
@@ -331,17 +394,14 @@ watch(activeId, (newActiveId) => {
                     <a
                       :href="link.url"
                       target="_blank"
-                      class="flex items-center text-primary  hover:text-ring transition-colors duration-200"
+                      class="flex items-center text-primary hover:text-ring transition-colors duration-200"
                     >
                       <Icon
                         :name="link.icon"
                         class="mr-2"
                         size="20px"
                       />
-                      <span class="text-sm">
-
-                        {{ link.text }}
-                      </span>
+                      <span class="text-sm">{{ link.text }}</span>
                     </a>
                   </li>
                 </ul>
