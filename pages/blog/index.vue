@@ -48,8 +48,8 @@ const filteredPosts = computed((): Post[] => {
       )
     })
     .sort((a, b) => {
-      const dateA = new Date(a.published_on).getTime()
-      const dateB = new Date(b.published_on).getTime()
+      const dateA = new Date(a.published_at).getTime()
+      const dateB = new Date(b.published_at).getTime()
       return sortOrder.value === 'asc' ? dateA - dateB : dateB - dateA
     })
 })

@@ -15,6 +15,7 @@ export interface Post {
   description?: string
   image?: {
     url: string
+    alt: string
     width: number
     height: number
   }

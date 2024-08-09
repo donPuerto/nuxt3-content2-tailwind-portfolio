@@ -118,16 +118,16 @@ watch(activeId, (newActiveId) => {
 
         <!-- Posted Date -->
         <p class="text-foreground/80 mt-8 mb-2 text-sm">
-          {{ publishedDate }}
+          <span class="font-semibold">Published on:</span>  {{ publishedDate }}
         </p>
 
         <!-- Blog Title -->
-        <h1 class="text-4xl font-black text-foreground mb-3">
+        <h1 class="text-2xl sm:text-3xl font-black text-foreground">
           {{ title }}
         </h1>
 
         <!-- Blog Description -->
-        <p class="text-lg text-foreground mb-2">
+        <p class="text-foreground mb-4">
           {{ post.description }}
         </p>
 
@@ -140,7 +140,7 @@ watch(activeId, (newActiveId) => {
             v-for="tag in post.tags"
             :key="tag"
             :to="`/blog/tag/${encodeURIComponent(tag)}`"
-            class="px-3 py-1 text-sm font-medium bg-secondary text-primary rounded-full hover:bg-primary hover:text-secondary transition-colors duration-200"
+            class="px-2 py-1 text-xs font-medium bg-secondary text-primary rounded-full hover:bg-primary hover:text-secondary transition-colors duration-200"
           >
             #{{ tag }}
           </NuxtLink>
