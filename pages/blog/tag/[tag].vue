@@ -63,36 +63,51 @@ const filteredPosts = computed(() =>
       />
     </div>
 
-    <div class="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
-      <div
-        v-for="post in filteredPosts"
-        :key="post.slug"
-      >
-        <!-- Card Layout  -->
-        <div class="flex flex-col gap-5 md:flex-row">
-          <NuxtLink
-            :to="`/blog/${post.slug}`"
-            class="shrink-0"
-          >
-            <img
-              v-if="post.image"
-              :src="post.image.url"
-              :width="post.image.width"
-              :height="post.image.height"
-              :alt="post.image.alt"
-              class="h-[240px] w-full rounded-lg object-cover shadow md:h-[200px]"
+    <div class="container w-full">
+      <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-4 gap-4">
+        <div
+          v-for="post in filteredPosts"
+          :key="post.slug"
+          class="md:col-span-1 lg:col-span-1"
+        >
+          <!-- Card Layout  -->
+          <div class="flex flex-col md:flex-row lg:flex-col shadow-xl rounded-xl overflow-hidden h-full">
+            <!-- Image -->
+            <NuxtLink
+              :to="`/blog/${post.slug}`"
+              class="md:w-1/3 lg:w-full"
             >
-            <div>
-              <p
-                v-if="post.headline"
-                class="mb-2 text-sm font-semibold text-primary"
+              <img
+                v-if="post.image"
+                :src="post.image.url"
+                :width="post.image.width"
+                :height="post.image.height"
+                :alt="post.image.alt"
+                class="h-[240px] w-full object-cover md:h-[200px] lg:h-[240px]"
               >
-                {{ post.headline }}
-              </p>
-              <p class="mb-2 text-xl font-semibold lg:text-2xl">
-                {{ post.title }}
-              </p>
-              <div class="flex items-center">
+            </NuxtLink>
+
+            <!-- Content -->
+            <div
+              class="p-4 md:w-2/3 lg:w-full flex flex-col justify-between"
+            >
+              <div>
+                <p
+                  v-if="
+                    post.headline"
+                  class="mb-2 text-sm font-semibold text-primary"
+                >
+                  {{ post.headline }}
+                </p>
+                <p class="mb-2 text-xl font-semibold lg:text-2xl">
+                  {{ post.title }}
+                </p>
+                <p class="mb-2 text-sm  lg:text-2xl">
+                  {{ post.description }}
+                </p>
+              </div>
+
+              <div class="flex items-center mt-auto">
                 <div v-if="allAuthors.length > 0">
                   <div
                     v-for="(author, index) in allAuthors"
@@ -102,7 +117,7 @@ const filteredPosts = computed(() =>
                       v-if="author.avatar"
                       :src="author.avatar"
                       :alt="author.name"
-                      class="mr-3 rounded-full bg-background shadow ring-1 ring-ring/30"
+                      class="w-8 h-8 rounded-full mr-2 bg-background shadow ring-1 ring-ring/30"
                     />
                     <div>
                       <p
@@ -114,20 +129,19 @@ const filteredPosts = computed(() =>
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
-          </NuxtLink>
+          </div>
         </div>
-      </div>
 
-      <div
-        v-if="filteredPosts.length === 0 && !pending"
-        class="bg-white rounded-lg shadow-md overflow-hidden flex items-center justify-center p-8"
-      >
-        <p class="text-gray-600 text-center">
-          No posts found with the tag "{{ route.params.tag }}".
-        </p>
+        <div
+          v-if="filteredPosts.length === 0 && !pending"
+          class="bg-white rounded-lg shadow-md overflow-hidden flex items-center justify-center p-8"
+        >
+          <p class="text-gray-600 text-center">
+            No posts found with the tag "{{ route.params.tag }}".
+          </p>
+        </div>
       </div>
     </div>
 
