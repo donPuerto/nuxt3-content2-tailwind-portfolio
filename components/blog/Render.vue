@@ -39,7 +39,7 @@ const updatedDate = computed(() =>
   props.post.updated_at ? formatDate(props.post.updated_at) : '',
 )
 
-// Ensure authors is always an array of Author objects
+// Author objects
 const authors = computed((): Author[] => {
   if (Array.isArray(props.post.authors)) {
     return props.post.authors
@@ -188,7 +188,7 @@ watch(activeId, (newActiveId) => {
                 >
                   {{ author.name }}
                 </NuxtLink>
-                <!-- <span class="font-normal text-sm text-primary">{{ author.slug }}</span> -->
+                <span class="font-normal text-sm text-primary">{{ author.slug }} </span>
               </div>
             </div>
           </div>
