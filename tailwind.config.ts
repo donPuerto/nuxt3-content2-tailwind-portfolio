@@ -136,7 +136,7 @@ module.exports = {
   plugins: [
     tailwindcss(),
     formsPlugin({ strategy: 'class' }),
-    plugin(function ({ addComponents, theme }) {
+    plugin(function ({ addComponents }) {
       addComponents({
         '.blog-content-heading': {
           // marginTop: '0.5em',

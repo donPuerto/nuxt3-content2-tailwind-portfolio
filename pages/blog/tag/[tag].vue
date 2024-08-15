@@ -6,6 +6,7 @@ const route = useRoute()
 const currentPage = ref(1)
 const postsPerPage = 10
 const showAllAuthors = ref(false)
+const { getRelativeTime } = useRelativeTime()
 
 // Fetch all blog posts with the given tag
 const { data: posts, pending } = await useAsyncData<Post[]>(`fetch-blog-posts-by-tag-${route.params.tag}`, () =>
@@ -129,13 +130,13 @@ const filteredPosts = computed(() =>
                   </div>
 
                   <!-- Description -->
-                  <p class="mb-4 leading-relaxed text-sm lg:text-sm">
+                  <p class="mb-3 leading-relaxed text-sm lg:text-sm">
                     {{ post.description }}
                   </p>
                 </div>
 
                 <!-- Start: Author -->
-                <div class="md:flex md:justify-between md:items-center mb-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 sm:mb-0">
                   <div
                     v-if="allAuthors.length > 0"
                     class="relative flex overflow-hidden"
@@ -159,12 +160,23 @@ const filteredPosts = computed(() =>
                             v-if="author.avatar"
                             :src="author.avatar"
                             :alt="author.name"
-                            class="border-2 border-white dark:border-gray-800 hover:border-primary dark:hover:border-primary rounded-full h-10 w-10 -mr-2 last:mr-0 transition-colors duration-200 ease-in-out"
+                            class="
+                              border-2
+                              border-white
+                              dark:border-gray-800
+                              hover:border-primary
+                              dark:hover:border-primary
+                              rounded-full
+                              h-6 w-6 -mr-2
+                              last:mr-0
+                              transition-colors
+                              duration-200
+                              ease-in-out"
                           />
 
                           <div
                             v-else
-                            class="border-2 border-white dark:border-gray-800 rounded-full h-10 w-10 -mr-2 last:mr-0 bg-primary flex items-center justify-center text-white text-sm font-semibold"
+                            class="border-2 border-white dark:border-gray-800 rounded-full h-8 w-8 -mr-2 last:mr-0 bg-primary flex items-center justify-center text-white text-sm font-semibold"
                           >
                             {{ author.name.charAt(0) }}
                           </div>
@@ -175,14 +187,38 @@ const filteredPosts = computed(() =>
                     <Transition name="fade">
                       <span
                         v-if="allAuthors.length > 3 && !showAllAuthors"
-                        class="absolute right-0 flex items-center justify-center bg-white dark:bg-gray-800 text-sm text-gray-800 dark:text-white font-semibold border-2 border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary rounded-full h-10 w-10 transition-colors duration-200 ease-in-out z-20 cursor-pointer"
+                        class="absolute right-0 flex items-center justify-center bg-white dark:bg-gray-800 text-sm text-gray-800 dark:text-white font-semibold border-2 border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary rounded-full h-6 w-6 transition-colors duration-200 ease-in-out z-20 cursor-pointer"
                       >
                         +{{ allAuthors.length - 3 }}
                       </span>
                     </Transition>
                   </div>
+
+                  <!-- Start: Date -->
+                  <div v-if="posts">
+                    <div
+                      v-for="post in posts"
+                      :key="post.slug"
+                    >
+                      <!-- Other post details -->
+                      <div
+                        v-if="post.published_at"
+                        class="flex items-center mt-2"
+                      >
+                        <span class="mr-2">
+                          <Icon
+                            name="🕒"
+                            size="14px"
+                          />
+                        </span>
+
+                        <span class="text-xs font-normal">{{ getRelativeTime(post.published_at).toLowerCase() }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End: Date -->
                 </div>
-                <!-- End: Author Avatar -->
+                <!-- End: Author -->
 
                 <!-- Start: Show card that has no tag -->
                 <div
