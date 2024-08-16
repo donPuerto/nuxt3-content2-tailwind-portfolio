@@ -23,7 +23,7 @@ const allAuthors = computed(() => {
   return allPosts.value.flatMap(post => getAuthors(post.authors))
 })
 
-const noResults = computed(() => posts.value.length === 0 && search.value !== '')
+// const noResults = computed(() => posts.value.length === 0 && search.value !== '')
 
 // Reset page when search changes
 watch(search, () => {
