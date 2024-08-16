@@ -11,4 +11,4 @@ published_on: "2024-07-06"
 is_publish: true
 ---
 
-# Vue Postss
+# Vue Posts
