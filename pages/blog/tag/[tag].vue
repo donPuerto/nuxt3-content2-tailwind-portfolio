@@ -220,12 +220,12 @@ watch(search, () => {
                         <!-- Other post details -->
                         <div
                           v-if="post.published_at"
-                          class="flex items-center mt-2"
+                          class="flex items-center"
                         >
-                          <span class="mr-2">
+                          <span class="mr-2 mb-1">
                             <Icon
                               name="🕒"
-                              size="16px"
+                              size="18px"
                             />
                           </span>
 
