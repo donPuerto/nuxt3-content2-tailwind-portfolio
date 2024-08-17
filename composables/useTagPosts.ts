@@ -24,8 +24,7 @@ export function useTagPosts(mainTag: string, currentPage: Ref<number>, postsPerP
 
     return allPosts.value.filter(post =>
       post.tags.some(tag =>
-        tag.toLowerCase().includes(search.value.toLowerCase())
-        && tag.toLowerCase() !== mainTag.toLowerCase(),
+        tag.toLowerCase().includes(search.value.toLowerCase()),
       ),
     )
   })
