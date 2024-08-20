@@ -1,6 +1,5 @@
 <script setup lang="ts">
 // composables
-
 const route = useRoute()
 
 // data
