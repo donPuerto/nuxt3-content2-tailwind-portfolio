@@ -19,8 +19,8 @@ const allAuthors = computed(() => getAuthors(props.post.authors))
 </script>
 
 <template>
-  <div class="md:col-span-1 lg:col-span-1">
-    <div class="flex flex-col md:flex-row lg:flex-col shadow-xl rounded-xl overflow-hidden h-full">
+  <div>
+    <div class="flex flex-col md:flex-row lg:flex-col h-full shadow-xl rounded-xl overflow-hidden">
       <!-- Image -->
       <NuxtLink
         :to="`/blog/${post.slug}`"
@@ -37,7 +37,7 @@ const allAuthors = computed(() => getAuthors(props.post.authors))
       </NuxtLink>
 
       <!-- Content -->
-      <div class="px-3 md:w-2/3 lg:w-full flex flex-col justify-between">
+      <div class="px-3 py-4 md:py-0 md:px-6 lg:py-4 md:w-2/3 lg:w-full flex flex-col justify-between">
         <div>
           <!-- headline -->
           <h2

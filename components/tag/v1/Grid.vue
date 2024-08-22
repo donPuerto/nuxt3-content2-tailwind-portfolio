@@ -21,40 +21,48 @@ const {
 </script>
 
 <template>
-  <!-- Root -->
   <div>
     <div class="flex flex-col min-h-screen">
       <div class="flex-grow">
         <div class="container mx-auto px-4 h-full">
-          <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-4 gap-4 h-full">
+          <!-- Start: Grid Layout -->
+          <div
+            v-if="posts.length > 0"
+            class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-4 gap-4"
+          >
             <!-- Start: Tag Card -->
-            <template v-if="posts.length > 0">
-              <TagV1Card
-                v-for="post in posts"
-                :key="post.slug"
-                :post="post"
-              />
-            </template>
+            <TagV1Card
+              v-for="post in posts"
+              :key="post.slug"
+              :post="post"
+              class="flex-1"
+            />
             <!-- End: Tag Card -->
+          </div>
+          <!-- End: Grid Layout -->
 
-            <!-- Start: Tag not found card h-full -->
-            <template v-else>
-              <div class="md:col-span-1 lg:col-span-4 flex items-center justify-center">
-                <!-- Your existing card content -->
+          <!-- Start: Tag not found card h-full -->
+          <div
+            v-else
+            class="md:col-span-1 lg:col-span-4 flex items-center justify-center"
+          >
+            <div class="w-full max-w-2xl shadow-md rounded-xl overflow-hidden">
+              <div class="px-8 w-full flex flex-col justify-center items-center py-8">
+                <!-- Card -->
                 <div
                   ref="targetRef"
                   class="
-                  relative
-                  flex
-                  h-60
-                  w-96
-                  items-center
-                  justify-center
-                  overflow-hidden
-                  rounded-xl
-                  border border-border
-                  bg-gradient-to-r from-black to-gray-950
-                  shadow-2xl"
+                        relative
+                        flex
+                        h-60
+                        w-96
+                        items-center
+                        justify-center
+                        overflow-hidden
+                        rounded-xl
+                        border border-border
+                        bg-gradient-to-r from-black to-gray-950
+                        shadow-2xl"
                   @mousemove="handleMouseMove"
                   @focus="handleFocus"
                   @blur="handleBlur"
@@ -82,10 +90,12 @@ const {
                     </p>
                   </div>
                 </div>
+                <!-- Card -->
               </div>
-            </template>
-          <!-- End: Tag not found card h-full -->
+            </div>
           </div>
+
+          <!-- End: Tag not found card h-full -->
         </div>
       </div>
     </div>

@@ -66,7 +66,3 @@ watch(search, () => {
   </div>
   <!-- End: Root -->
 </template>
-
-<style scoped>
-
-</style>
