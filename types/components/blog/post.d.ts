@@ -1,8 +1,4 @@
-export interface Author {
-  name: string
-  avatar: string
-  slug: string
-}
+import type { Author } from './author'
 
 export interface Post {
   _path: string

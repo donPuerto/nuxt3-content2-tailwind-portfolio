@@ -182,13 +182,13 @@ watch(activeId, (newActiveId) => {
                 class="w-12 h-12 rounded-full mr-4"
               >
               <div class="flex flex-col">
-                <NuxtLink
+                <!-- <NuxtLink
                   :to="`/author/${author.slug}`"
                   class="font-normal text-sm text-secondary-foreground/80 hover:text-ring"
                 >
                   {{ author.name }}
                 </NuxtLink>
-                <span class="font-normal text-sm text-primary">{{ author.slug }} </span>
+                <span class="font-normal text-sm text-primary">{{ author.slug }} </span> -->
               </div>
             </div>
           </div>
@@ -232,7 +232,7 @@ watch(activeId, (newActiveId) => {
         <div class="md:flex md:justify-between md:items-center">
           <!-- Left Column -->
           <div class="md:mb-0">
-            <NuxtLink
+            <!-- <NuxtLink
               :to="post.doc_url"
               class="inline-flex items-center text-sm text-gray-600 hover:text-gray-800 transition-colors"
             >
@@ -246,7 +246,7 @@ watch(activeId, (newActiveId) => {
                 class="ml-1 mb-1"
               />
 
-            </NuxtLink>
+            </NuxtLink> -->
           </div>
 
           <!-- Right Column -->

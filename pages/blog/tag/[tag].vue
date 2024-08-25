@@ -1,13 +1,18 @@
 <script setup lang="ts">
-// composables
+/*
+  // ? Imports and Setup
+  - Setting up the necessary Vue composables and reactive variables.
+*/
+
+// * Get the route object to access route parameters
 const route = useRoute()
 
-// data
+// * Reactive variables for pagination and search
 const currentPage = ref(1)
 const postsPerPage = 10
-
 const search = ref('')
 
+// * Fetch posts based on the tag, current page, and search term
 const { posts, totalPages } = useTagPosts(
   route.params.tag as string,
   currentPage,
@@ -15,14 +20,14 @@ const { posts, totalPages } = useTagPosts(
   search,
 )
 
-// Reset page when search changes
+// * Watcher: Reset the current page to 1 whenever the search term changes
 watch(search, () => {
   currentPage.value = 1
 })
 </script>
 
 <template>
-  <!-- Start: Root -->
+  <!-- Start: Root Container -->
   <div>
     <!-- Start: Tag Page -->
     <div class="flex flex-col items-center mt-8">
@@ -32,7 +37,7 @@ watch(search, () => {
       </h1>
       <!-- End: Tag Route Param -->
 
-      <!-- Start: Search -->
+      <!-- Start: Search Input -->
       <div class="mb-12 w-full max-w-md">
         <UiInput
           v-model="search"
@@ -41,7 +46,7 @@ watch(search, () => {
           @keydown.stop
         />
       </div>
-      <!-- End: Search -->
+      <!-- End: Search Input---->
 
       <!-- Post Grid -->
       <TagV1Grid :posts="posts" />
@@ -64,5 +69,5 @@ watch(search, () => {
     </div>
     <!-- End: Tag Page -->
   </div>
-  <!-- End: Root -->
+  <!-- End: Root Container -->
 </template>

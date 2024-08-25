@@ -1,27 +1,29 @@
 <script setup lang="ts">
+// * Importing the Post type for type safety
 import type { Post } from '~/types/components/blog/post'
 
+// * Defining Props interface for type-checking the component's props
 interface Props {
   post: Post
 }
 
+// * Defining the props for this component
 const props = defineProps<Props>()
 
-// composables
+// * Importing composables for handling relative time and authors
 const { getRelativeTime } = useRelativeTime()
 const { getAuthors } = useAuthors()
 
-// data
-const showAllAuthors = ref(false)
-
-// Computed
+// * Computed property to get the list of authors for the post
 const allAuthors = computed(() => getAuthors(props.post.authors))
 </script>
 
 <template>
+  <!-- Start: Root Container -->
   <div>
+    <!-- Start: Card Layout -->
     <div class="flex flex-col md:flex-row lg:flex-col h-full shadow-xl rounded-xl overflow-hidden">
-      <!-- Image -->
+      <!-- Start: Image Section -->
       <NuxtLink
         :to="`/blog/${post.slug}`"
         class="md:w-1/3 lg:w-full"
@@ -35,24 +37,27 @@ const allAuthors = computed(() => getAuthors(props.post.authors))
           class="h-[240px] w-full object-cover md:h-[200px] lg:h-[240px]"
         >
       </NuxtLink>
+      <!-- End: Image Section -->
 
-      <!-- Content -->
-      <div class="px-3 py-4 md:py-0 md:px-6 lg:py-4 md:w-2/3 lg:w-full flex flex-col justify-between">
+      <!-- Start: Content Section -->
+      <div class="px-2 py:3 md:py-0 md:px-4 lg:py-2 md:w-2/3 lg:w-full flex flex-col justify-between">
         <div>
-          <!-- headline -->
+          <!-- Start: Headline -->
           <h2
             v-if="post.headline"
             class="text-xs font-medium text-primary mt-2 sm:mt-2"
           >
             {{ post.headline }}
           </h2>
+          <!-- End: Headline -->
 
-          <!-- Title -->
+          <!-- Start: Title -->
           <h3 class="text-base font-medium lg:text-base">
             {{ post.title }}
           </h3>
+          <!-- End: Title -->
 
-          <!-- Tags -->
+          <!-- Start: Tags -->
           <div
             v-if="post.tags && post.tags.length > 0"
             class="flex flex-wrap gap-2 mb-4 text-xs"
@@ -66,106 +71,20 @@ const allAuthors = computed(() => getAuthors(props.post.authors))
               #{{ tag }}
             </NuxtLink>
           </div>
+          <!-- End: Tags -->
 
-          <!-- Description -->
+          <!-- Start: Description -->
           <p class="mb-3 leading-relaxed text-sm lg:text-sm">
             {{ post.description }}
           </p>
+          <!-- End: Description -->
         </div>
 
-        <!-- Start: Author -->
+        <!-- Start: Author Section -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 sm:mb-0">
-          <div
-            v-if="allAuthors.length > 0"
-            class="relative flex overflow-hidden"
-            @mouseenter="showAllAuthors = true"
-            @mouseleave="showAllAuthors = false"
-          >
-            <TransitionGroup
-              name="author-list"
-              tag="div"
-              class="flex -space-x-4"
-            >
-              <div
-                v-for="(author, index) in showAllAuthors ? allAuthors : allAuthors.slice(0, 3)"
-                :key="author.slug || index"
-                class="flex justify-end"
-              >
-                <div
-                  class="flex justify-end"
-                >
-                  <UiAvatar
-                    v-if="author.avatar"
-                    :src="author.avatar"
-                    :alt="author.name"
-                    class="
-                      border-2
-                      border-white
-                      dark:border-gray-800
-                      hover:border-primary
-                      dark:hover:border-primary
-                      rounded-full
-                      h-8 w-8 -mr-2
-                      last:mr-0
-                      transition-colors
-                      duration-200
-                      ease-in-out"
-                  />
-
-                  <div
-                    v-else
-                    class="
-                      border-2
-                      border-white
-                      dark:border-gray-800
-                      rounded-full
-                      h-8 w-8
-                      -mr-2
-                      last:mr-0
-                      bg-primary
-                      flex
-                      items-center
-                      justify-center
-                      text-white
-                      text-sm
-                      font-semibold"
-                  >
-                    {{ author.name.charAt(0) }}
-                  </div>
-                </div>
-              </div>
-            </TransitionGroup>
-            <Transition name="fade">
-              <span
-                v-if="allAuthors.length > 3 && !showAllAuthors"
-                class="
-                  absolute
-                  right-0
-                  flex
-                  items-center
-                  justify-center
-                  bg-white
-                  dark:bg-gray-800
-                  text-sm
-                  text-gray-800
-                  dark:text-white
-                  font-semibold
-                  border-2
-                  border-gray-200
-                  dark:border-gray-700
-                  hover:border-primary
-                  dark:hover:border-primary
-                  rounded-full
-                  h-8 w-8 transition-colors
-                  duration-200
-                  ease-in-out
-                  z-20
-                  cursor-pointer"
-              >
-                +{{ allAuthors.length - 3 }}
-              </span>
-            </Transition>
-          </div>
+          <BlogAuthorList
+            :authors="allAuthors"
+          />
 
           <!-- Start: Date -->
           <div
@@ -182,10 +101,13 @@ const allAuthors = computed(() => getAuthors(props.post.authors))
           </div>
           <!-- End: Date -->
         </div>
-        <!-- End: Author -->
+        <!-- End: Author Section -->
       </div>
+      <!-- End: Content Section -->
     </div>
+    <!-- End: Card Layout -->
   </div>
+  <!-- End: Root Container -->
 </template>
 
 <style scoped>
