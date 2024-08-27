@@ -1,28 +1,32 @@
-// composables/useTagPosts.ts
-
-import type { Ref } from 'vue'
-import { computed } from 'vue'
+import { useAsyncData } from '#app'
 import type { Post } from '~/types/components/blog/post'
 
-export function useTagPosts(mainTag: string, currentPage: Ref<number>, postsPerPage: number, search: Ref<string>) {
-  const fetchPosts = () =>
-    queryContent<Post>()
-      .where({ tags: { $contains: mainTag } })
-      .find()
+// Define a type for the query result that doesn't require any specific fields
+type QueryResult = Partial<Post>
 
-  const { data: allPosts, pending } = useAsyncData<Post[]>(
+export function useTagPosts(mainTag: string, postsPerPage: number) {
+  const currentPage = useState(`currentPage-${mainTag}`, () => 1)
+  const search = useState(`search-${mainTag}`, () => '')
+
+  const { data: allPosts, pending } = useAsyncData<QueryResult[]>(
     `fetch-blog-posts-by-tag-${mainTag}`,
-    fetchPosts,
+    () => queryContent('blog')
+      .where({ tags: { $contains: mainTag } })
+      .find(),
   )
 
-  const filteredPosts = computed(() => {
+  const filteredPosts = computed<Post[]>(() => {
     if (!allPosts.value) return []
 
+    const postsWithTags = allPosts.value.filter((post): post is Post =>
+      Array.isArray(post.tags) && post.tags.length > 0,
+    )
+
     if (search.value === '') {
-      return allPosts.value
+      return postsWithTags
     }
 
-    return allPosts.value.filter(post =>
+    return postsWithTags.filter(post =>
       post.tags.some(tag =>
         tag.toLowerCase().includes(search.value.toLowerCase()),
       ),
@@ -39,10 +43,16 @@ export function useTagPosts(mainTag: string, currentPage: Ref<number>, postsPerP
     Math.ceil(filteredPosts.value.length / postsPerPage),
   )
 
+  watch(search, () => {
+    currentPage.value = 1
+  })
+
   return {
     posts: paginatedPosts,
     allPosts,
     pending,
     totalPages,
+    currentPage,
+    search,
   }
 }

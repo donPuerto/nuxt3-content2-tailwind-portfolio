@@ -15,7 +15,6 @@ const search = ref('')
 // * Fetch posts based on the tag, current page, and search term
 const { posts, totalPages } = useTagPosts(
   route.params.tag as string,
-  currentPage,
   postsPerPage,
   search,
 )
@@ -27,7 +26,6 @@ watch(search, () => {
 </script>
 
 <template>
-  <!-- Start: Root Container -->
   <div>
     <!-- Start: Tag Page -->
     <div class="flex flex-col items-center mt-8">
@@ -52,7 +50,10 @@ watch(search, () => {
       <TagV1Grid :posts="posts" />
 
       <!-- Start: Pagination -->
-      <div class="mt-4">
+      <div
+        v-if="totalPages > 1"
+        class="mt-4"
+      >
         <button
           v-for="page in totalPages"
           :key="page"
@@ -69,5 +70,4 @@ watch(search, () => {
     </div>
     <!-- End: Tag Page -->
   </div>
-  <!-- End: Root Container -->
 </template>

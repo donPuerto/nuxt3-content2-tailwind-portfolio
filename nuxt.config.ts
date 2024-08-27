@@ -40,6 +40,20 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
   ],
 
+  fonts: {
+    families: [{
+      name: 'Inter',
+      // Use the 'weights' property instead of 'wght'
+      weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      // You can specify styles if needed
+      styles: ['normal', 'italic'],
+    }],
+    // This ensures the font is loaded globally regardless of usage in the project
+    defaults: {
+      preload: true,
+    },
+  },
+
   // Defaults options
   tailwindcss: {
     exposeConfig: true,

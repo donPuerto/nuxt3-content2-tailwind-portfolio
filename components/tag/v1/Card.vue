@@ -11,7 +11,6 @@ interface Props {
 const props = defineProps<Props>()
 
 // * Importing composables for handling relative time and authors
-const { getRelativeTime } = useRelativeTime()
 const { getAuthors } = useAuthors()
 
 // * Computed property to get the list of authors for the post
@@ -22,7 +21,7 @@ const allAuthors = computed(() => getAuthors(props.post.authors))
   <!-- Start: Root Container -->
   <div>
     <!-- Start: Card Layout -->
-    <div class="flex flex-col md:flex-row lg:flex-col h-full shadow-xl rounded-xl overflow-hidden">
+    <div class="flex flex-col md:flex-row lg:flex-col h-full shadow-lg rounded-lg overflow-hidden bg-card border border-border">
       <!-- Start: Image Section -->
       <NuxtLink
         :to="`/blog/${post.slug}`"
@@ -40,7 +39,7 @@ const allAuthors = computed(() => getAuthors(props.post.authors))
       <!-- End: Image Section -->
 
       <!-- Start: Content Section -->
-      <div class="px-2 py:3 md:py-0 md:px-4 lg:py-2 md:w-2/3 lg:w-full flex flex-col justify-between">
+      <div class="px-3 py:3 md:py-1 md:px-4 lg:py-2 md:w-2/3 lg:w-full flex flex-col justify-between">
         <div>
           <!-- Start: Headline -->
           <h2
@@ -52,7 +51,7 @@ const allAuthors = computed(() => getAuthors(props.post.authors))
           <!-- End: Headline -->
 
           <!-- Start: Title -->
-          <h3 class="text-base font-medium lg:text-base">
+          <h3 class="text-base font-medium lg:text-base text-card-foreground">
             {{ post.title }}
           </h3>
           <!-- End: Title -->
@@ -66,7 +65,7 @@ const allAuthors = computed(() => getAuthors(props.post.authors))
               v-for="tag in post.tags"
               :key="tag"
               :to="`/blog/tag/${encodeURIComponent(tag)}`"
-              class="px-2 py-1 text-xs font-medium bg-secondary text-primary rounded-full hover:bg-primary hover:text-secondary transition-colors duration-200"
+              class="px-2 py-1 text-xs font-medium bg-secondary text-secondary-foreground rounded-full hover:bg-primary hover:text-primary-foreground transition-colors duration-200"
             >
               #{{ tag }}
             </NuxtLink>
@@ -74,34 +73,25 @@ const allAuthors = computed(() => getAuthors(props.post.authors))
           <!-- End: Tags -->
 
           <!-- Start: Description -->
-          <p class="mb-3 leading-relaxed text-sm lg:text-sm">
+          <p class="mb-3 leading-relaxed text-sm lg:text-sm text-card-foreground line-clamp-3">
             {{ post.description }}
           </p>
           <!-- End: Description -->
         </div>
 
-        <!-- Start: Author Section -->
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 sm:mb-0">
+        <!-- Start: Author and Share Section -->
+        <div class="flex justify-between items-center mb-2">
           <BlogAuthorList
             :authors="allAuthors"
+            size="sm"
+            class="flex-shrink-0"
           />
-
-          <!-- Start: Date -->
-          <div
-            v-if="post.published_at"
-            class="flex items-center"
-          >
-            <span class="mr-2 mb-1">
-              <Icon
-                name="🕒"
-                size="18px"
-              />
-            </span>
-            <span class="text-sm font-thin">{{ getRelativeTime(post.published_at).toLowerCase() }}</span>
-          </div>
-          <!-- End: Date -->
+          <BlogShareLinks
+            size="md"
+            class="flex-shrink-0"
+          />
         </div>
-        <!-- End: Author Section -->
+        <!-- End: Author and Share Section -->
       </div>
       <!-- End: Content Section -->
     </div>
@@ -119,5 +109,12 @@ const allAuthors = computed(() => getAuthors(props.post.authors))
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 </style>

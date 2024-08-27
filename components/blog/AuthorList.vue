@@ -18,110 +18,83 @@ const visibleAuthors = computed(() =>
 )
 
 const sizeMap = {
-  xs: { avatar: 18, font: 9, spacing: 1 },
-  sm: { avatar: 20, font: 10, spacing: 2 },
-  md: { avatar: 24, font: 12, spacing: 2 },
-  lg: { avatar: 28, font: 14, spacing: 3 },
-  xl: { avatar: 32, font: 16, spacing: 3 },
+  xs: { avatar: 'h-6 w-6', font: 'text-xs', overlap: '-space-x-2' },
+  sm: { avatar: 'h-8 w-8', font: 'text-sm', overlap: '-space-x-3' },
+  md: { avatar: 'h-10 w-10', font: 'text-base', overlap: '-space-x-4' },
+  lg: { avatar: 'h-12 w-12', font: 'text-lg', overlap: '-space-x-5' },
+  xl: { avatar: 'h-14 w-14', font: 'text-xl', overlap: '-space-x-6' },
 }
 
 const sizeConfig = computed(() => sizeMap[props.size || 'xs'])
 
-const avatarSizeClass = computed(() => `h-[${sizeConfig.value.avatar}px] w-[${sizeConfig.value.avatar}px]`)
-const fontSizeStyle = computed(() => `font-size: ${sizeConfig.value.font}px;`)
-const negativeMarginClass = computed(() => `-mr-${sizeConfig.value.spacing}`)
+const getInitials = (name: string) => {
+  return name.split(' ').map(n => n[0]).join('').toUpperCase()
+}
 </script>
 
 <template>
   <div
     v-if="authors.length > 0"
-    class="relative flex overflow-hidden"
+    class="relative flex items-center"
     @mouseenter="showAllAuthors = true"
     @mouseleave="showAllAuthors = false"
   >
     <TransitionGroup
       name="author-list"
       tag="div"
-      class="flex"
-      :class="negativeMarginClass"
+      :class="['flex items-center', sizeConfig.overlap]"
     >
       <div
         v-for="(author, index) in visibleAuthors"
         :key="author.slug || index"
-        class="flex justify-end"
       >
-        <div class="flex justify-end">
-          <UiAvatar
-            v-if="author.avatar"
-            :src="author.avatar"
-            :alt="author.name"
-            :class="[
-              avatarSizeClass,
-              'border-2',
-              'border-white',
-              'dark:border-gray-800',
-              'hover:border-primary',
-              'dark:hover:border-primary',
-              'rounded-full',
-              'transition-colors',
-              'duration-200',
-              'ease-in-out',
-            ]"
-          />
-
-          <div
-            v-else
-            :class="[
-              avatarSizeClass,
-              'border-2',
-              'border-white',
-              'dark:border-gray-800',
-              'rounded-full',
-              'bg-primary',
-              'flex',
-              'items-center',
-              'justify-center',
-              'text-white',
-              'font-semibold',
-            ]"
-            :style="fontSizeStyle"
-          >
-            {{ author.name.charAt(0) }}
-          </div>
-        </div>
+        <UiAvatar
+          :src="author.avatar"
+          :alt="author.name"
+          :fallback="getInitials(author.name)"
+          :class="[
+            sizeConfig.avatar,
+            'border',
+            'border-border',
+            'dark:border-border',
+            'hover:border-primary',
+            'dark:hover:border-primary',
+            'rounded-full',
+            'transition-colors',
+            'duration-200',
+            'ease-in-out',
+          ]"
+        />
       </div>
     </TransitionGroup>
     <Transition name="fade">
-      <span
+      <UiAvatar
         v-if="authors.length > 3 && !showAllAuthors"
+        :fallback="`+${authors.length - 3}`"
         :class="[
-          avatarSizeClass,
-          'absolute',
-          'right-0',
+          sizeConfig.avatar,
+          sizeConfig.font,
+          'border',
+          'border-border',
+          'dark:border-border',
           'flex',
           'items-center',
           'justify-center',
-          'bg-white',
-          'dark:bg-gray-800',
-          'text-gray-800',
-          'dark:text-white',
+          'bg-background',
+          'dark:bg-background',
+          'text-foreground',
+          'dark:text-foreground',
           'font-semibold',
-          'border-2',
-          'border-gray-200',
-          'dark:border-gray-700',
           'hover:border-primary',
           'dark:hover:border-primary',
           'rounded-full',
           'transition-colors',
           'duration-200',
           'ease-in-out',
-          'z-20',
           'cursor-pointer',
+          '-ml-2',
         ]"
-        :style="fontSizeStyle"
-      >
-        +{{ authors.length - 3 }}
-      </span>
+      />
     </Transition>
   </div>
 </template>

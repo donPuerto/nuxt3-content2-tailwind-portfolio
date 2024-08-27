@@ -143,6 +143,23 @@ export default defineAppConfig({
         },
       ],
     },
+    shareLinks: [
+      {
+        name: 'X (Twitter)',
+        icon: 'ri:twitter-x-fill',
+        url: 'https://twitter.com/intent/tweet?url=',
+      },
+      {
+        name: 'LinkedIn',
+        icon: 'mdi:linkedin',
+        url: 'https://www.linkedin.com/sharing/share-offsite/?url=',
+      },
+      {
+        name: 'Facebook',
+        icon: 'mdi:facebook',
+        url: 'https://www.facebook.com/sharer/sharer.php?u=',
+      },
+    ],
   },
 
 })
