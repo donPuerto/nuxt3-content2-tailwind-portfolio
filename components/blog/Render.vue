@@ -37,6 +37,16 @@ const showIcons = ref(false)
 const headerSection = ref(null)
 const mainContentWrapper = ref(null)
 
+const isFullscreen = ref(false)
+
+const openFullscreen = () => {
+  isFullscreen.value = true
+}
+
+const closeFullscreen = () => {
+  isFullscreen.value = false
+}
+
 onMounted(() => {
   const handleScroll = () => {
     if (headerSection.value && mainContentWrapper.value) {
@@ -162,19 +172,40 @@ const imageUrl = computed(() => {
       <!-- End: Tags -->
 
       <!-- Start: Image with error handling -->
-      <img
+      <div
         v-if="imageUrl"
-        :src="imageUrl"
-        :alt="props.post.title"
-        class="w-full h-64 object-cover rounded-xl mb-6"
-        @error="handleImageError"
-      >
+        :style="{ backgroundImage: `url(${imageUrl})` }"
+        :aria-label="props.post.title"
+        class="w-full h-64 bg-cover bg-center rounded-xl mb-6 cursor-pointer transition-all duration-300 ease-in-out filter grayscale hover:filter-none"
+        @click="openFullscreen"
+      />
       <div
         v-else
-        class="w-full h-64 bg-gray-200 rounded-xl mb-6 flex items-center justify-center text-gray-500"
+        class="w-full h-84 bg-secondary rounded-xl mb-6 flex items-center justify-center text-muted-foreground"
       >
         No image available
       </div>
+      <!-- Fullscreen Image Modal -->
+      <Transition
+        enter-active-class="transition duration-300 ease-out"
+        enter-from-class="opacity-0 scale-95"
+        enter-to-class="opacity-100 scale-100"
+        leave-active-class="transition duration-200 ease-in"
+        leave-from-class="opacity-100 scale-100"
+        leave-to-class="opacity-0 scale-95"
+      >
+        <div
+          v-if="isFullscreen"
+          class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
+          @click="closeFullscreen"
+        >
+          <img
+            :src="imageUrl"
+            :alt="props.post.title"
+            class="max-w-full max-h-full object-contain"
+          >
+        </div>
+      </Transition>
       <!-- End: Image with error handling -->
 
       <!-- Start: Author and Share Section -->
