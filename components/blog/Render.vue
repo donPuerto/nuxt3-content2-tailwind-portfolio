@@ -12,13 +12,12 @@ interface TOCItem {
   isActive: boolean
 }
 
-const { formatDate } = useDate()
 const props = defineProps<{
   post: Post
 }>()
 
+const { formatDate } = useDate()
 const { getAuthors } = useAuthors()
-
 const allAuthors = computed(() => {
   const authors = getAuthors(props.post.authors)
   return authors.filter(author => author !== undefined)
@@ -26,6 +25,41 @@ const allAuthors = computed(() => {
 
 const tableOfContents = ref<TOCItem[]>([])
 const activeId = ref<string | null>(null)
+
+// Function to generate a unique ID for each header
+const generateId = (text: string): string => {
+  return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '')
+}
+
+// Function to extract headers from the content
+const extractHeaders = (): TOCItem[] => {
+  const headers: TOCItem[] = []
+  const article = document.querySelector('.blog-content')
+  if (article) {
+    const headerElements = article.querySelectorAll('h2, h3, h4, h5, h6')
+    headerElements.forEach((header) => {
+      const level = parseInt(header.tagName.charAt(1))
+      const text = header.textContent || ''
+      const id = generateId(text)
+      header.id = id // Set the ID on the header element
+      headers.push({ id, text, level })
+    })
+  }
+  return headers
+}
+
+const updateActiveHeader = () => {
+  const headers = document.querySelectorAll('.blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6')
+  const scrollPosition = window.scrollY
+
+  for (let i = headers.length - 1; i >= 0; i--) {
+    const header = headers[i] as HTMLElement
+    if (header.offsetTop <= scrollPosition + 100) {
+      activeId.value = header.id
+      break
+    }
+  }
+}
 
 const title = computed(() => props.post.title)
 
@@ -43,6 +77,17 @@ const openFullscreen = () => {
   isFullscreen.value = true
 }
 
+const imageUrl = computed(() => {
+  if (typeof props.post.image === 'string') {
+    return props.post.image
+  }
+  else if (typeof props.post.image === 'object' && props.post.image !== null) {
+    // Assuming the object has a 'url' property. Adjust if it's named differently.
+    return props.post.image.url
+  }
+  return null
+})
+
 const closeFullscreen = () => {
   isFullscreen.value = false
 }
@@ -54,61 +99,31 @@ onMounted(() => {
       const mainContentRect = mainContentWrapper.value.getBoundingClientRect()
       showIcons.value = window.scrollY > headerRect.bottom && mainContentRect.top <= 0
     }
+    updateActiveHeader()
   }
 
   window.addEventListener('scroll', handleScroll)
+
+  const updateTOC = () => {
+    nextTick(() => {
+      tableOfContents.value = extractHeaders()
+      updateActiveHeader()
+    })
+  }
+
+  // Initial TOC generation
+  updateTOC()
+
+  const observer = new MutationObserver(updateTOC)
+  const blogContent = document.querySelector('.blog-content')
+  if (blogContent) {
+    observer.observe(blogContent, { childList: true, subtree: true })
+  }
+
   onUnmounted(() => {
+    observer.disconnect()
     window.removeEventListener('scroll', handleScroll)
   })
-
-  const article = document.querySelector('.blog-content')
-  if (article) {
-    const headers = article.querySelectorAll('h2, h3, h4, h5, h6')
-    tableOfContents.value = Array.from(headers).map(header => ({
-      id: header.id,
-      text: header.textContent,
-      level: parseInt(header.tagName.charAt(1)),
-      isActive: false,
-    }))
-
-    // Set up Intersection Observer
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            activeId.value = entry.target.id
-          }
-        })
-      },
-      { rootMargin: '-5% 0px -95% 0px' },
-    )
-
-    headers.forEach(header => observer.observe(header))
-  }
-})
-
-// Update active state of TOC items when activeId changes
-watch(activeId, (newActiveId) => {
-  tableOfContents.value = tableOfContents.value.map(item => ({
-    ...item,
-    isActive: item.id === newActiveId,
-  }))
-})
-
-const handleImageError = (e: Event) => {
-  console.error('Image failed to load:', (e.target as HTMLImageElement).src)
-  ;(e.target as HTMLImageElement).style.display = 'none'
-}
-
-const imageUrl = computed(() => {
-  if (typeof props.post.image === 'string') {
-    return props.post.image
-  }
-  else if (typeof props.post.image === 'object' && props.post.image !== null) {
-    // Assuming the object has a 'url' property. Adjust if it's named differently.
-    return props.post.image.url
-  }
-  return null
 })
 </script>
 
@@ -258,23 +273,28 @@ const imageUrl = computed(() => {
           <div class="sticky top-8 space-y-6">
             <!-- Start: Table of Contents -->
             <div
-              v-if="tableOfContents && tableOfContents.length > 0"
-              class="bg-secondary p-6 rounded-xl"
+              v-if="tableOfContents.length > 0"
+              class="bg-secondary py-6 px-4 rounded-xl"
             >
               <h2 class="text-sm font-bold mb-4">
                 Table of Contents
               </h2>
-              <ul class="space-y-1">
+              <ul>
                 <li
                   v-for="header in tableOfContents"
                   :key="header.id"
-                  class="leading-[1.3rem]"
-                  :class="{ 'ml-1': header.level === 3, 'ml-8': header.level > 3 }"
                 >
                   <a
                     :href="`#${header.id}`"
-                    class="text-sm text-primary hover:text-ring transition-colors duration-200"
-                    :class="{ 'font-bold text-ring': header.isActive }"
+                    class="toc-link block py-1 text-sm text-primary transition-all duration-300 ease-in-out"
+                    :class="{
+                      'active': header.id === activeId,
+                      'font-bold': header.level === 1,
+                      'ml-2': header.level === 2,
+                      'ml-4': header.level === 3,
+                      'ml-6': header.level === 4,
+                      'ml-8': header.level > 4,
+                    }"
                   >
                     {{ header.text }}
                   </a>
@@ -282,23 +302,6 @@ const imageUrl = computed(() => {
               </ul>
             </div>
             <!-- End: Table of Contents -->
-
-            <!-- Debugging: Table of Contents -->
-            <div
-              v-if="!tableOfContents || tableOfContents.length === 0"
-              class="bg-secondary p-6 rounded-xl"
-            >
-              <p>No table of contents items found.</p>
-              <p>tableOfContents: {{ tableOfContents }}</p>
-            </div>
-            <div
-              v-else
-              class="bg-secondary p-6 rounded-xl"
-            >
-              <p>Number of TOC items: {{ tableOfContents.length }}</p>
-              <pre>{{ JSON.stringify(tableOfContents, null, 2) }}</pre>
-            </div>
-            <!-- End Debugging -->
 
             <!-- Start: Quick Links -->
             <div class="bg-secondary p-4 rounded-xl">
@@ -372,12 +375,6 @@ const imageUrl = computed(() => {
 </template>
 
 <style scoped>
-@media (min-width: 640px) {
-  .container {
-    padding-left: calc(3rem + 1rem); /* icon width (3rem) + extra space (1rem) */
-  }
-}
-
 .blog-content{
   font-family: "Inter var","Liberation Mono", "Courier New", monospace;
   line-height: 1.3333;
@@ -478,10 +475,17 @@ const imageUrl = computed(() => {
   margin-top: 6.5rem !important;
 }
 
-/* Add this to ensure the main content doesn't overlap with the floating icons */
-@media (min-width: 640px) {
-  .container {
-    padding-left: calc(3rem + 1rem); /* icon width (3rem) + extra space (1rem) */
-  }
+.toc-link {
+  transition: all 0.1s ease-in-out;
+}
+
+.toc-link:hover {
+  color: var(--color-ring);
+}
+
+.toc-link.active {
+  color: var(--color-ring);
+  font-weight: bold;
+  transform: scale(1.05);
 }
 </style>
