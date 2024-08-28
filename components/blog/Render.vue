@@ -256,9 +256,9 @@ const imageUrl = computed(() => {
         <!-- Start: Right Sidebar -->
         <aside class="w-full lg:w-1/3 mt-8 lg:mt-0">
           <div class="sticky top-8 space-y-6">
-            <!-- Start:Table of Contents -->
+            <!-- Start: Table of Contents -->
             <div
-              v-if="tableOfContents.length > 0"
+              v-if="tableOfContents && tableOfContents.length > 0"
               class="bg-secondary p-6 rounded-xl"
             >
               <h2 class="text-sm font-bold mb-4">
@@ -281,7 +281,24 @@ const imageUrl = computed(() => {
                 </li>
               </ul>
             </div>
-            <!-- End:Table of Contents -->
+            <!-- End: Table of Contents -->
+
+            <!-- Debugging: Table of Contents -->
+            <div
+              v-if="!tableOfContents || tableOfContents.length === 0"
+              class="bg-secondary p-6 rounded-xl"
+            >
+              <p>No table of contents items found.</p>
+              <p>tableOfContents: {{ tableOfContents }}</p>
+            </div>
+            <div
+              v-else
+              class="bg-secondary p-6 rounded-xl"
+            >
+              <p>Number of TOC items: {{ tableOfContents.length }}</p>
+              <pre>{{ JSON.stringify(tableOfContents, null, 2) }}</pre>
+            </div>
+            <!-- End Debugging -->
 
             <!-- Start: Quick Links -->
             <div class="bg-secondary p-4 rounded-xl">
