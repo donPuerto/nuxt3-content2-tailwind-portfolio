@@ -172,16 +172,18 @@ const imageUrl = computed(() => {
       <!-- End: Tags -->
 
       <!-- Start: Image with error handling -->
-      <div
+      <NuxtImg
         v-if="imageUrl"
-        :style="{ backgroundImage: `url(${imageUrl})` }"
-        :aria-label="props.post.title"
-        class="w-full h-64 bg-cover bg-center rounded-xl mb-6 cursor-pointer transition-all duration-300 ease-in-out filter grayscale hover:filter-none"
+        :src="imageUrl"
+        :alt="props.post.title"
+        width="800"
+        height="384"
+        class="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover rounded-xl mb-6 cursor-pointer transition-all duration-300 ease-in-out filter grayscale hover:filter-none"
         @click="openFullscreen"
       />
       <div
         v-else
-        class="w-full h-84 bg-secondary rounded-xl mb-6 flex items-center justify-center text-muted-foreground"
+        class="w-full h-48 sm:h-64 md:h-80 lg:h-96 bg-secondary rounded-xl mb-6 flex items-center justify-center text-muted-foreground"
       >
         No image available
       </div>
@@ -196,14 +198,16 @@ const imageUrl = computed(() => {
       >
         <div
           v-if="isFullscreen"
-          class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
+          class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4 sm:p-8"
           @click="closeFullscreen"
         >
-          <img
-            :src="imageUrl"
-            :alt="props.post.title"
-            class="max-w-full max-h-full object-contain"
-          >
+          <div class="relative w-full h-full max-w-6xl max-h-[90vh]">
+            <NuxtImg
+              :src="imageUrl"
+              :alt="props.post.title"
+              class="w-full h-full object-contain"
+            />
+          </div>
         </div>
       </Transition>
       <!-- End: Image with error handling -->
@@ -249,9 +253,10 @@ const imageUrl = computed(() => {
         </div>
         <!-- End: Main Content -->
 
-        <!-- Start: Table of Contents -->
+        <!-- Start: Right Sidebar -->
         <aside class="w-full lg:w-1/3 mt-8 lg:mt-0">
           <div class="sticky top-8 space-y-6">
+            <!-- Start:Table of Contents -->
             <div
               v-if="tableOfContents.length > 0"
               class="bg-secondary p-6 rounded-xl"
@@ -276,8 +281,9 @@ const imageUrl = computed(() => {
                 </li>
               </ul>
             </div>
+            <!-- End:Table of Contents -->
 
-            <!-- Quick Links -->
+            <!-- Start: Quick Links -->
             <div class="bg-secondary p-4 rounded-xl">
               <h2 class="text-sm font-bold mb-4">
                 Quick Links
@@ -302,8 +308,9 @@ const imageUrl = computed(() => {
                 </li>
               </ul>
             </div>
+            <!-- End: Quick Links -->
 
-            <!-- Ad Space -->
+            <!-- Start: Ad Space -->
             <div class="bg-secondary p-4 rounded-xl">
               <h2 class="text-sm font-bold mb-4">
                 Advertisement
@@ -313,9 +320,10 @@ const imageUrl = computed(() => {
                 Ad Space
               </div>
             </div>
+            <!-- End: Ad Space -->
           </div>
         </aside>
-        <!-- End: Table of Contents -->
+        <!-- End: Right Sidebar -->
       </div>
     </div>
     <!-- End: Main Content Wrapper -->
