@@ -270,13 +270,13 @@ onMounted(() => {
 
         <!-- Start: Right Sidebar -->
         <aside class="w-full lg:w-1/3 mt-8 lg:mt-0">
-          <div class="sticky top-8 space-y-6">
+          <div class="sticky top-8 space-y-4">
             <!-- Start: Table of Contents -->
             <div
               v-if="tableOfContents.length > 0"
-              class="bg-secondary py-6 px-4 rounded-xl"
+              class="bg-secondary py-6 px-6 rounded-xl"
             >
-              <h2 class="text-sm font-bold mb-4">
+              <h2 class="text-sm font-semibold mb-4">
                 Table of Contents
               </h2>
               <ul>
@@ -286,14 +286,14 @@ onMounted(() => {
                 >
                   <a
                     :href="`#${header.id}`"
-                    class="toc-link block py-1 text-sm text-primary transition-all duration-300 ease-in-out"
+                    class="toc-link block py-1 text-xs text-primary transition-all duration-300 ease-in-out"
                     :class="{
                       'active': header.id === activeId,
                       'font-bold': header.level === 1,
-                      'ml-2': header.level === 2,
-                      'ml-4': header.level === 3,
-                      'ml-6': header.level === 4,
-                      'ml-8': header.level > 4,
+                      'mr-2': header.level === 2,
+                      'mr-4': header.level === 3,
+                      'mr-6': header.level === 4,
+                      'mr-8': header.level > 4,
                     }"
                   >
                     {{ header.text }}
