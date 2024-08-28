@@ -1,5 +1,5 @@
-<script lang="ts" setup>
-import type { Author } from '../../types/components/blog/post'
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import type { Post } from '~/types/components/blog/post'
 
 const { app: { quickLinks, projectLinks } } = useAppConfig()
@@ -12,54 +12,45 @@ interface TOCItem {
   isActive: boolean
 }
 
+const { formatDate } = useDate()
 const props = defineProps<{
   post: Post
 }>()
+
+const { getAuthors } = useAuthors()
+
+const allAuthors = computed(() => {
+  const authors = getAuthors(props.post.authors)
+  return authors.filter(author => author !== undefined)
+})
 
 const tableOfContents = ref<TOCItem[]>([])
 const activeId = ref<string | null>(null)
 
 const title = computed(() => props.post.title)
 
-const formatDate = (date: string | Date) => {
-  return new Date(date).toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    timeZone: 'UTC',
-  })
-}
+// * Computed properties for formatted dates
+const publishedDate = computed(() => formatDate(props.post.published_at))
+const updatedDate = computed(() => props.post.updated_at ? formatDate(props.post.updated_at) : null)
 
-const publishedDate = computed(() =>
-  props.post.published_at ? formatDate(props.post.published_at) : '',
-)
-
-const updatedDate = computed(() =>
-  props.post.updated_at ? formatDate(props.post.updated_at) : '',
-)
-
-// Author objects
-const authors = computed((): Author[] => {
-  if (Array.isArray(props.post.authors)) {
-    return props.post.authors
-  }
-  else if (typeof props.post.authors === 'string') {
-    // Fallback for old format where authors was just a string
-    return [{
-      name: props.post.authors,
-      avatar: '', // You might want to provide a default avatar
-      slug: props.post.authors.toLowerCase().replace(/\s+/g, '-'),
-    }]
-  }
-  else if (props.post.authors && typeof props.post.authors === 'object') {
-    // Single author object
-    return [props.post.authors]
-  }
-  return []
-})
+const showIcons = ref(false)
+const headerSection = ref(null)
+const mainContentWrapper = ref(null)
 
 onMounted(() => {
+  const handleScroll = () => {
+    if (headerSection.value && mainContentWrapper.value) {
+      const headerRect = headerSection.value.getBoundingClientRect()
+      const mainContentRect = mainContentWrapper.value.getBoundingClientRect()
+      showIcons.value = window.scrollY > headerRect.bottom && mainContentRect.top <= 0
+    }
+  }
+
+  window.addEventListener('scroll', handleScroll)
+  onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll)
+  })
+
   const article = document.querySelector('.blog-content')
   if (article) {
     const headers = article.querySelectorAll('h2, h3, h4, h5, h6')
@@ -93,339 +84,244 @@ watch(activeId, (newActiveId) => {
     isActive: item.id === newActiveId,
   }))
 })
+
+const handleImageError = (e: Event) => {
+  console.error('Image failed to load:', (e.target as HTMLImageElement).src)
+  ;(e.target as HTMLImageElement).style.display = 'none'
+}
+
+const imageUrl = computed(() => {
+  if (typeof props.post.image === 'string') {
+    return props.post.image
+  }
+  else if (typeof props.post.image === 'object' && props.post.image !== null) {
+    // Assuming the object has a 'url' property. Adjust if it's named differently.
+    return props.post.image.url
+  }
+  return null
+})
 </script>
 
 <template>
-  <template>
-    <article>
-      <!-- Header Section -->
-      <div class="mt-4 container mx-auto p-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 2xl:px-[10rem]">
-        <!-- Breadcrumb -->
-        <nav class="font-medium mb-4">
-          <NuxtLink
-            to="/blog"
-            class="hover:text-ring"
-          >
-            <Icon
-              name="ph:newspaper-duotone"
-              class="flex-shrink-0 w-6 h-6"
-            />
-            Blog
-          </NuxtLink>
-          <span class="mx-1">&gt;</span>
-          <span class="text-primary hover:text-ring">{{ props.post.title }}</span>
-        </nav>
-
-        <!-- Posted Date -->
-        <p class="text-foreground/80 mt-8 mb-2 text-sm">
-          <span class="font-semibold">Published on:</span>  {{ publishedDate }}
-        </p>
-
-        <!-- Blog Title -->
-        <h1 class="text-2xl sm:text-3xl font-black text-foreground">
-          {{ title }}
-        </h1>
-
-        <!-- Blog Description -->
-        <p class="text-foreground mb-4">
-          {{ post.description }}
-        </p>
-
-        <!-- Tags -->
-        <div
-          v-if="post.tags && post.tags.length > 0"
-          class="flex flex-wrap gap-2 mb-4"
+  <article class="relative">
+    <!-- Header Section -->
+    <div
+      ref="headerSection"
+      class="mt-4 container mx-auto p-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 2xl:px-[10rem]"
+    >
+      <!-- Start: Breadcrumb -->
+      <nav class="font-medium mb-4">
+        <NuxtLink
+          to="/blog"
+          class="hover:text-ring"
         >
-          <NuxtLink
-            v-for="tag in post.tags"
-            :key="tag"
-            :to="`/blog/tag/${encodeURIComponent(tag)}`"
-            class="px-2 py-1 text-xs font-medium bg-secondary text-primary rounded-full hover:bg-primary hover:text-secondary transition-colors duration-200"
-          >
-            #{{ tag }}
-          </NuxtLink>
-        </div>
+          <Icon
+            name="ph:newspaper-duotone"
+            class="flex-shrink-0 w-6 h-6"
+          />
+          Blog
+        </NuxtLink>
+        <span class="mx-1">&gt;</span>
+        <span class="text-primary hover:text-ring">{{ props.post.title }}</span>
+      </nav>
+      <!-- End: Breadcrumb -->
 
-        <!-- Featured Image -->
-        <div
-          v-if="post.image"
-          class="mb-6"
-        >
-          <div
-            class="relative w-full"
-            style="max-width: 100%; margin: 0;"
-          >
-            <div style="padding-top: 56.25%;">
-              <img
-                :src="post.image.url"
-                :width="post.image.width"
-                :height="post.image.height"
-                :alt="post.title"
-                class="absolute top-0 left-0 w-full h-full rounded-xl shadow-xl object-cover transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0"
-              >
-            </div>
-          </div>
-        </div>
-
-        <!-- Authors Info -->
-        <div class="md:flex md:justify-between md:items-center mb-4">
-          <!-- Left Column: Authors -->
-          <div class="flex flex-wrap items-center mb-4 md:mb-0">
-            <div
-              v-for="(author, index) in authors"
-              :key="index"
-              class="flex items-center mr-6 mb-2"
-            >
-              <img
-                :src="author.avatar"
-                :alt="author.name"
-                class="w-12 h-12 rounded-full mr-4"
-              >
-              <div class="flex flex-col">
-                <!-- <NuxtLink
-                  :to="`/author/${author.slug}`"
-                  class="font-normal text-sm text-secondary-foreground/80 hover:text-ring"
-                >
-                  {{ author.name }}
-                </NuxtLink>
-                <span class="font-normal text-sm text-primary">{{ author.slug }} </span> -->
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Column: Social Media Icons -->
-          <div class="flex items-center space-x-4">
-            <a
-              target="_blank"
-              href="https://x.com/donpuerto_"
-              class="text-gray-600 hover:text-gray-800 transition-colors"
-            >
-              <Icon
-                name="ri:twitter-x-fill"
-                size="20"
-              />
-            </a>
-            <a
-              target="_blank"
-              href="https://www.facebook.com/diybuddy18"
-              class="text-gray-600 hover:text-gray-800 transition-colors"
-            >
-              <Icon
-                name="mdi:facebook"
-                size="24"
-              />
-            </a>
-            <a
-              target="_blank"
-              href="https://www.linkedin.com/in/don-puerto-115790110/"
-              class="text-gray-600 hover:text-gray-800 transition-colors"
-            >
-              <Icon
-                name="mdi:linkedin"
-                size="24"
-              />
-            </a>
-          </div>
-        </div>
-
-        <!-- Updated Date -->
-        <div class="md:flex md:justify-between md:items-center">
-          <!-- Left Column -->
-          <div class="md:mb-0">
-            <!-- <NuxtLink
-              :to="post.doc_url"
-              class="inline-flex items-center text-sm text-gray-600 hover:text-gray-800 transition-colors"
-            >
-              <Icon
-                name="ph:pen-duotone"
-                class="mr-2"
-              />
-              Edit this page
-              <Icon
-                name="ph:arrow-up-right"
-                class="ml-1 mb-1"
-              />
-
-            </NuxtLink> -->
-          </div>
-
-          <!-- Right Column -->
-          <div class="text-sm text-gray-600">
-            <span>
-              Updated at {{ updatedDate }}
-            </span>
-            <span class="mx-3">|</span>
-            <span class="inline-flex items-center">
-              <Icon
-                name="streamline:interface-time-clock-circle-clock-loading-measure-time-circle"
-                class="mr-2"
-              />
-              {{ post.reading_time }}
-            </span>
-          </div>
-        </div>
-
-        <!-- Horizontal line -->
-        <hr class="border-t border-secondary mt-2 mb-6">
+      <!-- Start: Date Section -->
+      <div class="flex flex-col sm:flex-row justify-between text-xs text-muted-foreground mb-4">
+        <span>Published: {{ publishedDate }}</span>
+        <span v-if="updatedDate">Updated: {{ updatedDate }}</span>
       </div>
+      <!-- End: Date Section -->
 
-      <!-- Full-width Wrapper with 3 Columns -->
-      <div class="container w-full mx-auto p-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 2xl:px-[10rem]">
-        <!-- Icons Row (for small devices) -->
-        <div class="flex justify-center mb-4 lg:hidden">
-          <div class="flex space-x-4">
-            <a
-              v-for="icon in projectLinks"
-              :key="icon.name"
-              :href="icon.url"
-              target="_blank"
-              class="text-gray-600 hover:text-gray-800 transition-colors"
-            >
-              <Icon
-                :name="icon.name"
-                :size="icon.size"
-              />
-            </a>
-          </div>
-        </div>
+      <!-- Start: Blog Title -->
+      <h1 class="text-2xl sm:text-3xl font-black text-foreground">
+        {{ title }}
+      </h1>
+      <!-- End: Blog Title -->
 
-        <!-- Content and TOC -->
-        <div class="flex flex-col lg:flex-row lg:space-x-8">
-          <!-- Icons Column (for large devices) -->
-          <div class="hidden lg:block">
-            <div class="sticky top-8 flex flex-col items-center space-y-2">
-              <a
-                v-for="icon in projectLinks"
-                :key="icon.name"
-                :href="icon.url"
-                target="_blank"
-                class="text-gray-600 hover:text-gray-800 transition-colors"
-              >
-                <Icon
-                  :name="icon.name"
-                  :size="icon.size"
-                />
-              </a>
-            </div>
-          </div>
+      <!-- Start:Blog Description -->
+      <p class="text-foreground ">
+        {{ post.description }}
+      </p>
+      <!-- End: Blog Description -->
 
-          <!-- Main Content and Table of Contents (Stacked on small screens) -->
-          <div class="w-full lg:w-2/3">
-            <!-- Table of Contents as Accordion (for small devices) -->
-            <div
-              v-if="tableOfContents.length > 0"
-              class="lg:hidden md:pb-3 pb-3 "
-            >
-              <div class="bg-secondary p-4 rounded-xl shadow-xl">
-                <details class="space-y-2">
-                  <summary class="text-sm font-bold cursor-pointer">
-                    Table of Contents
-                  </summary>
-                  <ul class="space-y-1 mt-2">
-                    <li
-                      v-for="header in tableOfContents"
-                      :key="header.id"
-                      class="leading-[1.3rem]"
-                      :class="{ 'ml-1': header.level === 3, 'ml-8': header.level > 3 }"
-                    >
-                      <a
-                        :href="`#${header.id}`"
-                        class="text-sm text-primary hover:text-ring transition-colors duration-200"
-                        :class="{ 'font-bold text-ring': header.isActive }"
-                      >
-                        {{ header.text }}
-                      </a>
-                    </li>
-                  </ul>
-                </details>
-              </div>
-            </div>
+      <!-- Start: Tags -->
+      <div
+        v-if="post.tags && post.tags.length > 0"
+        class="flex flex-wrap gap-2 mb-4"
+      >
+        <NuxtLink
+          v-for="tag in post.tags"
+          :key="tag"
+          :to="`/blog/tag/${encodeURIComponent(tag)}`"
+          class="px-2 py-1 text-xs font-medium bg-secondary text-primary rounded-full hover:bg-primary hover:text-secondary transition-colors duration-200"
+        >
+          #{{ tag }}
+        </NuxtLink>
+      </div>
+      <!-- End: Tags -->
 
-            <!-- Main Content -->
-            <div class="bg-secondary w-full px-8 py-6 rounded-xl shadow-xl">
-              <div class="blog-content">
+      <!-- Start: Image with error handling -->
+      <img
+        v-if="imageUrl"
+        :src="imageUrl"
+        :alt="props.post.title"
+        class="w-full h-64 object-cover rounded-xl mb-6"
+        @error="handleImageError"
+      >
+      <div
+        v-else
+        class="w-full h-64 bg-gray-200 rounded-xl mb-6 flex items-center justify-center text-gray-500"
+      >
+        No image available
+      </div>
+      <!-- End: Image with error handling -->
+
+      <!-- Start: Author and Share Section -->
+      <div class="flex justify-between items-center mt-auto">
+        <BlogAuthorList
+          :authors="allAuthors"
+          size="sm"
+          class="flex-shrink-0"
+        />
+        <BlogShareLinks
+          size="md"
+          class="flex-shrink-0"
+        />
+      </div>
+      <!-- End: Author and Share Section -->
+
+      <!-- Horizontal line -->
+      <hr class="border-t border-secondary mt-2 mb-6">
+    </div>
+    <!-- End: Header Section -->
+
+    <!-- Start: Main Content Wrapper -->
+    <div
+      ref="mainContentWrapper"
+      class="container mx-auto p-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 2xl:px-[10rem]"
+    >
+      <div class="flex flex-col lg:flex-row lg:space-x-8">
+        <!-- Start: Main Content -->
+        <div class="flex-1 lg:w-2/3">
+          <div class="bg-secondary w-full px-4 sm:px-8 py-6 rounded-xl shadow-xl">
+            <div class="blog-content">
+              <ClientOnly>
                 <ContentRenderer :value="post">
                   <template #empty>
                     <p>No content found.</p>
                   </template>
                 </ContentRenderer>
+              </ClientOnly>
+            </div>
+          </div>
+        </div>
+        <!-- End: Main Content -->
+
+        <!-- Start: Table of Contents -->
+        <aside class="w-full lg:w-1/3 mt-8 lg:mt-0">
+          <div class="sticky top-8 space-y-6">
+            <div
+              v-if="tableOfContents.length > 0"
+              class="bg-secondary p-6 rounded-xl"
+            >
+              <h2 class="text-sm font-bold mb-4">
+                Table of Contents
+              </h2>
+              <ul class="space-y-1">
+                <li
+                  v-for="header in tableOfContents"
+                  :key="header.id"
+                  class="leading-[1.3rem]"
+                  :class="{ 'ml-1': header.level === 3, 'ml-8': header.level > 3 }"
+                >
+                  <a
+                    :href="`#${header.id}`"
+                    class="text-sm text-primary hover:text-ring transition-colors duration-200"
+                    :class="{ 'font-bold text-ring': header.isActive }"
+                  >
+                    {{ header.text }}
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="bg-secondary p-4 rounded-xl">
+              <h2 class="text-sm font-bold mb-4">
+                Quick Links
+              </h2>
+              <ul class="space-y-1">
+                <li
+                  v-for="link in quickLinks"
+                  :key="link.url"
+                >
+                  <a
+                    :href="link.url"
+                    target="_blank"
+                    class="flex items-center text-primary hover:text-ring transition-colors duration-200"
+                  >
+                    <Icon
+                      :name="link.icon"
+                      class="mr-2"
+                      size="20px"
+                    />
+                    <span class="text-sm">{{ link.text }}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Ad Space -->
+            <div class="bg-secondary p-4 rounded-xl">
+              <h2 class="text-sm font-bold mb-4">
+                Advertisement
+              </h2>
+              <!-- Replace this with your actual ad component or code -->
+              <div class="bg-gray-200 h-40 flex items-center justify-center text-gray-500">
+                Ad Space
               </div>
             </div>
           </div>
-
-          <!-- Table of Contents (Visible on large devices) -->
-          <aside class="w-full lg:w-1/3 lg:block hidden">
-            <div class="sticky top-8 space-y-6">
-              <div
-                v-if="tableOfContents.length > 0"
-                class="bg-secondary p-6 rounded-xl"
-              >
-                <h2 class="text-sm font-bold mb-4">
-                  Table of Contents
-                </h2>
-                <ul class="space-y-1">
-                  <li
-                    v-for="header in tableOfContents"
-                    :key="header.id"
-                    class="leading-[1.3rem]"
-                    :class="{ 'ml-1': header.level === 3, 'ml-8': header.level > 3 }"
-                  >
-                    <a
-                      :href="`#${header.id}`"
-                      class="text-sm text-primary hover:text-ring transition-colors duration-200"
-                      :class="{ 'font-bold text-ring': header.isActive }"
-                    >
-                      {{ header.text }}
-                    </a>
-                  </li>
-                </ul>
-              </div>
-
-              <!-- Quick Links -->
-              <div class="bg-secondary p-4 rounded-xl">
-                <h2 class="text-sm font-bold mb-4">
-                  Quick Links
-                </h2>
-                <ul class="space-y-1">
-                  <li
-                    v-for="link in quickLinks"
-                    :key="link.url"
-                  >
-                    <a
-                      :href="link.url"
-                      target="_blank"
-                      class="flex items-center text-primary hover:text-ring transition-colors duration-200"
-                    >
-                      <Icon
-                        :name="link.icon"
-                        class="mr-2"
-                        size="20px"
-                      />
-                      <span class="text-sm">{{ link.text }}</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-
-              <!-- Ad Space -->
-              <div class="bg-secondary p-4 rounded-xl">
-                <h2 class="text-sm font-bold mb-4">
-                  Advertisement
-                </h2>
-                <!-- Replace this with your actual ad component or code -->
-                <div class="bg-gray-200 h-40 flex items-center justify-center text-gray-500">
-                  Ad Space
-                </div>
-              </div>
-            </div>
-          </aside>
-        </div>
+        </aside>
+        <!-- End: Table of Contents -->
       </div>
-    </article>
-  </template>
+    </div>
+    <!-- End: Main Content Wrapper -->
+
+    <!-- Start: Floating Icons -->
+    <div
+      :class="[
+        'fixed left-4 sm:left-8 md:left-16 lg:left-24 xl:left-40 2xl:left-[10rem] transition-all duration-300 ease-in-out w-12 z-50',
+        showIcons ? 'opacity-100' : 'opacity-0 pointer-events-none',
+      ]"
+    >
+      <div class="sticky top-8 flex flex-col items-center space-y-2">
+        <a
+          v-for="icon in projectLinks"
+          :key="icon.name"
+          :href="icon.url"
+          target="_blank"
+          class="text-gray-600 hover:text-gray-800 transition-colors"
+        >
+          <Icon
+            :name="icon.name"
+            :size="icon.size"
+          />
+        </a>
+      </div>
+    </div>
+    <!-- End: Floating Icons -->
+  </article>
 </template>
 
 <style scoped>
+@media (min-width: 640px) {
+  .container {
+    padding-left: calc(3rem + 1rem); /* icon width (3rem) + extra space (1rem) */
+  }
+}
+
 .blog-content{
   font-family: "Inter var","Liberation Mono", "Courier New", monospace;
   line-height: 1.3333;
@@ -524,5 +420,12 @@ watch(activeId, (newActiveId) => {
 
 .blog-content :deep(h3 + h3) {
   margin-top: 6.5rem !important;
+}
+
+/* Add this to ensure the main content doesn't overlap with the floating icons */
+@media (min-width: 640px) {
+  .container {
+    padding-left: calc(3rem + 1rem); /* icon width (3rem) + extra space (1rem) */
+  }
 }
 </style>

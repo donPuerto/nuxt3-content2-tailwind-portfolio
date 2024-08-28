@@ -123,6 +123,10 @@ export default defineNuxtConfig({
       ],
 
     },
+    // markdown: {
+    //   remarkPlugins: ['remark-unwrap-images'],
+    //   rehypePlugins: ['rehype-external-links'],
+    // },
   },
 
   compatibilityDate: '2024-07-22',

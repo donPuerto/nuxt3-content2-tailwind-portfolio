@@ -12,8 +12,8 @@ export interface Post {
   image?: {
     url: string
     alt: string
-    width: number
-    height: number
+    width?: number
+    height?: number
   }
   alt?: string
   published_at: string

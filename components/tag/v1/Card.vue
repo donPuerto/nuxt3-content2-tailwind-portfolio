@@ -12,9 +12,17 @@ const props = defineProps<Props>()
 
 // * Importing composables for handling relative time and authors
 const { getAuthors } = useAuthors()
+const { formatDate } = useDate()
 
 // * Computed property to get the list of authors for the post
-const allAuthors = computed(() => getAuthors(props.post.authors))
+const allAuthors = computed(() => {
+  const authors = getAuthors(props.post.authors)
+  return authors.filter(author => author !== undefined)
+})
+
+// * Computed properties for formatted dates
+const publishedDate = computed(() => formatDate(props.post.published_at))
+const updatedDate = computed(() => props.post.updated_at ? formatDate(props.post.updated_at) : null)
 </script>
 
 <template>
@@ -33,25 +41,32 @@ const allAuthors = computed(() => getAuthors(props.post.authors))
           :width="post.image.width"
           :height="post.image.height"
           :alt="post.image.alt"
-          class="h-[240px] w-full object-cover md:h-[200px] lg:h-[240px]"
+          class="h-[240px] w-full object-cover md:h-full lg:h-[240px]"
         >
       </NuxtLink>
       <!-- End: Image Section -->
 
       <!-- Start: Content Section -->
-      <div class="px-3 py:3 md:py-1 md:px-4 lg:py-2 md:w-2/3 lg:w-full flex flex-col justify-between">
+      <div class="flex flex-col justify-between p-4 md:w-2/3 lg:w-full">
+        <!-- Start: Date Section -->
+        <div class="flex flex-col sm:flex-row justify-between text-xs text-muted-foreground mb-2">
+          <span>Published: {{ publishedDate }}</span>
+          <span v-if="updatedDate">Updated: {{ updatedDate }}</span>
+        </div>
+        <!-- End: Date Section -->
+
         <div>
           <!-- Start: Headline -->
           <h2
             v-if="post.headline"
-            class="text-xs font-medium text-primary mt-2 sm:mt-2"
+            class="text-xs font-medium text-primary"
           >
             {{ post.headline }}
           </h2>
           <!-- End: Headline -->
 
           <!-- Start: Title -->
-          <h3 class="text-base font-medium lg:text-base text-card-foreground">
+          <h3 class="text-sm font-semibold text-card-foreground mb-1 leading-snug">
             {{ post.title }}
           </h3>
           <!-- End: Title -->
@@ -59,13 +74,13 @@ const allAuthors = computed(() => getAuthors(props.post.authors))
           <!-- Start: Tags -->
           <div
             v-if="post.tags && post.tags.length > 0"
-            class="flex flex-wrap gap-2 mb-4 text-xs"
+            class="flex flex-wrap gap-1.5 mb-3"
           >
             <NuxtLink
               v-for="tag in post.tags"
               :key="tag"
               :to="`/blog/tag/${encodeURIComponent(tag)}`"
-              class="px-2 py-1 text-xs font-medium bg-secondary text-secondary-foreground rounded-full hover:bg-primary hover:text-primary-foreground transition-colors duration-200"
+              class="px-1.5 py-0.5 text-[10px] font-medium bg-secondary text-secondary-foreground rounded-full hover:bg-primary hover:text-primary-foreground transition-colors duration-200"
             >
               #{{ tag }}
             </NuxtLink>
@@ -73,14 +88,14 @@ const allAuthors = computed(() => getAuthors(props.post.authors))
           <!-- End: Tags -->
 
           <!-- Start: Description -->
-          <p class="mb-3 leading-relaxed text-sm lg:text-sm text-card-foreground line-clamp-3">
+          <p class="text-sm text-card-foreground line-clamp-3 mb-3">
             {{ post.description }}
           </p>
           <!-- End: Description -->
         </div>
 
         <!-- Start: Author and Share Section -->
-        <div class="flex justify-between items-center mb-2">
+        <div class="flex justify-between items-center mt-auto">
           <BlogAuthorList
             :authors="allAuthors"
             size="sm"

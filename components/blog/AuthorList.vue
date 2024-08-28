@@ -5,7 +5,7 @@ import type { Author } from '~/types/components/blog/author'
 type SizeOption = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 interface Props {
-  authors: Author[]
+  authors: (Author | undefined)[] // Allow for potentially undefined authors
   size?: SizeOption
 }
 
@@ -27,8 +27,9 @@ const sizeMap = {
 
 const sizeConfig = computed(() => sizeMap[props.size || 'xs'])
 
-const getInitials = (name: string) => {
-  return name.split(' ').map(n => n[0]).join('').toUpperCase()
+const getInitials = (author: Author | undefined) => {
+  if (!author || !author.name) return '?'
+  return author.name.split(' ').map(n => n[0]).join('').toUpperCase()
 }
 </script>
 
@@ -46,12 +47,12 @@ const getInitials = (name: string) => {
     >
       <div
         v-for="(author, index) in visibleAuthors"
-        :key="author.slug || index"
+        :key="author?.slug || index"
       >
         <UiAvatar
-          :src="author.avatar"
-          :alt="author.name"
-          :fallback="getInitials(author.name)"
+          :src="author?.avatar"
+          :alt="author?.name"
+          :fallback="getInitials(author)"
           :class="[
             sizeConfig.avatar,
             'border',
