@@ -21,6 +21,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter var', 'Inter', ...fontFamily.sans],
+        mono: ['"Liberation Mono"', ...fontFamily.mono],
       },
       fontSize: {
         'xs': '0.75rem',

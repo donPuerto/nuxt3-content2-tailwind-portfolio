@@ -158,14 +158,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <article class="relative">
+  <article class="font-sans text-sm">
     <!-- Start: Header Section -->
     <div
       ref="headerSection"
       class="container mx-auto p-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 2xl:px-[10rem]"
     >
       <!-- Start: Breadcrumb -->
-      <nav class="font-medium mb-4">
+      <nav class="text-xs font-medium mb-4">
         <NuxtLink
           to="/blog"
           class="hover:text-ring"
@@ -189,13 +189,13 @@ onMounted(() => {
       <!-- End: Date Section -->
 
       <!-- Start: Blog Title -->
-      <h1 class="text-2xl sm:text-3xl font-black text-foreground">
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4">
         {{ title }}
       </h1>
       <!-- End: Blog Title -->
 
-      <!-- Start:Blog Description -->
-      <p class="text-foreground ">
+      <!-- Start: Blog Description -->
+      <p class="text-sm text-foreground mb-4">
         {{ post.description }}
       </p>
       <!-- End: Blog Description -->
@@ -203,7 +203,7 @@ onMounted(() => {
       <!-- Start: Tags -->
       <div
         v-if="post.tags && post.tags.length > 0"
-        class="flex flex-wrap gap-2 mb-4"
+        class="flex flex-wrap gap-2 mb-6"
       >
         <NuxtLink
           v-for="tag in post.tags"
@@ -232,29 +232,6 @@ onMounted(() => {
       >
         No image available
       </div>
-      <!-- Fullscreen Image Modal -->
-      <Transition
-        enter-active-class="transition duration-300 ease-out"
-        enter-from-class="opacity-0 scale-95"
-        enter-to-class="opacity-100 scale-100"
-        leave-active-class="transition duration-200 ease-in"
-        leave-from-class="opacity-100 scale-100"
-        leave-to-class="opacity-0 scale-95"
-      >
-        <div
-          v-if="isFullscreen"
-          class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4 sm:p-8"
-          @click="closeFullscreen"
-        >
-          <div class="relative w-full h-full max-w-6xl max-h-[90vh]">
-            <NuxtImg
-              :src="imageUrl"
-              :alt="props.post.title"
-              class="w-full h-full object-contain"
-            />
-          </div>
-        </div>
-      </Transition>
       <!-- End: Image with error handling -->
 
       <!-- Start: Author and Share Section -->
@@ -270,9 +247,6 @@ onMounted(() => {
         />
       </div>
       <!-- End: Author and Share Section -->
-
-      <!-- Horizontal line -->
-      <hr class="border-t border-secondary mt-2 mb-6">
     </div>
     <!-- End: Header Section -->
 
@@ -322,7 +296,7 @@ onMounted(() => {
             ]"
           >
             <div class="bg-secondary w-full px-4 sm:px-8 py-6 rounded-xl shadow-xl">
-              <div class="blog-content">
+              <div class="blog-content text-sm leading-relaxed">
                 <ClientOnly>
                   <ContentRenderer :value="post">
                     <template #empty>
@@ -347,32 +321,31 @@ onMounted(() => {
         >
           <aside
             v-if="isLargeScreen"
-            class="col-span-12 lg:col-span-4 mt-8 lg:mt-0"
+            class="col-span-12 lg:col-span-4 mt-8 lg:mt-0 text-sm"
           >
-            <div class="sticky top-8 space-y-4">
+            <div class="sticky top-8 space-y-6">
               <!-- Start: Table of Contents -->
               <div
                 v-if="tableOfContents.length > 0"
                 class="bg-secondary py-6 px-6 rounded-xl"
               >
-                <h2 class="text-sm font-semibold mb-4">
+                <h2 class="text-base font-semibold mb-4">
                   Table of Contents
                 </h2>
-                <ul>
+                <ul class="space-y-2">
                   <li
                     v-for="header in tableOfContents"
                     :key="header.id"
                   >
                     <a
                       :href="`#${header.id}`"
-                      class="toc-link block py-1 text-xs text-primary transition-all duration-300 ease-in-out"
+                      class="toc-link block text-xs text-primary transition-all duration-300 ease-in-out"
                       :class="{
                         'active': header.id === activeId,
-                        'font-bold': header.level === 1,
-                        'mr-2': header.level === 2,
-                        'mr-4': header.level === 3,
-                        'ml-6': header.level === 4,
-                        'mr-8': header.level > 4,
+                        'font-medium': header.level === 2,
+                        'pl-2': header.level === 3,
+                        'pl-4': header.level === 4,
+                        'pl-6': header.level > 4,
                       }"
                     >
                       {{ header.text }}
@@ -383,11 +356,11 @@ onMounted(() => {
               <!-- End: Table of Contents -->
 
               <!-- Start: Quick Links -->
-              <div class="bg-secondary p-4 rounded-xl">
-                <h2 class="text-sm font-bold mb-4">
+              <div class="bg-secondary p-6 rounded-xl">
+                <h2 class="text-base font-semibold mb-4">
                   Quick Links
                 </h2>
-                <ul class="space-y-1">
+                <ul class="space-y-2">
                   <li
                     v-for="link in quickLinks"
                     :key="link.url"
@@ -395,14 +368,14 @@ onMounted(() => {
                     <a
                       :href="link.url"
                       target="_blank"
-                      class="flex items-center text-primary hover:text-ring transition-colors duration-200"
+                      class="flex items-center text-xs text-primary hover:text-ring transition-colors duration-200"
                     >
                       <Icon
                         :name="link.icon"
                         class="mr-2"
-                        size="20px"
+                        size="16px"
                       />
-                      <span class="text-sm">{{ link.text }}</span>
+                      <span>{{ link.text }}</span>
                     </a>
                   </li>
                 </ul>
@@ -410,12 +383,12 @@ onMounted(() => {
               <!-- End: Quick Links -->
 
               <!-- Start: Ad Space -->
-              <div class="bg-secondary p-4 rounded-xl">
-                <h2 class="text-sm font-bold mb-4">
+              <div class="bg-secondary p-6 rounded-xl">
+                <h2 class="text-base font-semibold mb-4">
                   Advertisement
                 </h2>
                 <!-- Replace this with your actual ad component or code -->
-                <div class="bg-gray-200 h-40 flex items-center justify-center text-gray-500">
+                <div class="bg-gray-200 h-40 flex items-center justify-center text-xs text-gray-500">
                   Ad Space
                 </div>
               </div>
@@ -431,104 +404,36 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.blog-content{
-  font-family: "Inter var","Liberation Mono", "Courier New", monospace;
-  line-height: 1.3333;
-}
 .blog-content :deep(pre) {
-  margin: 0em -.5rem;
-  padding: 1em 2rem;
-  background-color: hsl(var(--background));
-  border-style: solid;
-  border-width: 1px;
-  border-color: hsl(var(--border, 200 200 200));
-  border-radius: 0.5rem;
-  overflow-x: auto;
-
-}
-
-.blog-content :deep(code) {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 0.875em;
-
-}
-
-.blog-content :deep(pre code) {
-  display: block;
-  padding: 0;
-  background-color: transparent;
-
+  @apply font-mono text-xs;
 }
 
 .blog-content :deep(h1) {
-  font-color: hsl(var(--text-primary));
-  font-size: 3rem; /* text-5xl */
-  font-weight: 700; /* font-bold */
-  margin-left: -0.5rem; /* -mx-2 */
-  margin-right: -0.5rem; /* -mx-2 */
-  margin-top: 1rem; /* my-4 */
-  margin-bottom: 1rem; /* my-4 */
-  letter-spacing: -0.025em;
+  @apply text-xl sm:text-2xl font-bold mb-4 mt-6;
 }
 
 .blog-content :deep(h2) {
-  font-size: 2.25rem; /* text-4xl */
-  font-weight: 700; /* font-bold */
-  margin-left: -0.5rem; /* -mx-2 */
-  margin-right: -0.5rem; /* -mx-2 */
-  margin-top: 2rem; /* my-8 */
-  letter-spacing: -0.025em;
+  @apply text-lg sm:text-xl font-semibold mb-3 mt-5;
 }
 
 .blog-content :deep(h3) {
-  font-size: 1.875rem; /* text-3xl */
-  font-weight: 600; /* font-bold */
-  margin-bottom: 1rem;
-  margin-left: -0.5rem; /* -mx-2 */
-  margin-right: -0.5rem; /* -mx-2 */
-  letter-spacing: -0.05em;
-  border: 1px solid blue;
+  @apply text-base sm:text-lg font-medium mb-2 mt-4;
 }
 
 .blog-content :deep(h4) {
-  font-color: hsl(var(--text-primary));
-  font-size: 1.2rem;
-  /* font-weight: 500; */
-  margin-top: 0.5rem;
-  letter-spacing: -0.025em;
-  border: 1px solid red;
-  text-shadow: none;
-  -webkit-text-stroke: 0;
-  font-variation-settings: normal;
+  @apply text-sm sm:text-base font-medium mb-2 mt-3;
 }
 
 .blog-content :deep(h5) {
-  font-size: 1.25rem; /* text-xl */
+  @apply text-xs sm:text-sm font-medium mb-2 mt-3;
 }
 
 .blog-content :deep(h6) {
-  font-size: 1.125rem; /* text-lg */
-}
-
-/* Assuming blog-content-heading includes these properties: */
-.blog-content :deep(h1),
-.blog-content :deep(h2),
-.blog-content :deep(h3),
-.blog-content :deep(h4),
-.blog-content :deep(h5),
-.blog-content :deep(h6) {
-  /* Add properties from blog-content-heading here */
-  /* For example: */
-  line-height: 1;
-  color: hsl(var(--foreground));
+  @apply text-xs font-medium mb-2 mt-3;
 }
 
 .blog-content :deep(p) {
-  margin-bottom: 1.0rem;
-}
-
-.blog-content :deep(h3 + h3) {
-  margin-top: 6.5rem !important;
+  @apply mb-4;
 }
 
 .toc-link {
