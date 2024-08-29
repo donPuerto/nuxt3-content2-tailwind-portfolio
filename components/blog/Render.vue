@@ -34,6 +34,7 @@ const activeId = ref<string | null>(null)
 const headerSection = ref(null)
 const mainContentWrapper = ref(null)
 const isFullscreen = ref(false)
+const isScrolled = ref(false)
 
 // Compute title and dates
 const title = computed(() => props.post.title)
@@ -99,6 +100,22 @@ const updateActiveHeader = () => {
 
 // Lifecycle hooks
 onMounted(() => {
+  // New IntersectionObserver for isScrolled functionality
+  const scrollObserver = new IntersectionObserver(
+    ([entry]) => {
+      isScrolled.value = !entry.isIntersecting
+    },
+    {
+      root: null,
+      rootMargin: '0px 0px -100% 0px',
+      threshold: 0,
+    },
+  )
+
+  if (mainContentWrapper.value) {
+    scrollObserver.observe(mainContentWrapper.value)
+  }
+
   // Handle scroll event for updating active header
   window.addEventListener('scroll', updateActiveHeader)
 
@@ -124,6 +141,9 @@ onMounted(() => {
   onUnmounted(() => {
     observer.disconnect()
     window.removeEventListener('scroll', updateActiveHeader)
+    if (mainContentWrapper.value) {
+      scrollObserver.unobserve(mainContentWrapper.value)
+    }
   })
 })
 </script>
@@ -252,22 +272,32 @@ onMounted(() => {
       ref="mainContentWrapper"
       class="container mx-auto p-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 2xl:px-[10rem]"
     >
-      <div class="grid grid-cols-12 gap-2 lg:gap-4">
-        <!-- Start: Sticky Share Links -->
-        <div class="hidden sm:block col-span-1">
+      <div class="grid grid-cols-12 gap-4 lg:gap-8">
+        <!-- Start: Sticky Share Links (visible by default, hidden when scrolled on large screens) -->
+        <div
+          class="col-span-2 sm:col-span-1 hidden sm:block transition-all duration-300 ease-in-out"
+          :class="{
+            'lg:hidden': isScrolled,
+            'lg:block': !isScrolled,
+          }"
+        >
           <div
-            class="sticky transition-opacity duration-300"
-            :class="{ 'opacity-0': !isScrolled, 'opacity-100': isScrolled }"
-            :style="{ top: '8rem' }"
+            class="sticky"
+            style="top: 20px;"
           >
-            <!-- Adjust top value as needed -->
+            <!-- Adjusted top value -->
             <BlogShareLinks direction="column" />
           </div>
         </div>
         <!-- End: Sticky Share Links -->
 
         <!-- Start: Main Content -->
-        <div class="col-span-12 sm:col-span-11 lg:col-span-7">
+        <div
+          :class="[
+            'col-span-12 sm:col-span-10 md:col-span-11 transition-all duration-300 ease-in-out',
+            isScrolled ? 'lg:col-span-8' : 'lg:col-span-7',
+          ]"
+        >
           <div class="bg-secondary w-full px-4 sm:px-8 py-6 rounded-xl shadow-xl">
             <div class="blog-content">
               <ClientOnly>
@@ -283,7 +313,7 @@ onMounted(() => {
         <!-- End: Main Content -->
 
         <!-- Start: Right Sidebar -->
-        <aside class="col-span-12 lg:col-span-4 mt-8 lg:mt-0">
+        <aside class="col-span-12 hidden lg:block lg:col-span-4 mt-8 lg:mt-0">
           <div class="sticky top-8 space-y-4">
             <!-- Start: Table of Contents -->
             <div
