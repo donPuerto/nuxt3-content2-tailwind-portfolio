@@ -1,23 +1,6 @@
 export default defineAppConfig({
   app: {
     // app.config.ts
-    projectLinks: [
-      {
-        name: 'ri:twitter-x-fill',
-        url: 'https://x.com/donpuerto_',
-        size: '20',
-      },
-      {
-        name: 'mdi:facebook',
-        url: 'https://www.facebook.com/diybuddy18',
-        size: '24',
-      },
-      {
-        name: 'mdi:linkedin',
-        url: 'https://www.linkedin.com/in/don-puerto-115790110/',
-        size: '24',
-      },
-    ],
     quickLinks: [
       { icon: 'ph:pen-duotone', text: 'Edit this article', url: 'https://github.com/donPuerto/nuxt3-content2-tailwind-portfolio/blob/master/content/blog/2.nuxt/1.nuxt.md' },
       { icon: 'ph:shooting-star-duotone', text: 'Star on Github', url: 'https://github.com/donPuerto' },

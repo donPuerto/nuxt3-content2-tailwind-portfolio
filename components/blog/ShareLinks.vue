@@ -14,6 +14,11 @@ const props = defineProps({
     default: 'md',
     validator: (value: string) => ['xs', 'sm', 'md', 'lg', 'xl'].includes(value),
   },
+  direction: {
+    type: String,
+    default: 'row',
+    validator: (value: string) => ['row', 'column'].includes(value),
+  },
 })
 
 const currentUrl = computed(() => {
@@ -42,17 +47,22 @@ const getIconSize = (iconName: string) => {
   const sizeValue = sizeValues[props.size]
   return iconName === 'line-md:twitter-x' ? sizeValue.x : sizeValue.default
 }
+
+const containerClasses = computed(() => [
+  'flex',
+  props.direction === 'column' ? 'flex-col space-y-2' : 'space-x-2',
+])
 </script>
 
 <template>
-  <div class="flex space-x-2">
+  <div :class="containerClasses">
     <a
       v-for="link in shareLinks"
       :key="link.name"
       :href="link.url"
       target="_blank"
       rel="noopener noreferrer"
-      class="text-gray-500 hover:text-primary transition-colors duration-200"
+      class="share-link text-primary hover:text-ring transition-all duration-300 ease-in-out rounded-full p-2 flex items-center justify-center"
       :title="`Share on ${link.name}`"
     >
       <Icon
@@ -64,8 +74,28 @@ const getIconSize = (iconName: string) => {
 </template>
 
 <style scoped>
-.icon-wrapper :deep(svg) {
-  width: 100%;
-  height: 100%;
+.share-link {
+  transform: translateY(0);
+  transition: all 0.3s ease-in-out;
+}
+
+.share-link:hover {
+  transform: translateY(-3px);
+  background-color: var(--color-secondary);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.share-link:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+}
+
+.share-link .icon {
+  transition: transform 0.3s ease-in-out;
+}
+
+.share-link:hover .icon {
+  transform: scale(1.1);
+  background-color: rgba(var(--color-secondary-rgb), 0.2);
 }
 </style>

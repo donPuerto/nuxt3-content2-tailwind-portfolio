@@ -1,10 +1,11 @@
 <script setup lang="ts">
+// Import necessary Vue composables and types
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import type { Post } from '~/types/components/blog/post'
 
-const { app: { quickLinks, projectLinks } } = useAppConfig()
-
-// Define an interface for table of contents items
+// Extract quickLinks and projectLinks from app config
+const { app: { quickLinks } } = useAppConfig()
+// Define interface for table of contents items
 interface TOCItem {
   id: string
   text: string | null
@@ -12,19 +13,53 @@ interface TOCItem {
   isActive: boolean
 }
 
+// Define props
 const props = defineProps<{
   post: Post
 }>()
 
+// Use custom composables
 const { formatDate } = useDate()
 const { getAuthors } = useAuthors()
+
+// Compute all authors
 const allAuthors = computed(() => {
   const authors = getAuthors(props.post.authors)
   return authors.filter(author => author !== undefined)
 })
 
+// Initialize reactive variables
 const tableOfContents = ref<TOCItem[]>([])
 const activeId = ref<string | null>(null)
+const headerSection = ref(null)
+const mainContentWrapper = ref(null)
+const isFullscreen = ref(false)
+
+// Compute title and dates
+const title = computed(() => props.post.title)
+const publishedDate = computed(() => formatDate(props.post.published_at))
+const updatedDate = computed(() => props.post.updated_at ? formatDate(props.post.updated_at) : null)
+
+// Compute image URL
+const imageUrl = computed(() => {
+  if (typeof props.post.image === 'string') {
+    return props.post.image
+  }
+  else if (typeof props.post.image === 'object' && props.post.image !== null) {
+    return props.post.image.url
+  }
+  return null
+})
+
+// Function to open fullscreen
+const openFullscreen = () => {
+  isFullscreen.value = true
+}
+
+// Function to close fullscreen
+const closeFullscreen = () => {
+  isFullscreen.value = false
+}
 
 // Function to generate a unique ID for each header
 const generateId = (text: string): string => {
@@ -48,6 +83,7 @@ const extractHeaders = (): TOCItem[] => {
   return headers
 }
 
+// Function to update active header
 const updateActiveHeader = () => {
   const headers = document.querySelectorAll('.blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6')
   const scrollPosition = window.scrollY
@@ -61,49 +97,12 @@ const updateActiveHeader = () => {
   }
 }
 
-const title = computed(() => props.post.title)
-
-// * Computed properties for formatted dates
-const publishedDate = computed(() => formatDate(props.post.published_at))
-const updatedDate = computed(() => props.post.updated_at ? formatDate(props.post.updated_at) : null)
-
-const showIcons = ref(false)
-const headerSection = ref(null)
-const mainContentWrapper = ref(null)
-
-const isFullscreen = ref(false)
-
-const openFullscreen = () => {
-  isFullscreen.value = true
-}
-
-const imageUrl = computed(() => {
-  if (typeof props.post.image === 'string') {
-    return props.post.image
-  }
-  else if (typeof props.post.image === 'object' && props.post.image !== null) {
-    // Assuming the object has a 'url' property. Adjust if it's named differently.
-    return props.post.image.url
-  }
-  return null
-})
-
-const closeFullscreen = () => {
-  isFullscreen.value = false
-}
-
+// Lifecycle hooks
 onMounted(() => {
-  const handleScroll = () => {
-    if (headerSection.value && mainContentWrapper.value) {
-      const headerRect = headerSection.value.getBoundingClientRect()
-      const mainContentRect = mainContentWrapper.value.getBoundingClientRect()
-      showIcons.value = window.scrollY > headerRect.bottom && mainContentRect.top <= 0
-    }
-    updateActiveHeader()
-  }
+  // Handle scroll event for updating active header
+  window.addEventListener('scroll', updateActiveHeader)
 
-  window.addEventListener('scroll', handleScroll)
-
+  // Update table of contents
   const updateTOC = () => {
     nextTick(() => {
       tableOfContents.value = extractHeaders()
@@ -114,25 +113,27 @@ onMounted(() => {
   // Initial TOC generation
   updateTOC()
 
+  // Observe changes in blog content
   const observer = new MutationObserver(updateTOC)
   const blogContent = document.querySelector('.blog-content')
   if (blogContent) {
     observer.observe(blogContent, { childList: true, subtree: true })
   }
 
+  // Cleanup
   onUnmounted(() => {
     observer.disconnect()
-    window.removeEventListener('scroll', handleScroll)
+    window.removeEventListener('scroll', updateActiveHeader)
   })
 })
 </script>
 
 <template>
   <article class="relative">
-    <!-- Header Section -->
+    <!-- Start: Header Section -->
     <div
       ref="headerSection"
-      class="mt-4 container mx-auto p-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 2xl:px-[10rem]"
+      class="container mx-auto p-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 2xl:px-[10rem]"
     >
       <!-- Start: Breadcrumb -->
       <nav class="font-medium mb-4">
@@ -251,9 +252,22 @@ onMounted(() => {
       ref="mainContentWrapper"
       class="container mx-auto p-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 2xl:px-[10rem]"
     >
-      <div class="flex flex-col lg:flex-row lg:space-x-8">
+      <div class="grid grid-cols-12 gap-2 lg:gap-4">
+        <!-- Start: Sticky Share Links -->
+        <div class="hidden sm:block col-span-1">
+          <div
+            class="sticky transition-opacity duration-300"
+            :class="{ 'opacity-0': !isScrolled, 'opacity-100': isScrolled }"
+            :style="{ top: '8rem' }"
+          >
+            <!-- Adjust top value as needed -->
+            <BlogShareLinks direction="column" />
+          </div>
+        </div>
+        <!-- End: Sticky Share Links -->
+
         <!-- Start: Main Content -->
-        <div class="flex-1 lg:w-2/3">
+        <div class="col-span-12 sm:col-span-11 lg:col-span-7">
           <div class="bg-secondary w-full px-4 sm:px-8 py-6 rounded-xl shadow-xl">
             <div class="blog-content">
               <ClientOnly>
@@ -269,7 +283,7 @@ onMounted(() => {
         <!-- End: Main Content -->
 
         <!-- Start: Right Sidebar -->
-        <aside class="w-full lg:w-1/3 mt-8 lg:mt-0">
+        <aside class="col-span-12 lg:col-span-4 mt-8 lg:mt-0">
           <div class="sticky top-8 space-y-4">
             <!-- Start: Table of Contents -->
             <div
@@ -292,7 +306,7 @@ onMounted(() => {
                       'font-bold': header.level === 1,
                       'mr-2': header.level === 2,
                       'mr-4': header.level === 3,
-                      'mr-6': header.level === 4,
+                      'ml-6': header.level === 4,
                       'mr-8': header.level > 4,
                     }"
                   >
@@ -347,30 +361,6 @@ onMounted(() => {
       </div>
     </div>
     <!-- End: Main Content Wrapper -->
-
-    <!-- Start: Floating Icons -->
-    <div
-      :class="[
-        'fixed left-4 sm:left-8 md:left-16 lg:left-24 xl:left-40 2xl:left-[10rem] transition-all duration-300 ease-in-out w-12 z-50',
-        showIcons ? 'opacity-100' : 'opacity-0 pointer-events-none',
-      ]"
-    >
-      <div class="sticky top-8 flex flex-col items-center space-y-2">
-        <a
-          v-for="icon in projectLinks"
-          :key="icon.name"
-          :href="icon.url"
-          target="_blank"
-          class="text-gray-600 hover:text-gray-800 transition-colors"
-        >
-          <Icon
-            :name="icon.name"
-            :size="icon.size"
-          />
-        </a>
-      </div>
-    </div>
-    <!-- End: Floating Icons -->
   </article>
 </template>
 
