@@ -1,5 +1,6 @@
 <script setup lang="ts">
 // Import necessary Vue composables and types
+import { ref, onMounted, computed } from 'vue'
 import type { Post } from '~/types/components/blog/post'
 
 // Extract quickLinks and projectLinks from app config
@@ -30,11 +31,10 @@ const allAuthors = computed(() => {
 // Initialize reactive variables
 const tableOfContents = ref<TOCItem[]>([])
 const activeId = ref<string | null>(null)
-const mainContentWrapper = ref(null)
 const isFullscreen = ref(false)
 const imageLoaded = ref(false)
 const isScrolled = ref(false)
-const isLargeScreen = ref(false)
+const mainContentWrapper = ref(null)
 
 // Add error handling
 const pending = ref(false)
@@ -68,10 +68,6 @@ const closeFullscreen = () => {
 
 const onImageLoad = () => {
   imageLoaded.value = true
-}
-
-const checkScreenSize = () => {
-  isLargeScreen.value = window.innerWidth >= 1024 // Adjust this value based on your lg breakpoint
 }
 
 // Function to generate a unique ID for each header
@@ -112,27 +108,13 @@ const updateActiveHeader = () => {
 
 // Lifecycle hooks
 onMounted(() => {
-  checkScreenSize()
-  window.addEventListener('resize', checkScreenSize)
-
-  // New IntersectionObserver for isScrolled functionality
-  const scrollObserver = new IntersectionObserver(
-    ([entry]) => {
-      isScrolled.value = !entry.isIntersecting
-    },
-    {
-      root: null,
-      rootMargin: '0px 0px -100% 0px',
-      threshold: 0,
-    },
-  )
-
-  if (mainContentWrapper.value) {
-    scrollObserver.observe(mainContentWrapper.value)
+  const handleScroll = () => {
+    if (mainContentWrapper.value) {
+      isScrolled.value = window.scrollY > mainContentWrapper.value.offsetTop
+    }
   }
 
-  // Handle scroll event for updating active header
-  window.addEventListener('scroll', updateActiveHeader)
+  window.addEventListener('scroll', handleScroll)
 
   // Update table of contents
   const updateTOC = () => {
@@ -155,11 +137,7 @@ onMounted(() => {
   // Cleanup
   onUnmounted(() => {
     observer.disconnect()
-    window.removeEventListener('scroll', updateActiveHeader)
-    window.removeEventListener('resize', checkScreenSize)
-    if (mainContentWrapper.value) {
-      scrollObserver.unobserve(mainContentWrapper.value)
-    }
+    window.removeEventListener('scroll', handleScroll)
   })
 })
 </script>
@@ -293,162 +271,123 @@ onMounted(() => {
       ref="mainContentWrapper"
       class="container mx-auto p-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 2xl:px-[10rem]"
     >
-      <div class="grid grid-cols-12 gap-4 lg:gap-8">
-        <!-- Start: Sticky Share Links -->
-        <Transition
-          enter-active-class="transition-opacity duration-300 ease-out"
-          enter-from-class="opacity-0"
-          enter-to-class="opacity-100"
-          leave-active-class="transition-opacity duration-300 ease-in"
-          leave-from-class="opacity-100"
-          leave-to-class="opacity-0"
+      <div class="grid grid-cols-12 gap-2 lg:gap-4">
+        <!-- Start: Left Sidebar (Share Links) -->
+        <aside
+          class="col-span-1 hidden sm:block transition-opacity duration-300"
+          :class="{ 'opacity-0': !isScrolled, 'opacity-100': isScrolled }"
         >
-          <div
-            v-show="!isScrolled || !isLargeScreen"
-            class="col-span-2 sm:col-span-1 hidden sm:block"
-          >
-            <div
-              class="sticky"
-              style="top: 20px;"
-            >
-              <BlogShareLinks direction="column" />
-            </div>
+          <div class="sticky top-8">
+            <BlogShareLinks direction="column" />
           </div>
-        </Transition>
-        <!-- End: Sticky Share Links -->
+        </aside>
+        <!-- End: Left Sidebar -->
 
         <!-- Start: Main Content -->
-        <Transition
-          enter-active-class="transition-opacity duration-300 ease-out"
-          enter-from-class="opacity-0"
-          enter-to-class="opacity-100"
-          leave-active-class="transition-opacity duration-300 ease-in"
-          leave-from-class="opacity-100"
-          leave-to-class="opacity-0"
-        >
-          <div
-            v-show="true"
-            :class="[
-              'col-span-12 sm:col-span-10 md:col-span-11',
-              isScrolled && isLargeScreen ? 'lg:col-span-8' : 'lg:col-span-7',
-            ]"
-          >
-            <div class="bg-secondary w-full px-4 sm:px-8 py-6 rounded-xl shadow-xl">
-              <div
-                v-if="pending"
-                class="loading-spinner"
+        <div class="col-span-12 sm:col-span-11 lg:col-span-7">
+          <div class="bg-secondary w-full px-4 sm:px-8 py-6 rounded-xl shadow-xl">
+            <div
+              v-if="pending"
+              class="loading-spinner"
+            >
+              Loading...
+            </div>
+            <div
+              v-else-if="error"
+              class="error-message"
+            >
+              An error occurred while loading the content. Please try again later.
+            </div>
+            <div
+              v-else
+              class="blog-content text-sm leading-relaxed"
+            >
+              <ContentRenderer
+                :value="post"
               >
-                Loading...
-              </div>
-              <div
-                v-else-if="error"
-                class="error-message"
-              >
-                An error occurred while loading the content. Please try again later.
-              </div>
-              <div
-                v-else
-                class="blog-content text-sm leading-relaxed"
-              >
-                <ContentRenderer
-                  :value="post"
-                >
-                  <template #empty>
-                    <p>No content found.</p>
-                  </template>
-                </ContentRenderer>
-              </div>
+                <template #empty>
+                  <p>No content found.</p>
+                </template>
+              </ContentRenderer>
             </div>
           </div>
-        </Transition>
+        </div>
         <!-- End: Main Content -->
 
         <!-- Start: Right Sidebar -->
-        <Transition
-          enter-active-class="transition-opacity duration-300 ease-out"
-          enter-from-class="opacity-0"
-          enter-to-class="opacity-100"
-          leave-active-class="transition-opacity duration-300 ease-in"
-          leave-from-class="opacity-100"
-          leave-to-class="opacity-0"
-        >
-          <aside
-            v-if="isLargeScreen"
-            class="col-span-12 lg:col-span-4 mt-8 lg:mt-0 text-sm"
-          >
-            <div class="sticky top-8 space-y-6">
-              <!-- Start: Table of Contents -->
-              <div
-                v-if="tableOfContents.length > 0"
-                class="bg-secondary py-6 px-6 rounded-xl"
-              >
-                <h2 class="text-base font-semibold mb-4">
-                  Table of Contents
-                </h2>
-                <ul class="space-y-2">
-                  <li
-                    v-for="header in tableOfContents"
-                    :key="header.id"
+        <aside class="col-span-12 lg:col-span-4 mt-4 lg:mt-0 text-sm right-sidebar">
+          <div class="sticky top-8 space-y-4">
+            <!-- Start: Table of Contents -->
+            <div
+              v-if="tableOfContents.length > 0"
+              class="bg-secondary py-6 px-6 rounded-xl"
+            >
+              <h2 class="text-base font-semibold mb-4">
+                Table of Contents
+              </h2>
+              <ul class="space-y-2">
+                <li
+                  v-for="header in tableOfContents"
+                  :key="header.id"
+                >
+                  <a
+                    :href="`#${header.id}`"
+                    class="toc-link block text-xs text-primary transition-all duration-300 ease-in-out"
+                    :class="{
+                      'active': header.id === activeId,
+                      'font-medium': header.level === 2,
+                      'pl-2': header.level === 3,
+                      'pl-4': header.level === 4,
+                      'pl-6': header.level > 4,
+                    }"
                   >
-                    <a
-                      :href="`#${header.id}`"
-                      class="toc-link block text-xs text-primary transition-all duration-300 ease-in-out"
-                      :class="{
-                        'active': header.id === activeId,
-                        'font-medium': header.level === 2,
-                        'pl-2': header.level === 3,
-                        'pl-4': header.level === 4,
-                        'pl-6': header.level > 4,
-                      }"
-                    >
-                      {{ header.text }}
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <!-- End: Table of Contents -->
-
-              <!-- Start: Quick Links -->
-              <div class="bg-secondary p-6 rounded-xl">
-                <h2 class="text-base font-semibold mb-4">
-                  Quick Links
-                </h2>
-                <ul class="space-y-2">
-                  <li
-                    v-for="link in quickLinks"
-                    :key="link.url"
-                  >
-                    <a
-                      :href="link.url"
-                      target="_blank"
-                      class="flex items-center text-xs text-primary hover:text-ring transition-colors duration-200"
-                    >
-                      <Icon
-                        :name="link.icon"
-                        class="mr-2"
-                        size="16px"
-                      />
-                      <span>{{ link.text }}</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <!-- End: Quick Links -->
-
-              <!-- Start: Ad Space -->
-              <div class="bg-secondary p-6 rounded-xl">
-                <h2 class="text-base font-semibold mb-4">
-                  Advertisement
-                </h2>
-                <!-- Replace this with your actual ad component or code -->
-                <div class="bg-gray-200 h-40 flex items-center justify-center text-xs text-gray-500">
-                  Ad Space
-                </div>
-              </div>
-              <!-- End: Ad Space -->
+                    {{ header.text }}
+                  </a>
+                </li>
+              </ul>
             </div>
-          </aside>
-        </Transition>
+            <!-- End: Table of Contents -->
+
+            <!-- Start: Quick Links -->
+            <div class="bg-secondary p-6 rounded-xl">
+              <h2 class="text-base font-semibold mb-4">
+                Quick Links
+              </h2>
+              <ul class="space-y-2">
+                <li
+                  v-for="link in quickLinks"
+                  :key="link.url"
+                >
+                  <a
+                    :href="link.url"
+                    target="_blank"
+                    class="flex items-center text-xs text-primary hover:text-ring transition-colors duration-200"
+                  >
+                    <Icon
+                      :name="link.icon"
+                      class="mr-2"
+                      size="16px"
+                    />
+                    <span>{{ link.text }}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <!-- End: Quick Links -->
+
+            <!-- Start: Ad Space -->
+            <div class="bg-secondary p-6 rounded-xl">
+              <h2 class="text-base font-semibold mb-4">
+                Advertisement
+              </h2>
+              <!-- Replace this with your actual ad component or code -->
+              <div class="bg-gray-200 h-40 flex items-center justify-center text-xs text-gray-500">
+                Ad Space
+              </div>
+            </div>
+            <!-- End: Ad Space -->
+          </div>
+        </aside>
         <!-- End: Right Sidebar -->
       </div>
     </div>
@@ -549,5 +488,22 @@ onMounted(() => {
 .fixed {
   transition: all 0.3s ease-in-out;
   box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.7);
+}
+
+.right-sidebar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .right-sidebar {
+    display: block;
+  }
+}
+
+/* Hide the left sidebar on extra small screens */
+@media (max-width: 639px) {
+  .col-span-1 {
+    display: none;
+  }
 }
 </style>
