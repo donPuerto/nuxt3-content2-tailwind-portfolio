@@ -1,6 +1,5 @@
 <script setup lang="ts">
 // Import necessary Vue composables and types
-import { ref, onMounted, onUnmounted, computed } from 'vue'
 import type { Post } from '~/types/components/blog/post'
 
 // Extract quickLinks and projectLinks from app config
@@ -31,11 +30,15 @@ const allAuthors = computed(() => {
 // Initialize reactive variables
 const tableOfContents = ref<TOCItem[]>([])
 const activeId = ref<string | null>(null)
-const headerSection = ref(null)
 const mainContentWrapper = ref(null)
 const isFullscreen = ref(false)
+const imageLoaded = ref(false)
 const isScrolled = ref(false)
 const isLargeScreen = ref(false)
+
+// Add error handling
+const pending = ref(false)
+const error = ref(null)
 
 // Compute title and dates
 const title = computed(() => props.post.title)
@@ -61,6 +64,10 @@ const openFullscreen = () => {
 // Function to close fullscreen
 const closeFullscreen = () => {
   isFullscreen.value = false
+}
+
+const onImageLoad = () => {
+  imageLoaded.value = true
 }
 
 const checkScreenSize = () => {
@@ -160,12 +167,9 @@ onMounted(() => {
 <template>
   <article class="font-sans text-sm">
     <!-- Start: Header Section -->
-    <div
-      ref="headerSection"
-      class="container mx-auto p-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 2xl:px-[10rem]"
-    >
+    <div class="container mx-auto p-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 2xl:px-[10rem]">
       <!-- Start: Breadcrumb -->
-      <nav class="text-xs font-medium mb-4">
+      <nav class="text-xs font-medium">
         <NuxtLink
           to="/blog"
           class="hover:text-ring"
@@ -182,20 +186,20 @@ onMounted(() => {
       <!-- End: Breadcrumb -->
 
       <!-- Start: Date Section -->
-      <div class="flex flex-col sm:flex-row justify-between text-xs text-muted-foreground mb-4">
+      <div class="flex flex-col sm:flex-row justify-between text-xs text-muted-foreground my-4">
         <span>Published: {{ publishedDate }}</span>
         <span v-if="updatedDate">Updated: {{ updatedDate }}</span>
       </div>
       <!-- End: Date Section -->
 
       <!-- Start: Blog Title -->
-      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4">
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground">
         {{ title }}
       </h1>
       <!-- End: Blog Title -->
 
       <!-- Start: Blog Description -->
-      <p class="text-sm text-foreground mb-4">
+      <p class="text-sm text-foreground my-1">
         {{ post.description }}
       </p>
       <!-- End: Blog Description -->
@@ -203,7 +207,7 @@ onMounted(() => {
       <!-- Start: Tags -->
       <div
         v-if="post.tags && post.tags.length > 0"
-        class="flex flex-wrap gap-2 mb-6"
+        class="flex flex-wrap gap-2"
       >
         <NuxtLink
           v-for="tag in post.tags"
@@ -217,20 +221,54 @@ onMounted(() => {
       <!-- End: Tags -->
 
       <!-- Start: Image with error handling -->
-      <NuxtImg
-        v-if="imageUrl"
-        :src="imageUrl"
-        :alt="props.post.title"
-        width="800"
-        height="384"
-        class="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover rounded-xl mb-6 cursor-pointer transition-all duration-300 ease-in-out filter grayscale hover:filter-none"
-        @click="openFullscreen"
-      />
-      <div
-        v-else
-        class="w-full h-48 sm:h-64 md:h-80 lg:h-96 bg-secondary rounded-xl mb-6 flex items-center justify-center text-muted-foreground"
-      >
-        No image available
+      <div class="relative my-4">
+        <Transition name="fade">
+          <div
+            v-if="isFullscreen"
+            class="fixed inset-0 z-40 flex items-center justify-center"
+            @click="closeFullscreen"
+          >
+            <div
+              class="absolute inset-0 bg-black bg-opacity-75 backdrop-filter backdrop-blur-md"
+            />
+            <img
+              v-if="imageUrl"
+              :src="imageUrl"
+              :alt="props.post.title"
+              class="relative z-50 max-w-[95%] max-h-[95%] object-contain rounded-lg"
+            >
+          </div>
+        </Transition>
+
+        <NuxtImg
+          v-if="imageUrl"
+          :src="imageUrl"
+          :alt="props.post.title"
+          width="1200"
+          height="400"
+          :class="[
+            'w-full object-cover mb-6 cursor-zoom-in transition-all duration-300 ease-in-out filter grayscale hover:filter-none',
+            'h-48 sm:h-64 md:h-80 lg:h-96',
+            { 'opacity-0': !imageLoaded },
+            'rounded-lg',
+          ]"
+          @click="openFullscreen"
+          @load="onImageLoad"
+        />
+        <div
+          v-if="!imageLoaded && imageUrl"
+          class="absolute inset-0 bg-secondary flex items-center justify-center text-muted-foreground rounded-lg"
+        >
+          <div class="text-center">
+            Loading image...
+          </div>
+        </div>
+        <div
+          v-if="!imageUrl"
+          class="w-full h-48 sm:h-64 md:h-80 lg:h-96 bg-secondary mb-6 flex items-center justify-center text-muted-foreground rounded-lg"
+        >
+          No image available
+        </div>
       </div>
       <!-- End: Image with error handling -->
 
@@ -296,14 +334,29 @@ onMounted(() => {
             ]"
           >
             <div class="bg-secondary w-full px-4 sm:px-8 py-6 rounded-xl shadow-xl">
-              <div class="blog-content text-sm leading-relaxed">
-                <ClientOnly>
-                  <ContentRenderer :value="post">
-                    <template #empty>
-                      <p>No content found.</p>
-                    </template>
-                  </ContentRenderer>
-                </ClientOnly>
+              <div
+                v-if="pending"
+                class="loading-spinner"
+              >
+                Loading...
+              </div>
+              <div
+                v-else-if="error"
+                class="error-message"
+              >
+                An error occurred while loading the content. Please try again later.
+              </div>
+              <div
+                v-else
+                class="blog-content text-sm leading-relaxed"
+              >
+                <ContentRenderer
+                  :value="post"
+                >
+                  <template #empty>
+                    <p>No content found.</p>
+                  </template>
+                </ContentRenderer>
               </div>
             </div>
           </div>
@@ -448,5 +501,53 @@ onMounted(() => {
   color: var(--color-ring);
   font-weight: bold;
   transform: scale(1.05);
+}
+
+.blog-content pre {
+  @apply p-4 rounded-lg overflow-x-auto text-xs my-4;
+}
+
+.blog-content code {
+  @apply font-mono text-xs;
+}
+
+/* You might need to adjust these selectors based on the actual output */
+.blog-content .line {
+  @apply block;
+}
+
+.blog-content .highlighted {
+  @apply bg-primary bg-opacity-10;
+}
+
+.shiki-code {
+  @apply p-4 rounded-lg overflow-x-auto text-xs my-4;
+}
+
+.shiki {
+  @apply font-mono;
+}
+
+.line-number {
+  @apply mr-4 text-gray-500;
+}
+
+.highlighted {
+  @apply bg-yellow-100 dark:bg-yellow-900;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fixed {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.7);
 }
 </style>

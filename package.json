@@ -47,6 +47,7 @@
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5",
     "radix-vue": "^1.8.5",
+    "remark-directive": "^3.0.0",
     "sass": "latest",
     "shiki": "^1.9.1",
     "tailwindcss-animate": "^1.0.7",

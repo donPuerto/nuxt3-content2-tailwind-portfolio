@@ -4,7 +4,7 @@ import { ref } from 'vue'
 
 const { showMessage } = useToastMessages()
 
-const props = defineProps({
+defineProps({
   title: {
     type: String,
     default: 'Code',

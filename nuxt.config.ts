@@ -118,15 +118,28 @@ export default defineNuxtConfig({
         dark: 'github-dark',
         sepia: 'monokai',
       },
+      preload: [
+        'json',
+        'js',
+        'ts',
+        'html',
+        'css',
+        'vue',
+        'shell',
+        'markdown',
+        'yaml',
+        'bash',
+        'python',
+      ],
       langs: [
         'json', 'js', 'ts', 'html', 'css', 'vue', 'shell', 'mdc', 'md', 'yaml',
       ],
 
     },
-    // markdown: {
-    //   remarkPlugins: ['remark-unwrap-images'],
-    //   rehypePlugins: ['rehype-external-links'],
-    // },
+    markdown: {
+      remarkPlugins: ['remark-directive'],
+      // rehypePlugins: ['rehype-external-links'],
+    },
   },
 
   compatibilityDate: '2024-07-22',
