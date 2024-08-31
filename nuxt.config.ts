@@ -137,8 +137,7 @@ export default defineNuxtConfig({
 
     },
     markdown: {
-      remarkPlugins: ['remark-directive'],
-      // rehypePlugins: ['rehype-external-links'],
+      mdc: true,
     },
   },
 

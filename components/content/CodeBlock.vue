@@ -1,71 +1,58 @@
 <!-- components/content/CodeBlock.vue -->
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
+import { useToast } from '@/composables/useToast' // Adjust the import path as needed
 
-const { showMessage } = useToastMessages()
+defineProps<{
+  title?: string
+}>()
 
-defineProps({
-  title: {
-    type: String,
-    default: 'Code',
-  },
-})
+const codeRef = ref<HTMLElement | null>(null)
+const { toast } = useToast()
 
-const codeRef = ref(null)
-const copied = ref(false)
-
-const copyCode = () => {
+const copyAllCode = () => {
   if (codeRef.value) {
-    navigator.clipboard.writeText(codeRef.value.textContent)
-    copied.value = true
-    showMessage({
-      type: 'success',
-      title: 'Copied',
-      description: 'Snippets have been copied',
+    const codeText = codeRef.value.textContent
+    navigator.clipboard.writeText(codeText || '')
+
+    // Show toast notification
+    toast({
+      title: 'Copied!',
+      description: 'Code has been copied to clipboard',
+      variant: 'success',
+      duration: 3000,
     })
-    setTimeout(() => {
-      copied.value = false
-    }, 2000)
   }
 }
 </script>
 
 <template>
-  <div class="border  rounded-lg overflow-hidden ">
-    <div class="bg-background text-foreground text-sm px-4 flex justify-between items-center py-2 ">
-      <span>{{ title }}</span>
-
-      <span
-        class="cursor-pointer relative flex items-center"
-        @click="copyCode"
-      >
-        <template v-if="copied">
+  <div class="my-4 relative">
+    <div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
+      <div class="bg-gray-100 dark:bg-gray-800 px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+        <span
+          v-if="title"
+          class="font-medium text-sm text-gray-800 dark:text-gray-200"
+        >
+          {{ title }}
+        </span>
+        <span v-else />
+        <button
+          class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none transition-colors"
+          @click="copyAllCode"
+        >
           <Icon
-            key="copied"
-            name="material-symbols:check-box"
+            name="ph:copy"
+            size="1.2em"
           />
-        </template>
-        <template v-else>
-          <Icon
-            key="copy"
-            name="material-symbols:content-copy"
-          />
-        </template>
-
-      </span>
-    </div>
-
-    <div
-      ref="codeRef"
-    >
-      <ContentSlot
-        :use="$slots.default"
-        unwrap="p"
-      />
+        </button>
+      </div>
+      <div class="overflow-x-auto">
+        <pre
+          ref="codeRef"
+          class="p-4 text-sm font-mono text-gray-800 dark:text-gray-200"
+        ><code><slot /></code></pre>
+      </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>

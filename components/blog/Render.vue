@@ -285,7 +285,7 @@ onMounted(() => {
 
         <!-- Start: Main Content -->
         <div class="col-span-12 sm:col-span-11 lg:col-span-7">
-          <div class="bg-secondary w-full px-4 sm:px-8 py-6 rounded-xl shadow-xl">
+          <div class="bg-secondary w-full px-4 sm:px-8 py-6 rounded-xl shadow-md">
             <div
               v-if="pending"
               class="loading-spinner"
@@ -320,7 +320,7 @@ onMounted(() => {
             <!-- Start: Table of Contents -->
             <div
               v-if="tableOfContents.length > 0"
-              class="bg-secondary py-6 px-6 rounded-xl"
+              class="bg-secondary py-6 px-6 rounded-xl shadow-sm"
             >
               <h2 class="text-base font-semibold mb-4">
                 Table of Contents
@@ -349,7 +349,7 @@ onMounted(() => {
             <!-- End: Table of Contents -->
 
             <!-- Start: Quick Links -->
-            <div class="bg-secondary p-6 rounded-xl">
+            <div class="bg-secondary p-6 rounded-xl shadow-sm">
               <h2 class="text-base font-semibold mb-4">
                 Quick Links
               </h2>
@@ -376,7 +376,7 @@ onMounted(() => {
             <!-- End: Quick Links -->
 
             <!-- Start: Ad Space -->
-            <div class="bg-secondary p-6 rounded-xl">
+            <div class="bg-secondary p-6 rounded-xl shadow-sm">
               <h2 class="text-base font-semibold mb-4">
                 Advertisement
               </h2>
@@ -450,44 +450,12 @@ onMounted(() => {
   @apply font-mono text-xs;
 }
 
-/* You might need to adjust these selectors based on the actual output */
 .blog-content .line {
   @apply block;
 }
 
 .blog-content .highlighted {
   @apply bg-primary bg-opacity-10;
-}
-
-.shiki-code {
-  @apply p-4 rounded-lg overflow-x-auto text-xs my-4;
-}
-
-.shiki {
-  @apply font-mono;
-}
-
-.line-number {
-  @apply mr-4 text-gray-500;
-}
-
-.highlighted {
-  @apply bg-yellow-100 dark:bg-yellow-900;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-.fixed {
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.7);
 }
 
 .right-sidebar {
@@ -500,7 +468,6 @@ onMounted(() => {
   }
 }
 
-/* Hide the left sidebar on extra small screens */
 @media (max-width: 639px) {
   .col-span-1 {
     display: none;
