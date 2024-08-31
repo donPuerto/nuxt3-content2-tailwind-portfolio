@@ -34,7 +34,7 @@ const activeId = ref<string | null>(null)
 const isFullscreen = ref(false)
 const imageLoaded = ref(false)
 const isScrolled = ref(false)
-const mainContentWrapper = ref(null)
+const mainContentWrapper = ref<HTMLElement | null>(null)
 
 // Add error handling
 const pending = ref(false)
@@ -400,28 +400,24 @@ onMounted(() => {
   @apply font-mono text-xs;
 }
 
-.blog-content :deep(h1) {
-  @apply text-xl sm:text-2xl font-bold mb-4 mt-6;
-}
-
 .blog-content :deep(h2) {
-  @apply text-lg sm:text-xl font-semibold mb-3 mt-5;
+  @apply text-2xl font-semibold mt-8 mb-4;
 }
 
 .blog-content :deep(h3) {
-  @apply text-base sm:text-lg font-medium mb-2 mt-4;
+  @apply text-xl font-semibold mt-6 mb-3;
 }
 
 .blog-content :deep(h4) {
-  @apply text-sm sm:text-base font-medium mb-2 mt-3;
+  @apply text-lg font-medium mt-4 mb-2;
 }
 
 .blog-content :deep(h5) {
-  @apply text-xs sm:text-sm font-medium mb-2 mt-3;
+  @apply text-base font-medium mt-3 mb-2;
 }
 
 .blog-content :deep(h6) {
-  @apply text-xs font-medium mb-2 mt-3;
+  @apply text-sm font-medium mt-2 mb-2;
 }
 
 .blog-content :deep(p) {
