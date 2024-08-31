@@ -71,26 +71,10 @@ const extractHeaders = (): TOCItem[] => {
       const text = header.textContent || ''
       const id = generateId(text)
       header.id = id // Set the ID on the header element
-
-      // Add margin classes based on header level
-      const marginClasses = getMarginClasses(level)
-      header.classList.add(...marginClasses)
-
       headers.push({ id, text, level, isActive: false })
     })
   }
   return headers
-}
-
-const getMarginClasses = (level: number): string[] => {
-  switch (level) {
-    case 2: return ['mt-8']
-    case 3: return ['mt-6', 'ml-4']
-    case 4: return ['mt-4', 'ml-8']
-    case 5: return ['mt-3', 'ml-12']
-    case 6: return ['mt-2', 'ml-16']
-    default: return []
-  }
 }
 
 const updateActiveHeader = () => {
