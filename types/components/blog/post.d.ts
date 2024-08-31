@@ -23,3 +23,10 @@ export interface Post {
   reading_time: string
   tags: string[]
 }
+
+export interface TOCItem {
+  id: string
+  text: string | null
+  level: number
+  isActive: boolean
+}

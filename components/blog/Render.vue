@@ -1,51 +1,31 @@
 <script setup lang="ts">
 // Import necessary Vue composables and types
 import { ref, onMounted, computed } from 'vue'
-import type { Post } from '~/types/components/blog/post'
+import type { Post, TOCItem } from '~/types/components/blog/post'
 
-// Extract quickLinks and projectLinks from app config
+// Extract quickLinks from app config
 const { app: { quickLinks } } = useAppConfig()
-// Define interface for table of contents items
-interface TOCItem {
-  id: string
-  text: string | null
-  level: number
-  isActive: boolean
-}
 
 // Define props
 const props = defineProps<{
   post: Post
+  status: 'idle' | 'pending' | 'success' | 'error'
+  error: Error | null
+  refresh: () => Promise<void>
 }>()
 
 // Use custom composables
 const { formatDate } = useDate()
 const { getAuthors } = useAuthors()
 
-// Compute all authors
+// Compute values
 const allAuthors = computed(() => {
   const authors = getAuthors(props.post.authors)
   return authors.filter(author => author !== undefined)
 })
-
-// Initialize reactive variables
-const tableOfContents = ref<TOCItem[]>([])
-const activeId = ref<string | null>(null)
-const isFullscreen = ref(false)
-const imageLoaded = ref(false)
-const isScrolled = ref(false)
-const mainContentWrapper = ref<HTMLElement | null>(null)
-
-// Add error handling
-const pending = ref(false)
-const error = ref(null)
-
-// Compute title and dates
 const title = computed(() => props.post.title)
 const publishedDate = computed(() => formatDate(props.post.published_at))
 const updatedDate = computed(() => props.post.updated_at ? formatDate(props.post.updated_at) : null)
-
-// Compute image URL
 const imageUrl = computed(() => {
   if (typeof props.post.image === 'string') {
     return props.post.image
@@ -56,12 +36,19 @@ const imageUrl = computed(() => {
   return null
 })
 
-// Function to open fullscreen
+// Initialize reactive variables
+const tableOfContents = ref<TOCItem[]>([])
+const activeId = ref<string | null>(null)
+const isFullscreen = ref(false)
+const imageLoaded = ref(false)
+const isScrolled = ref(false)
+const mainContentWrapper = ref<HTMLElement | null>(null)
+
+// Functions
 const openFullscreen = () => {
   isFullscreen.value = true
 }
 
-// Function to close fullscreen
 const closeFullscreen = () => {
   isFullscreen.value = false
 }
@@ -70,12 +57,10 @@ const onImageLoad = () => {
   imageLoaded.value = true
 }
 
-// Function to generate a unique ID for each header
 const generateId = (text: string): string => {
   return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '')
 }
 
-// Function to extract headers from the content
 const extractHeaders = (): TOCItem[] => {
   const headers: TOCItem[] = []
   const article = document.querySelector('.blog-content')
@@ -86,13 +71,28 @@ const extractHeaders = (): TOCItem[] => {
       const text = header.textContent || ''
       const id = generateId(text)
       header.id = id // Set the ID on the header element
+
+      // Add margin classes based on header level
+      const marginClasses = getMarginClasses(level)
+      header.classList.add(...marginClasses)
+
       headers.push({ id, text, level, isActive: false })
     })
   }
   return headers
 }
 
-// Function to update active header
+const getMarginClasses = (level: number): string[] => {
+  switch (level) {
+    case 2: return ['mt-8']
+    case 3: return ['mt-6', 'ml-4']
+    case 4: return ['mt-4', 'ml-8']
+    case 5: return ['mt-3', 'ml-12']
+    case 6: return ['mt-2', 'ml-16']
+    default: return []
+  }
+}
+
 const updateActiveHeader = () => {
   const headers = document.querySelectorAll('.blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6')
   const scrollPosition = window.scrollY
@@ -287,7 +287,7 @@ onMounted(() => {
         <div class="col-span-12 sm:col-span-11 lg:col-span-7">
           <div class="bg-secondary w-full px-4 sm:px-8 py-6 rounded-xl shadow-md">
             <div
-              v-if="pending"
+              v-if="status === 'pending'"
               class="loading-spinner"
             >
               Loading...
@@ -296,10 +296,13 @@ onMounted(() => {
               v-else-if="error"
               class="error-message"
             >
-              An error occurred while loading the content. Please try again later.
+              An error occurred while loading the content: {{ error.message }}
+              <button @click="refresh">
+                Retry
+              </button>
             </div>
             <div
-              v-else
+              v-else-if="post"
               class="blog-content text-sm leading-relaxed"
             >
               <ContentRenderer
@@ -309,6 +312,9 @@ onMounted(() => {
                   <p>No content found.</p>
                 </template>
               </ContentRenderer>
+            </div>
+            <div v-else>
+              Post not found
             </div>
           </div>
         </div>
