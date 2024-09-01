@@ -30,7 +30,7 @@ defineProps<{
 
           :alt="alt"
           class="h-[240px] w-full object-cover rounded-lg shadow-md"
-        >
+        />
       </NuxtLink>
 
       <div class="pl-4 pb-4 sm:pt-0 md:pt-4 md:pl-1">

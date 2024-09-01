@@ -24,6 +24,6 @@ const styles = tv({
     v-bind="forwarded"
     :class="styles({ class: props.class })"
   >
-    <slot />
+    <slot></slot>
   </ComboboxContent>
 </template>

@@ -14,6 +14,15 @@ export default defineNuxtConfig({
         target: 'esnext',
       },
     },
+
+  },
+
+  runtimeConfig: {
+    public: {
+      siteUrl: process.env.NODE_ENV === 'production'
+        ? 'https://yourproductionsite.com'
+        : 'http://localhost:3000',
+    },
   },
 
   postcss: {
@@ -38,7 +47,13 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxt/image',
     '@vueuse/nuxt',
+    'nuxt-disqus',
   ],
+
+  disqus: {
+    shortname: 'donpuerto-dev',
+
+  },
 
   fonts: {
     families: [{

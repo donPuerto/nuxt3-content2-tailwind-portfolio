@@ -47,6 +47,6 @@ const elementType = computed(() => {
     :class="badgeVariants({ disabled, variant, class: props.class })"
     @click="onClick"
   >
-    <slot />
+    <slot></slot>
   </component>
 </template>

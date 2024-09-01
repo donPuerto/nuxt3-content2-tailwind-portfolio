@@ -7,6 +7,6 @@ const props = defineProps<DialogPortalProps>()
 
 <template>
   <DialogPortal v-bind="props">
-    <slot />
+    <slot></slot>
   </DialogPortal>
 </template>

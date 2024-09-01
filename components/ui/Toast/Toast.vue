@@ -48,6 +48,6 @@ const styles = tv({
     :class="styles({ variant, class: props.class })"
     @update:open="onOpenChange"
   >
-    <slot />
+    <slot></slot>
   </ToastRoot>
 </template>

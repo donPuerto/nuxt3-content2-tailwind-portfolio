@@ -12,7 +12,7 @@ const forwarded = useForwardPropsEmits(props, emits)
   <UiDialog v-bind="forwarded">
     <UiDialogContent class="overflow-hidden p-0 shadow-lg">
       <UiCommand>
-        <slot />
+        <slot></slot>
       </UiCommand>
     </UiDialogContent>
   </UiDialog>

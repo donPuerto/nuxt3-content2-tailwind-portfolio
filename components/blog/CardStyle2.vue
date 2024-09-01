@@ -29,7 +29,7 @@ defineProps<{
           :src="image"
           :alt="alt"
           class="h-[240px] w-full object-cover rounded-lg shadow-md"
-        >
+        />
       </NuxtLink>
       <div class="p-4">
         <UiBadge

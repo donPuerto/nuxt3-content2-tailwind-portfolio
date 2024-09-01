@@ -1,10 +1,12 @@
 <script setup lang="ts">
 // Import necessary Vue composables and types
-import { ref, onMounted, computed } from 'vue'
+import { useIntersectionObserver } from '@vueuse/core'
 import type { Post, TOCItem } from '~/types/components/blog/post'
 
 // Extract quickLinks from app config
 const { app: { quickLinks } } = useAppConfig()
+const route = useRoute()
+const config = useRuntimeConfig()
 
 // Define props
 const props = defineProps<{
@@ -18,7 +20,7 @@ const props = defineProps<{
 const { formatDate } = useDate()
 const { getAuthors } = useAuthors()
 
-// Compute values
+// Compute
 const allAuthors = computed(() => {
   const authors = getAuthors(props.post.authors)
   return authors.filter(author => author !== undefined)
@@ -27,40 +29,53 @@ const title = computed(() => props.post.title)
 const publishedDate = computed(() => formatDate(props.post.published_at))
 const updatedDate = computed(() => props.post.updated_at ? formatDate(props.post.updated_at) : null)
 const imageUrl = computed(() => {
-  if (typeof props.post.image === 'string') {
-    return props.post.image
+  const rawImage = toRaw(props.post.image)
+
+  if (typeof rawImage === 'string') {
+    return rawImage
   }
-  else if (typeof props.post.image === 'object' && props.post.image !== null) {
-    return props.post.image.url
+  else if (typeof rawImage === 'object' && rawImage !== null) {
+    return rawImage.url
   }
   return null
 })
 
-// Initialize reactive variables
+// Define refs
 const tableOfContents = ref<TOCItem[]>([])
 const activeId = ref<string | null>(null)
 const isFullscreen = ref(false)
 const imageLoaded = ref(false)
 const isScrolled = ref(false)
 const mainContentWrapper = ref<HTMLElement | null>(null)
+const commentsSection = ref(null)
+const showComments = ref(false)
+const imageError = ref(false)
 
-// Functions
+// Handle fullscreen
 const openFullscreen = () => {
   isFullscreen.value = true
 }
-
+// Close fullscreen
 const closeFullscreen = () => {
   isFullscreen.value = false
 }
 
+// Handle image load
 const onImageLoad = () => {
   imageLoaded.value = true
 }
 
+// Handle image error
+const handleImageError = () => {
+  imageError.value = true
+}
+
+// Generate ID
 const generateId = (text: string): string => {
   return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '')
 }
 
+// Extract headers
 const extractHeaders = (): TOCItem[] => {
   const headers: TOCItem[] = []
   const article = document.querySelector('.blog-content')
@@ -77,6 +92,7 @@ const extractHeaders = (): TOCItem[] => {
   return headers
 }
 
+// Update active header
 const updateActiveHeader = () => {
   const headers = document.querySelectorAll('.blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6')
   const scrollPosition = window.scrollY
@@ -90,14 +106,31 @@ const updateActiveHeader = () => {
   }
 }
 
+// Disqus configuration
+const disqusConfig = computed(() => ({
+  url: `${config.public.siteUrl}${route.path}`,
+  identifier: props.post.slug || route.path,
+  title: props.post.title,
+}))
+
 // Lifecycle hooks
 onMounted(() => {
+  // Handle comments section
+  useIntersectionObserver(commentsSection, ([{ isIntersecting }]) => {
+    if (isIntersecting) {
+      showComments.value = true
+    }
+  })
+
+  // Handle scroll
   const handleScroll = () => {
     if (mainContentWrapper.value) {
       isScrolled.value = window.scrollY > mainContentWrapper.value.offsetTop
     }
+    updateActiveHeader() // Add this line to update active header on scroll
   }
 
+  // Handle scroll
   window.addEventListener('scroll', handleScroll)
 
   // Update table of contents
@@ -192,38 +225,43 @@ onMounted(() => {
           >
             <div
               class="absolute inset-0 bg-black bg-opacity-75 backdrop-filter backdrop-blur-md"
-            />
-            <img
-              v-if="imageUrl"
-              :src="imageUrl"
-              :alt="props.post.title"
-              class="relative z-50 max-w-[95%] max-h-[95%] object-contain rounded-lg"
-            >
+            ></div>
+            <Transition name="zoom">
+              <div
+                v-if="isFullscreen"
+                class="relative z-50 max-w-[95%] max-h-[95%] object-contain rounded-lg"
+              >
+                <img
+                  v-if="imageUrl && !imageError"
+                  :src="imageUrl"
+                  :alt="props.post.title"
+                  class="relative w-full h-full object-contain rounded-lg grayscale hover:grayscale-0 transition-all"
+                  @load="onImageLoad"
+                  @error="handleImageError"
+                />
+              </div>
+            </Transition>
           </div>
         </Transition>
 
-        <NuxtImg
-          v-if="imageUrl"
-          :src="imageUrl"
-          :alt="props.post.title"
-          width="1200"
-          height="400"
-          :class="[
-            'w-full object-cover mb-6 cursor-zoom-in transition-all duration-300 ease-in-out filter grayscale hover:filter-none',
-            'h-48 sm:h-64 md:h-80 lg:h-96',
-            { 'opacity-0': !imageLoaded },
-            'rounded-lg',
-          ]"
-          @click="openFullscreen"
-          @load="onImageLoad"
-        />
+        <div class="relative w-full h-96 mb-6 rounded-lg cursor-pointer">
+          <img
+            v-if="imageUrl && !imageError"
+            :src="imageUrl"
+            :alt="props.post.title"
+            width="1200"
+            height="400"
+            class="relative w-full h-full object-cover rounded-lg grayscale hover:grayscale-0 transition-all"
+            @click="openFullscreen"
+            @load="onImageLoad"
+            @error="handleImageError"
+          />
+        </div>
         <div
-          v-if="!imageLoaded && imageUrl"
-          class="absolute inset-0 bg-secondary flex items-center justify-center text-muted-foreground rounded-lg"
+          v-if="imageError || !imageUrl"
+          class="w-full h-48 sm:h-64 md:h-80 lg:h-96 bg-secondary mb-6 flex items-center justify-center text-muted-foreground rounded-lg"
         >
-          <div class="text-center">
-            Loading image...
-          </div>
+          Image failed to load
         </div>
         <div
           v-if="!imageUrl"
@@ -249,6 +287,10 @@ onMounted(() => {
       <!-- End: Author and Share Section -->
     </div>
     <!-- End: Header Section -->
+
+    <ClientOnly>
+      <UiGradientDivider class="mb-2" />
+    </ClientOnly>
 
     <!-- Start: Main Content Wrapper -->
     <div
@@ -326,10 +368,11 @@ onMounted(() => {
                     :class="{
                       'active': header.id === activeId,
                       'font-medium': header.level === 2,
-                      'pl-2': header.level === 3,
+                      'pr-2': header.level === 3,
                       'pl-4': header.level === 4,
-                      'pl-6': header.level > 4,
+                      'pr-6': header.level > 4,
                     }"
+                    @click="activeId = header.id"
                   >
                     {{ header.text }}
                   </a>
@@ -380,6 +423,17 @@ onMounted(() => {
         </aside>
         <!-- End: Right Sidebar -->
       </div>
+
+      <!-- Add Disqus component -->
+      <ClientOnly>
+        <DisqusComments
+          :identifier="disqusConfig.identifier"
+          :url="disqusConfig.url"
+          :title="disqusConfig.title"
+          style="margin-top: 4rem; margin-bottom: 3rem;"
+        />
+        <UiGradientDivider />
+      </ClientOnly>
     </div>
     <!-- End: Main Content Wrapper -->
   </article>
@@ -458,5 +512,31 @@ onMounted(() => {
   .col-span-1 {
     display: none;
   }
+}
+
+.grayscale {
+  filter: grayscale(100%);
+}
+
+.hover\:grayscale-0:hover {
+  filter: grayscale(0%);
+}
+
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+}
+
+.zoom-enter-active, .zoom-leave-active {
+  transition: transform 0.5s;
+}
+.zoom-enter, .zoom-leave-to /* .zoom-leave-active in <2.1.8 */ {
+  transform: scale(0.9);
 }
 </style>

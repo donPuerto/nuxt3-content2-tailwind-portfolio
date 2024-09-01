@@ -4,7 +4,7 @@
       <div>Nav</div>
     </header>
     <article>
-      <slot />
+      <slot></slot>
     </article>
   </main>
 </template>

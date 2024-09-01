@@ -118,19 +118,19 @@ onMounted(() => {
       <div class="pd-2 relative flex items-center">
         <span
           class="i-material-symbols-search text-theme-text-primary-color pointer-events-none absolute left-4 top-3.5 h-5 w-5"
-        />
+        ></span>
         <input
           v-model="searchQuery"
           type="text"
           placeholder="Search or type a command..."
           class="search-input"
-        >
+        />
         <div class="absolute inset-y-0 right-3 flex py-2">
           <button
             class="close-button-container"
             @click="closeCommandPalette"
           >
-            <KBD><span class="close-icon" /></KBD>
+            <KBD><span class="close-icon"></span></KBD>
           </button>
         </div>
       </div>

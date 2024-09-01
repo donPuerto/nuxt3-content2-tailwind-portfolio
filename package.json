@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "nuxt": "latest",
+    "nuxt-disqus": "^1.0.1",
     "tailwind-variants": "^0.2.1",
     "vue": "latest",
     "vue-router": "latest"

@@ -6,7 +6,7 @@
     <div class="absolute inset-0 flex min-h-screen flex-col">
       <AppHeaderTopBar />
       <main class="flex-grow">
-        <slot />
+        <slot></slot>
       </main>
       <AppFooter />
     </div>

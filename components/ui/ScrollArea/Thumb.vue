@@ -31,6 +31,6 @@ const styles = tv({
     v-bind="reactiveOmit(props, 'class')"
     :class="styles({ orientation, class: props.class })"
   >
-    <slot />
+    <slot></slot>
   </ScrollAreaThumb>
 </template>

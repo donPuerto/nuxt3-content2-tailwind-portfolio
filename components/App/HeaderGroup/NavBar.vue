@@ -66,14 +66,14 @@ onMounted(() => {
             class="md:hidden"
             @click="toggleMenu"
           >
-            <span class="i-mdi-hamburger cursor-pointer text-3xl" />
+            <span class="i-mdi-hamburger cursor-pointer text-3xl"></span>
           </button>
 
           <span
             v-else
             class="i-mdi-hamburger-remove cursor-pointer text-3xl"
             @click="toggleMenu"
-          />
+          ></span>
         </div>
 
         <Logo />
@@ -102,7 +102,7 @@ onMounted(() => {
           class="hover:border-theme-border-color hover:bg-theme-bg-secondary-color flex items-center justify-center rounded-md border-2 border-transparent bg-transparent p-2"
           @click="toggleCommandPaletteButton"
         >
-          <span class="i-material-symbols-keyboard-command-key cursor-pointer text-xl" />
+          <span class="i-material-symbols-keyboard-command-key cursor-pointer text-xl"></span>
         </button>
         <CommandPalette
           :menu-items="menuItems"

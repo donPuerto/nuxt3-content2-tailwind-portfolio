@@ -65,7 +65,7 @@ const kbdClasses = computed(() => {
 
 <template>
   <kbd :class="[kbdClasses, customClass]">
-    <slot />
+    <slot></slot>
   </kbd>
 </template>
 

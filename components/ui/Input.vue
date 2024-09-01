@@ -27,5 +27,5 @@ const styles = tv({
     v-bind="props"
     v-model="localModel"
     :class="styles({ class: props.class })"
-  >
+  />
 </template>

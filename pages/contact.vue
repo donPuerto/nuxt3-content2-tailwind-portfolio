@@ -12,7 +12,7 @@
     <div class="">
       Tailwind
     </div>
-    <p class="p-4 pb-2" />
+    <p class="p-4 pb-2"></p>
     <!-- <div>Color Mode: {{ $colorMode.preference }}</div> -->
 
     <select v-model="$colorMode.preference">
@@ -30,14 +30,14 @@
       </option>
     </select>
 
-    <br>
+    <br />
     <div class="bg-theme-bg-primary-color border-theme-border-color border-border-color border p-4">
       <span class="text-theme-text-primary-color">Tailwind Styling</span>
     </div>
     <div class="theme-background border p-4">
       <span class="theme-font-color">Local Theme Styling</span>
     </div>
-    <br>
+    <br />
 
     <div>Font:</div>
     <div>
@@ -67,28 +67,28 @@
       </div>
     </div>
 
-    <br>
+    <br />
     <div>Iconify</div>
     <div>
       <p>Material Design Icon (MDI)</p>
-      <span class="i-mdi-home hover:i-mdi-home-alert cursor-pointer text-5xl text-green-800" />
-      <br>
+      <span class="i-mdi-home hover:i-mdi-home-alert cursor-pointer text-5xl text-green-800"></span>
+      <br />
       <p>Lucile Icon</p>
-      <span class="i-lucide-a-arrow-down cursor-pointer text-5xl text-green-800" />
-      <br>
+      <span class="i-lucide-a-arrow-down cursor-pointer text-5xl text-green-800"></span>
+      <br />
       <p>Materials Symbols Icon</p>
-      <span class="i-material-symbols-light-mode cursor-pointer text-5xl text-green-800" />
-      <span class="i-material-symbols-dark-mode cursor-pointer text-5xl text-green-800" />
+      <span class="i-material-symbols-light-mode cursor-pointer text-5xl text-green-800"></span>
+      <span class="i-material-symbols-dark-mode cursor-pointer text-5xl text-green-800"></span>
 
-      <br>
+      <br />
       <p>Iconamoon Icons</p>
-      <span class="i-iconamoon-3d cursor-pointer text-5xl text-green-800" />
-      <br>
+      <span class="i-iconamoon-3d cursor-pointer text-5xl text-green-800"></span>
+      <br />
       <p>SVG Logos</p>
       <span
         class="i-logos-vue transform cursor-pointer text-5xl text-green-800 transition duration-300 ease-in-out hover:scale-110"
-      />
-      <br>
+      ></span>
+      <br />
       <p class="bg-red-700">
         Tailwind IntelliSense
       </p>

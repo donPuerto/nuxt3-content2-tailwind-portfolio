@@ -23,16 +23,7 @@ export default withNuxt(
     rules: {
       'no-console': 'error',
       '@typescript-eslint/no-explicit-any': 'off',
-      // 'vue/no-multiple-template-root': 'error',
-      // 'vue/multi-word-component-names': 'error',
-      // 'vue/block-lang': ['error', {
-      //   script: {
-      //     lang: 'ts',
-      //   },
-      //   style: {
-      //     lang: 'scss',
-      //   },
-      // }],
+
       'vue/require-v-for-key': 'error',
       'vue/no-use-v-if-with-v-for': 'error',
       'vue/component-tags-order': ['error', { order: ['script', 'template', 'style'] }],
@@ -58,6 +49,18 @@ export default withNuxt(
       ],
       'vue/prop-name-casing': 'off',
       'vue/no-v-html': 'off',
+      'vue/html-self-closing': [
+        'error',
+        {
+          html: {
+            void: 'always',
+            normal: 'never',
+            component: 'always',
+          },
+          svg: 'always',
+          math: 'always',
+        },
+      ],
     },
   },
 )

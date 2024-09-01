@@ -39,6 +39,6 @@ const eltype = computed(() => {
     "
     @click="onClick"
   >
-    <slot />
+    <slot></slot>
   </component>
 </template>

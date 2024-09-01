@@ -98,7 +98,7 @@ onMounted(async () => {
         type="text"
         placeholder="Search posts"
         class="mb-4 rounded border border-gray-300 p-2"
-      >
+      />
     </div>
 
     <div class=" grid grid-cols-1 gap-2 px-4 md:grid-cols-6 lg:grid-cols-12">

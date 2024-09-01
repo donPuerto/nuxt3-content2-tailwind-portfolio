@@ -35,7 +35,7 @@ const styles = tv({
       v-bind="{ ...forwarded, ...$attrs }"
       :class="styles({ class: props.class })"
     >
-      <slot />
+      <slot></slot>
     </DropdownMenuContent>
   </UiDropdownMenuPortal>
 </template>

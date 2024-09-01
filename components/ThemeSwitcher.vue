@@ -58,7 +58,7 @@ const themeOptions: ThemeOption[] = [
       class="hover:border-theme-border-color hover:bg-theme-bg-secondary-color flex items-center justify-center rounded-md border-2 border-transparent bg-transparent p-2"
       @click="toggleDropdown"
     >
-      <span class="i-mdi-cog-outline cursor-pointer text-xl hover:text-primary" />
+      <span class="i-mdi-cog-outline cursor-pointer text-xl hover:text-primary"></span>
     </button>
     <ul
       v-if="dropdownOpen"
@@ -72,7 +72,7 @@ const themeOptions: ThemeOption[] = [
       >
         <span
           :class="option.iconClass + ' text-theme-text-primary-color cursor-pointer text-2xl'"
-        />
+        ></span>
         <p class="text-theme-text-secondary-color">
           {{ option.label }}
         </p>

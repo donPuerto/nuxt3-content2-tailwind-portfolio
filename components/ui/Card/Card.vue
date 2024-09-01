@@ -57,10 +57,10 @@ const styles = tv({
         name="content"
       >
         <UiCardContent>
-          <div v-html="content" />
+          <div v-html="content"></div>
         </UiCardContent>
       </slot>
-      <slot name="footer" />
+      <slot name="footer"></slot>
     </slot>
   </Primitive>
 </template>

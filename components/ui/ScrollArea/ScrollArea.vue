@@ -27,7 +27,7 @@ const styles = tv({
     :class="styles({ class: props.class })"
   >
     <UiScrollAreaViewport>
-      <slot />
+      <slot></slot>
     </UiScrollAreaViewport>
     <UiScrollAreaScrollbar :orientation="orientation" />
     <UiScrollAreaCorner />

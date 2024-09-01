@@ -42,7 +42,7 @@ const updatedDate = computed(() => props.post.updated_at ? formatDate(props.post
           :height="post.image.height"
           :alt="post.image.alt"
           class="h-[240px] w-full object-cover md:h-full lg:h-[240px]"
-        >
+        />
       </NuxtLink>
       <!-- End: Image Section -->
 

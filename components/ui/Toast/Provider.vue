@@ -10,6 +10,6 @@ const props = withDefaults(defineProps<ToastProviderProps>(), {
 
 <template>
   <ToastProvider v-bind="props">
-    <slot />
+    <slot></slot>
   </ToastProvider>
 </template>

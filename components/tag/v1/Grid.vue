@@ -78,7 +78,7 @@ const {
                     opacity,
                     background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(255,182,255,.1), transparent 40%)`,
                   }"
-                />
+                ></div>
                 <!-- End: Spotlight Effect -->
 
                 <!-- Start: Card Content -->

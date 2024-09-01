@@ -14,6 +14,6 @@ onMounted(async () => {
 <template>
   <div>
     <h1>{{ post.title }}</h1>
-    <div v-html="post.bodyHtml" />
+    <div v-html="post.bodyHtml"></div>
   </div>
 </template>

@@ -37,6 +37,6 @@ const styles = tv({
     :class="styles({ size, class: props.class })"
     v-bind="reactiveOmit(props, 'class', 'size')"
   >
-    <slot />
+    <slot></slot>
   </Primitive>
 </template>

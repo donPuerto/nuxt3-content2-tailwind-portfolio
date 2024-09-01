@@ -21,7 +21,7 @@ const { app: { footer } } = useAppConfig()
           <span v-if="i < 3">,</span>
         </div>
       </div>
-      <span class="flex-1" />
+      <span class="flex-1"></span>
       <span class="text-sm">
         {{ footer.credits }}
       </span>

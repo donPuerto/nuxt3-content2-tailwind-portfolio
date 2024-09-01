@@ -27,6 +27,6 @@ const styles = tv({
         :label="heading"
       />
     </slot>
-    <slot />
+    <slot></slot>
   </ComboboxGroup>
 </template>

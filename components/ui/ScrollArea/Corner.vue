@@ -7,6 +7,6 @@ const props = defineProps<ScrollAreaCornerProps>()
 
 <template>
   <ScrollAreaCorner v-bind="props">
-    <slot />
+    <slot></slot>
   </ScrollAreaCorner>
 </template>

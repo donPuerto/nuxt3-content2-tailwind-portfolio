@@ -28,7 +28,7 @@ const { app: { hero } } = useAppConfig()
               v-else
               class="ml-1 text-sm"
             >{{ segment.text }}</span>
-            <span v-if="!segment.link && index < hero.hireInfo.length - 1" />
+            <span v-if="!segment.link && index < hero.hireInfo.length - 1"></span>
           </span>
         </p>
       </div>

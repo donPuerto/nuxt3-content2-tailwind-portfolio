@@ -7,6 +7,6 @@ const props = defineProps<DropdownMenuTriggerProps>()
 
 <template>
   <DropdownMenuTrigger v-bind="props">
-    <slot />
+    <slot></slot>
   </DropdownMenuTrigger>
 </template>

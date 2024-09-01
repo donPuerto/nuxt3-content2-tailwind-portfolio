@@ -18,6 +18,6 @@ const styles = tv({
     :as-child="asChild"
     :class="styles({ class: props.class })"
   >
-    <slot />
+    <slot></slot>
   </ComboboxSeparator>
 </template>

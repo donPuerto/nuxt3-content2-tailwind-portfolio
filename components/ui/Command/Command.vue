@@ -18,6 +18,6 @@ const styles = tv({
     :open="true"
     :class="styles({ class: props.class })"
   >
-    <slot />
+    <slot></slot>
   </ComboboxRoot>
 </template>
