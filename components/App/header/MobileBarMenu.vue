@@ -1,5 +1,6 @@
 <!-- eslint-disable no-console -->
 <script lang="ts" setup>
+import { useWindowSize } from '@vueuse/core'
 import type { MenuList } from '~/types/components/header/menu'
 
 // Define props
@@ -12,23 +13,27 @@ const emits = defineEmits<{
   'update:modelValue': [value: boolean]
 }>()
 
-// Manage local model state
-const isOpen = ref(props.modelValue || false)
+// Get window size
+const { width } = useWindowSize()
 
-watch(() => props.modelValue, (newValue) => {
-  isOpen.value = newValue
+// Computed property to determine if the menu should be visible
+const isMenuVisible = computed(() => {
+  if (width.value < 768) {
+    return props.modelValue ?? true
+  }
+  return false
 })
 
-watch(isOpen, (newValue) => {
-  emits('update:modelValue', newValue)
+// Watch for screen size changes
+watch(width, (newWidth) => {
+  if (newWidth >= 768) {
+    emits('update:modelValue', false)
+  }
+  else {
+    emits('update:modelValue', true)
+  }
 })
 
-const router = useRouter()
-
-const navigateTo = (route: string) => {
-  isOpen.value = false
-  router.push(route)
-}
 // Handle keyboard shortcuts
 const handleShortcut = (event: KeyboardEvent) => {
   const shortcutKey = event.key.toLowerCase()
@@ -41,7 +46,7 @@ const handleShortcut = (event: KeyboardEvent) => {
 
 const handleEscape = (event: KeyboardEvent) => {
   if (event.key === 'Escape') {
-    isOpen.value = false
+    emits('update:modelValue', false)
   }
 }
 
@@ -57,46 +62,47 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div
-    v-if="isOpen"
-    class="container flex items-center justify-center px-4"
-  >
-    <UiList class="max-w ">
-      <h4
-        class="
-        uppercase
-        text-[17px]
-        font-medium
-        sm:text-sm"
+  <div class="container px-4 w-full md:hidden">
+    <Transition
+      enter-active-class="transition duration-100 ease-out"
+      enter-from-class="transform scale-95 opacity-0"
+      enter-to-class="transform scale-100 opacity-100"
+      leave-active-class="transition duration-75 ease-in"
+      leave-from-class="transform scale-100 opacity-100"
+      leave-to-class="transform scale-95 opacity-0"
+    >
+      <UiList
+        v-if="isMenuVisible"
+        class="w-full"
       >
-        {{ props.menuList?.header }}
-      </h4>
-      <template
-        v-for="item in props.menuList?.items"
-        :key="item.name"
-      >
-        <NuxtLink :to="item.route">
-          <UiListItem class="items-center px-4 hover:bg-primary hover:rounded-md">
-            <Icon
-              :name="item.icon"
-              class="h-4 w-4"
-            />
-            <UiListContent>
-              {{ item.name }}
-            </UiListContent>
+        <h4 class="mb-2 text-xs font-bold text-muted-foreground uppercase">
+          {{ props.menuList?.header }}
+        </h4>
+        <template
+          v-for="item in props.menuList?.items"
+          :key="item.name"
+        >
+          <NuxtLink :to="item.route">
+            <UiListItem class="px-3 py-1.5 hover:bg-accent hover:text-accent-foreground rounded-md">
+              <Icon
+                :name="item.icon"
+                class="h-4 w-4 mr-3 text-muted-foreground"
+              />
+              <UiListContent class="text-sm font-medium">
+                {{ item.name }}
+              </UiListContent>
 
-            <UiKbd
-              size="md"
-              class="ml-auto"
-            >
-              <span>
-                ⌘{{ item.shortcut }}
-              </span>
-            </UiKbd>
-          </UiListItem>
-        </NuxtLink>
-      </template>
-    </UiList>
+              <UiKbd
+                size="sm"
+                class="ml-auto text-xs text-muted-foreground"
+              >
+                <span>⌘{{ item.shortcut }}</span>
+              </UiKbd>
+            </UiListItem>
+          </NuxtLink>
+        </template>
+      </UiList>
+    </Transition>
   </div>
 </template>
 

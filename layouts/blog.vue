@@ -1,8 +1,6 @@
 <template>
   <main id="main-content">
-    <header class="mx-auto w-full max-w-3xl">
-      <div>Nav</div>
-    </header>
+    <AppHeaderTopBar />
     <article>
       <slot></slot>
     </article>

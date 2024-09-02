@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { fetchMenuListByHeader, modes } from '~/data'
+import MobileBarMenu from './MobileBarMenu.vue'
+import { fetchMenuListByHeader } from '~/data'
 import type { MenuList } from '~/types/components/header/menu'
 
 const pages: MenuList | undefined = fetchMenuListByHeader('Pages')
@@ -7,6 +8,14 @@ const pages: MenuList | undefined = fetchMenuListByHeader('Pages')
 const colorMode = useColorMode()
 const mobileNav = ref(false)
 const isOpen = ref(false)
+
+// Define the modes array, including sepia
+const modes = [
+  { value: 'light', icon: 'lucide:sun', title: 'Light' },
+  { value: 'dark', icon: 'lucide:moon', title: 'Dark' },
+  { value: 'sepia', icon: 'lucide:book', title: 'Sepia' },
+  { value: 'system', icon: 'lucide:laptop', title: 'System' },
+]
 
 defineShortcuts({
   meta_k: () => {
@@ -22,36 +31,38 @@ const currentIcon = computed(() => {
   return modes.find(m => m.value === colorMode?.preference)?.icon
 })
 
-const menuIcon = computed(() => mobileNav.value ? 'line-md:menu-to-close-transition' : 'line-md:close-to-menu-transition')
+const toggleMobileNav = () => {
+  mobileNav.value = !mobileNav.value
+}
 </script>
 
 <template>
-  <header class="sticky top-0 z-30 border-b bg-background/80 backdrop-blur">
+  <header class="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur">
     <div class="container flex h-14 items-center justify-between">
       <div class="flex items-center gap-10">
-        <div class="flex items-center gap-5">
+        <div class="flex items-center gap-3">
           <UiButton
             size="icon-sm"
             variant="outline"
             class="h-9 w-9 lg:hidden"
-            @click="mobileNav = !mobileNav"
+            @click="toggleMobileNav"
           >
             <Icon
-              :name="menuIcon"
+              :name="mobileNav ? 'heroicons:x-mark' : 'heroicons:bars-3'"
               class="h-4 w-4"
             />
           </UiButton>
           <NuxtLink
             to="/"
-            class="text-lg font-bold"
+            class="flex items-center justify-center w-8 h-8 border border-border rounded-md text-sm font-bold transition-colors duration-200 hover:bg-primary hover:text-primary-foreground hover:border-primary"
           >
-            Don Puerto
+            DP
           </NuxtLink>
         </div>
       </div>
 
       <!-- Middle -->
-      <div class="hidden md:flex flex-grow  items-center justify-center gap-3">
+      <div class="hidden md:flex flex-grow items-center justify-center gap-3">
         <template
           v-for="item in pages?.items"
           :key="item.name"
@@ -111,7 +122,7 @@ const menuIcon = computed(() => mobileNav.value ? 'line-md:menu-to-close-transit
         </UiDropdownMenu>
       </div>
     </div>
-    <AppHeaderMobileBarMenu
+    <MobileBarMenu
       v-model="mobileNav"
       :menu-list="pages"
     />

@@ -21,6 +21,10 @@ const dialog = useVModel(props, 'modelValue', emits, { passive: true })
       v-model:open="dialog"
     >
       <UiCommand>
+        <DialogTitle class="sr-only">
+          Command Search
+        </DialogTitle>
+
         <UiCommandInput placeholder="Search..." />
 
         <UiCommandList>
