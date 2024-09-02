@@ -50,6 +50,8 @@ const mainContentWrapper = ref<HTMLElement | null>(null)
 const commentsSection = ref(null)
 const showComments = ref(false)
 const imageError = ref(false)
+const disqusLoaded = ref(false)
+const disqusContainer = ref(null)
 
 // Handle fullscreen
 const openFullscreen = () => {
@@ -151,6 +153,13 @@ onMounted(() => {
     observer.observe(blogContent, { childList: true, subtree: true })
   }
 
+  // Keep this intersection observer for Disqus
+  useIntersectionObserver(disqusContainer, ([{ isIntersecting }]) => {
+    if (isIntersecting && !disqusLoaded.value) {
+      disqusLoaded.value = true
+    }
+  })
+
   // Cleanup
   onUnmounted(() => {
     observer.disconnect()
@@ -220,54 +229,36 @@ onMounted(() => {
         <Transition name="fade">
           <div
             v-if="isFullscreen"
-            class="fixed inset-0 z-40 flex items-center justify-center"
+            class="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-md"
             @click="closeFullscreen"
           >
-            <div
-              class="absolute inset-0 bg-black bg-opacity-75 backdrop-filter backdrop-blur-md"
-            ></div>
-            <Transition name="zoom">
-              <div
-                v-if="isFullscreen"
-                class="relative z-50 max-w-[95%] max-h-[95%] object-contain rounded-lg"
-              >
-                <img
-                  v-if="imageUrl && !imageError"
-                  :src="imageUrl"
-                  :alt="props.post.title"
-                  class="relative w-full h-full object-contain rounded-lg grayscale hover:grayscale-0 transition-all"
-                  @load="onImageLoad"
-                  @error="handleImageError"
-                />
-              </div>
-            </Transition>
+            <img
+              v-if="imageUrl && !imageError"
+              :src="imageUrl"
+              :alt="props.post.title"
+              class="max-w-[95%] max-h-[95%] object-contain rounded-lg grayscale hover:grayscale-0 transition-all"
+              @load="onImageLoad"
+              @error="handleImageError"
+            />
           </div>
         </Transition>
 
-        <div class="relative w-full h-96 mb-6 rounded-lg cursor-pointer">
+        <div class="relative w-full mb-6 rounded-lg cursor-pointer overflow-hidden">
           <img
             v-if="imageUrl && !imageError"
             :src="imageUrl"
             :alt="props.post.title"
-            width="1200"
-            height="400"
-            class="relative w-full h-full object-cover rounded-lg grayscale hover:grayscale-0 transition-all"
+            class="w-full object-cover rounded-lg grayscale hover:grayscale-0 transition-all"
             @click="openFullscreen"
             @load="onImageLoad"
             @error="handleImageError"
           />
-        </div>
-        <div
-          v-if="imageError || !imageUrl"
-          class="w-full h-48 sm:h-64 md:h-80 lg:h-96 bg-secondary mb-6 flex items-center justify-center text-muted-foreground rounded-lg"
-        >
-          Image failed to load
-        </div>
-        <div
-          v-if="!imageUrl"
-          class="w-full h-48 sm:h-64 md:h-80 lg:h-96 bg-secondary mb-6 flex items-center justify-center text-muted-foreground rounded-lg"
-        >
-          No image available
+          <div
+            v-else
+            class="w-full h-48 bg-secondary flex items-center justify-center text-muted-foreground"
+          >
+            {{ imageError ? 'Image failed to load' : 'No image available' }}
+          </div>
         </div>
       </div>
       <!-- End: Image with error handling -->
@@ -424,16 +415,19 @@ onMounted(() => {
         <!-- End: Right Sidebar -->
       </div>
 
-      <!-- Add Disqus component -->
-      <ClientOnly>
-        <DisqusComments
-          :identifier="disqusConfig.identifier"
-          :url="disqusConfig.url"
-          :title="disqusConfig.title"
-          style="margin-top: 4rem; margin-bottom: 3rem;"
-        />
-        <UiGradientDivider />
-      </ClientOnly>
+      <!-- Simplified Disqus component section -->
+      <div ref="disqusContainer">
+        <ClientOnly>
+          <DisqusComments
+            v-if="disqusLoaded"
+            :identifier="disqusConfig.identifier"
+            :url="disqusConfig.url"
+            :title="disqusConfig.title"
+            style="margin-top: 4rem; margin-bottom: 3rem;"
+          />
+          <UiGradientDivider />
+        </ClientOnly>
+      </div>
     </div>
     <!-- End: Main Content Wrapper -->
   </article>
