@@ -1,13 +1,18 @@
+<!-- eslint-disable no-console -->
 <script setup lang="ts">
-import MobileBarMenu from './MobileBarMenu.vue'
+import { ref, onMounted, onUnmounted } from 'vue'
+import CommandPalette from '~/components/CommandPallete.vue'
+import MobileBarMenu from '@/components/app/header/MobileBarMenu.vue'
+
 import { fetchMenuListByHeader } from '~/data'
 import type { MenuList } from '~/types/components/header/menu'
+
+defineComponent({ components: { CommandPalette } })
 
 const pages: MenuList | undefined = fetchMenuListByHeader('Pages')
 
 const colorMode = useColorMode()
 const mobileNav = ref(false)
-const isOpen = ref(false)
 
 // Define the modes array, including sepia
 const modes = [
@@ -16,12 +21,6 @@ const modes = [
   { value: 'sepia', icon: 'lucide:book', title: 'Sepia' },
   { value: 'system', icon: 'lucide:laptop', title: 'System' },
 ]
-
-defineShortcuts({
-  meta_k: () => {
-    isOpen.value = !isOpen.value
-  },
-})
 
 const setTheme = (val: string) => {
   colorMode.preference = val
@@ -34,6 +33,27 @@ const currentIcon = computed(() => {
 const toggleMobileNav = () => {
   mobileNav.value = !mobileNav.value
 }
+
+const handleKeyDown = (event: KeyboardEvent) => {
+  if (event.ctrlKey && event.key.toLowerCase() === 'p') {
+    event.preventDefault()
+    toggleCommandPalette()
+  }
+}
+
+const isCommandPaletteVisible = ref(false)
+
+const toggleCommandPalette = () => {
+  isCommandPaletteVisible.value = !isCommandPaletteVisible.value
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeyDown)
+})
 </script>
 
 <template>
@@ -86,7 +106,7 @@ const toggleMobileNav = () => {
           class="h-9 w-9"
           variant="ghost"
           size="icon"
-          @click="isOpen = true"
+          @click="toggleCommandPalette"
         >
           <Icon
             name="material-symbols:keyboard-command-key"
@@ -126,6 +146,9 @@ const toggleMobileNav = () => {
       v-model="mobileNav"
       :menu-list="pages"
     />
-    <CommandSearch v-model="isOpen" />
+    <CommandPalette
+      v-model="isCommandPaletteVisible"
+      @close="isCommandPaletteVisible = false"
+    />
   </header>
 </template>
