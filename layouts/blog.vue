@@ -1,8 +1,7 @@
 <template>
-  <main id="main-content">
-    <AppHeaderTopBar />
+  <div class="blog-layout">
     <article>
       <slot></slot>
     </article>
-  </main>
+  </div>
 </template>

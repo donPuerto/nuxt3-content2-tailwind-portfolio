@@ -1,14 +1,20 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import type { NuxtConfig } from '@nuxt/schema'
+import routeRules from './router.options'
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
-
+  routeRules: routeRules as NuxtConfig['routeRules'],
   app: {
     layoutTransition: { name: 'slide', mode: 'out-in' },
-    pageTransition: { name: 'page', mode: 'out-in' },
+    pageTransition: { name: 'page-fade', mode: 'out-in' },
   },
 
-  // css: ['~/assets/scss/main.scss'],
+  css: ['~/assets/css/transitions.css'],
   nitro: {
+    experimental: {
+      openAPI: true,
+    },
     esbuild: {
       options: {
         target: 'esnext',
@@ -20,9 +26,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteUrl: process.env.NODE_ENV === 'production'
-        ? 'https://yourproductionsite.com'
+        ? 'my-portfolio-blush-phi.vercel.app/'
         : 'http://localhost:3000',
     },
+    gmailUserEmail: process.env.GMAIL_USER_EMAIL,
+    gmailAppPass: process.env.GMAIL_APP_PASS,
   },
 
   postcss: {
@@ -48,7 +56,33 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@vueuse/nuxt',
     'nuxt-disqus',
+    'nuxt-particles',
+    '@vee-validate/nuxt',
+    ['nuxt-mail', {
+      message: {
+        to: process.env.NUXT_MAILER_USER,
+      },
+      smtp: {
+        service: process.env.NUXT_MAILER_SERVICE,
+        host: process.env.NUXT_MAILER_HOST,
+        port: process.env.NUXT_MAILER_PORT,
+        secure: false,
+        auth: {
+          user: process.env.NUXT_MAILER_USER,
+          pass: process.env.NUXT_MAILER_PASSWORD,
+        },
+      },
+    }],
   ],
+  veeValidate: {
+    autoImports: true,
+    componentNames: {
+      Form: 'VeeForm',
+      Field: 'VeeField',
+      FieldArray: 'VeeFieldArray',
+      ErrorMessage: 'VeeErrorMessage',
+    },
+  },
 
   disqus: {
     shortname: 'donpuerto-dev',
@@ -117,7 +151,6 @@ export default defineNuxtConfig({
   },
 
   plugins: [
-    { src: '~/plugins/particles.client.ts', mode: 'client' },
 
   ],
 

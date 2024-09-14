@@ -47,10 +47,8 @@ const isFullscreen = ref(false)
 const imageLoaded = ref(false)
 const isScrolled = ref(false)
 const mainContentWrapper = ref<HTMLElement | null>(null)
-const commentsSection = ref(null)
-const showComments = ref(false)
 const imageError = ref(false)
-const disqusLoaded = ref(false)
+const showComments = ref(false)
 const disqusContainer = ref(null)
 
 // Handle fullscreen
@@ -118,7 +116,7 @@ const disqusConfig = computed(() => ({
 // Lifecycle hooks
 onMounted(() => {
   // Handle comments section
-  useIntersectionObserver(commentsSection, ([{ isIntersecting }]) => {
+  useIntersectionObserver(disqusContainer, ([{ isIntersecting }]) => {
     if (isIntersecting) {
       showComments.value = true
     }
@@ -152,13 +150,6 @@ onMounted(() => {
   if (blogContent) {
     observer.observe(blogContent, { childList: true, subtree: true })
   }
-
-  // Keep this intersection observer for Disqus
-  useIntersectionObserver(disqusContainer, ([{ isIntersecting }]) => {
-    if (isIntersecting && !disqusLoaded.value) {
-      disqusLoaded.value = true
-    }
-  })
 
   // Cleanup
   onUnmounted(() => {
@@ -417,19 +408,22 @@ onMounted(() => {
 
       <!-- Simplified Disqus component section -->
       <div ref="disqusContainer">
-        <ClientOnly>
+        <Suspense>
           <DisqusComments
-            v-if="disqusLoaded"
+            v-show="showComments"
             :identifier="disqusConfig.identifier"
             :url="disqusConfig.url"
             :title="disqusConfig.title"
             style="margin-top: 4rem; margin-bottom: 3rem;"
           />
+        </Suspense>
+
+        <ClientOnly>
           <UiGradientDivider />
         </ClientOnly>
       </div>
+      <!-- End: Main Content Wrapper -->
     </div>
-    <!-- End: Main Content Wrapper -->
   </article>
 </template>
 

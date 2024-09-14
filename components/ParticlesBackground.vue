@@ -1,71 +1,95 @@
 <!-- eslint-disable no-console -->
-<script setup lang="ts">
-import { MoveDirection, OutMode } from '@tsparticles/engine'
-import { onMounted } from 'vue'
-import type { Container } from '@tsparticles/engine'
+<script lang="ts" setup>
+import { shallowRef, ref, onMounted, onUnmounted, nextTick } from 'vue'
+import type { Container, ISourceOptions } from '@tsparticles/engine'
 
-// Utility function to get CSS variable value
-const getCssVariable = (variable: string) => {
-  return getComputedStyle(document.documentElement).getPropertyValue(variable).trim()
-}
-
-const particlesLoaded = (container?: Container) => {
-  // eslint-disable-next-line no-console
-  console.log(container)
-}
-const particleOptions = ref({
+const options = shallowRef<ISourceOptions>({
+  fullScreen: {
+    enable: false,
+  },
   background: {
     color: {
-      // Set a default value or make it transparent initially
-      value: 'tranparent',
+      value: 'transparent',
     },
   },
   particles: {
-    color: {
-      // Fallback value
-      value: '#ffff',
-    },
     number: {
-      value: 100,
-    },
-    move: {
-      direction: MoveDirection.none,
-      enable: true,
-      outModes: {
-        default: OutMode.out,
+      value: 80,
+      density: {
+        enable: true,
       },
-      random: true,
-      speed: 0.1,
-      straight: false,
+    },
+    color: {
+      value: 'random',
+    },
+    shape: {
+      type: 'circle',
     },
     opacity: {
+      value: { min: 0.1, max: 0.9 },
       animation: {
         enable: true,
         speed: 1,
         sync: false,
       },
-      value: { min: 0, max: 1 },
     },
     size: {
       value: { min: 1, max: 3 },
     },
+    move: {
+      enable: true,
+      speed: 0.1,
+      direction: 'none' as const,
+      random: true,
+      straight: false,
+      outModes: 'out',
+    },
+    twinkle: {
+      particles: {
+        enable: true,
+        color: 'random',
+        frequency: 0.05,
+        opacity: 1,
+      },
+    },
   },
 })
 
-const updateParticleColors = () => {
-  const themeColor = getCssVariable('text-foreground')
-  particleOptions.value.particles.color.value = themeColor
+const particlesContainer = shallowRef<Container | null>(null)
+const isMounted = ref(false)
+
+const onLoad = (container: Container) => {
+  particlesContainer.value = container
+  // console.log('Particles loaded', container)
 }
 
-onMounted(() => updateParticleColors())
+onMounted(async () => {
+  await nextTick()
+  isMounted.value = true
+})
+
+onUnmounted(() => {
+  if (particlesContainer.value) {
+    particlesContainer.value.destroy()
+  }
+})
 </script>
 
 <template>
-  <client-only>
-    <vue-particles
-      id="tsparticles"
-      :options="particleOptions"
-      @particles-loaded="particlesLoaded"
-    />
-  </client-only>
+  <ClientOnly>
+    <Suspense>
+      <template #default>
+        <NuxtParticles
+          v-if="isMounted"
+          id="tsparticles"
+          class="absolute inset-0"
+          :options="options"
+          @load="onLoad"
+        />
+      </template>
+      <template #fallback>
+        <div class="absolute inset-0 bg-primary-900"></div>
+      </template>
+    </Suspense>
+  </ClientOnly>
 </template>

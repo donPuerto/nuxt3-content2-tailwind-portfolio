@@ -3,6 +3,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import CommandPalette from '~/components/CommandPallete.vue'
 import MobileBarMenu from '@/components/app/header/MobileBarMenu.vue'
+import { THEME_MODES } from '~/utils/constants'
 
 import { fetchMenuListByHeader } from '~/data'
 import type { MenuList } from '~/types/components/header/menu'
@@ -12,27 +13,25 @@ defineComponent({ components: { CommandPalette } })
 const pages: MenuList | undefined = fetchMenuListByHeader('Pages')
 
 const colorMode = useColorMode()
-const mobileNav = ref(false)
-
-// Define the modes array, including sepia
-const modes = [
-  { value: 'light', icon: 'lucide:sun', title: 'Light' },
-  { value: 'dark', icon: 'lucide:moon', title: 'Dark' },
-  { value: 'sepia', icon: 'lucide:book', title: 'Sepia' },
-  { value: 'system', icon: 'lucide:laptop', title: 'System' },
-]
+const isMobileNavOpen = ref(false)
 
 const setTheme = (val: string) => {
   colorMode.preference = val
 }
 
 const currentIcon = computed(() => {
-  return modes.find(m => m.value === colorMode?.preference)?.icon
+  return THEME_MODES.find(m => m.value === colorMode?.preference)?.icon
 })
 
 const toggleMobileNav = () => {
-  mobileNav.value = !mobileNav.value
+  isMobileNavOpen.value = !isMobileNavOpen.value
 }
+
+// Add this to force close the mobile nav when screen size changes
+const { width } = useWindowSize()
+watch(width, () => {
+  isMobileNavOpen.value = false
+})
 
 const handleKeyDown = (event: KeyboardEvent) => {
   if (event.ctrlKey && event.key.toLowerCase() === 'p') {
@@ -57,24 +56,24 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <header class="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur">
+  <header class="sticky top-0 z-30 border-b border-border/50 bg-transparent">
     <div class="container flex h-14 items-center justify-between">
       <div class="flex items-center gap-10">
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2">
           <UiButton
             size="icon-sm"
             variant="outline"
-            class="h-9 w-9 lg:hidden"
+            class="h-9 w-9 lg:hidden bg-background/50 backdrop-blur-sm"
             @click="toggleMobileNav"
           >
             <Icon
-              :name="mobileNav ? 'heroicons:x-mark' : 'heroicons:bars-3'"
+              :name="isMobileNavOpen ? 'heroicons:x-mark' : 'heroicons:bars-3'"
               class="h-4 w-4"
             />
           </UiButton>
           <NuxtLink
             to="/"
-            class="flex items-center justify-center w-8 h-8 border border-border rounded-md text-sm font-bold transition-colors duration-200 hover:bg-primary hover:text-primary-foreground hover:border-primary"
+            class="flex items-center justify-center w-9 h-9 border border-border/50 rounded-md text-sm font-bold transition-colors duration-200 hover:bg-primary hover:text-primary-foreground hover:border-primary bg-background/50 backdrop-blur-sm"
           >
             DP
           </NuxtLink>
@@ -90,6 +89,7 @@ onUnmounted(() => {
           <UiButton
             variant="ghost"
             :to="item.route"
+            class="bg-background/50 backdrop-blur-sm"
           >
             <Icon
               :name="item.icon"
@@ -131,7 +131,7 @@ onUnmounted(() => {
             :side-offset="5"
           >
             <UiDropdownMenuItem
-              v-for="(m, i) in modes"
+              v-for="(m, i) in THEME_MODES"
               :key="i"
               class="cursor-pointer"
               :icon="m.icon"
@@ -143,8 +143,9 @@ onUnmounted(() => {
       </div>
     </div>
     <MobileBarMenu
-      v-model="mobileNav"
+      v-model="isMobileNavOpen"
       :menu-list="pages"
+      :force-closed="!isMobileNavOpen"
     />
     <CommandPalette
       v-model="isCommandPaletteVisible"

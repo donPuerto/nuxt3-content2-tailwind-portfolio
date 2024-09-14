@@ -1,11 +1,6 @@
-<!-- eslint-disable no-console -->
-<script lang="ts" setup>
-
-</script>
-
 <template>
   <div class="flex h-screen justify-center items-center">
-    <AppHeroH1 />
+    <AppHeroV1 />
   </div>
 </template>
 

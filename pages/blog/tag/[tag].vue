@@ -16,7 +16,7 @@ const search = ref('')
 const { posts, totalPages } = useTagPosts(
   route.params.tag as string,
   postsPerPage,
-  search,
+
 )
 
 // * Watcher: Reset the current page to 1 whenever the search term changes

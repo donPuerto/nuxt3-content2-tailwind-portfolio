@@ -6,7 +6,8 @@ import type { MenuList } from '~/types/components/header/menu'
 // Define props
 const props = defineProps<{
   menuList?: MenuList
-  modelValue?: boolean
+  modelValue: boolean
+  forceClosed: boolean
 }>()
 
 const emits = defineEmits<{
@@ -18,21 +19,18 @@ const { width } = useWindowSize()
 
 // Computed property to determine if the menu should be visible
 const isMenuVisible = computed(() => {
-  if (width.value < 768) {
-    return props.modelValue ?? true
-  }
-  return false
+  return props.modelValue && !props.forceClosed && width.value < 768
 })
 
 // Watch for screen size changes
-watch(width, (newWidth) => {
-  if (newWidth >= 768) {
-    emits('update:modelValue', false)
-  }
-  else {
-    emits('update:modelValue', true)
-  }
-})
+// watch(width, (newWidth) => {
+//   if (newWidth >= 768) {
+//     emits('update:modelValue', false)
+//   }
+//   else {
+//     emits('update:modelValue', true)
+//   }
+// })
 
 // Handle keyboard shortcuts
 const handleShortcut = (event: KeyboardEvent) => {

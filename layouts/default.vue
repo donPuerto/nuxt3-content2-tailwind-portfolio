@@ -1,9 +1,7 @@
-<script lang="ts" setup></script>
-
 <template>
-  <div class="relative flex min-h-screen flex-col">
+  <div class="relative flex min-h-screen flex-col bg-primary-900">
     <ParticlesBackground />
-    <div class="absolute inset-0 flex min-h-screen flex-col">
+    <div class="relative z-10 flex min-h-screen flex-col">
       <AppHeaderTopBar />
       <main class="flex-grow">
         <slot></slot>
@@ -12,5 +10,3 @@
     </div>
   </div>
 </template>
-
-<style></style>
