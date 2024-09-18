@@ -7,6 +7,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: 'node-server',
+    moduleSideEffects: ['@iconify/vue'],
   },
   app: {
     pageTransition: { name: 'page-fade', mode: 'out-in' },
