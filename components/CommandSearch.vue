@@ -1,7 +1,5 @@
 <!-- eslint-disable @stylistic/max-statements-per-line -->
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { MENU_LIST } from '@/utils/constants/menu';
 
 const props = defineProps<{
