@@ -1,6 +1,6 @@
-/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import { logicAnd, logicNot } from '@vueuse/math'
 import { computed, ref } from 'vue'
 import type { ComputedRef, WatchSource } from 'vue'

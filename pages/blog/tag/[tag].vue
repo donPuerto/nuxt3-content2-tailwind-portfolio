@@ -44,7 +44,7 @@ watch(search, () => {
           @keydown.stop
         />
       </div>
-      <!-- End: Search Input---->
+      <!-- End: Search Input -->
 
       <!-- Post Grid -->
       <TagV1Grid :posts="posts" />

@@ -1,14 +1,7 @@
-<!-- eslint-disable no-console -->
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import CommandPalette from '~/components/CommandPallete.vue'
-import MobileBarMenu from '@/components/app/header/MobileBarMenu.vue'
-import { THEME_MODES } from '~/utils/constants'
-
-import { fetchMenuListByHeader } from '~/data'
-import type { MenuList } from '~/types/components/header/menu'
-
-defineComponent({ components: { CommandPalette } })
+import { THEME_MODES } from '@/utils/constants'
+import { fetchMenuListByHeader } from '@/data'
+import type { MenuList } from '@/types/components/header/menu'
 
 const pages: MenuList | undefined = fetchMenuListByHeader('Pages')
 
@@ -142,12 +135,12 @@ onUnmounted(() => {
         </UiDropdownMenu>
       </div>
     </div>
-    <MobileBarMenu
+    <AppHeaderMobileBarMenu
       v-model="isMobileNavOpen"
       :menu-list="pages"
       :force-closed="!isMobileNavOpen"
     />
-    <CommandPalette
+    <CommandSearch
       v-model="isCommandPaletteVisible"
       @close="isCommandPaletteVisible = false"
     />

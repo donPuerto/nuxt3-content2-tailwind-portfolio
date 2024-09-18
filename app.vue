@@ -3,14 +3,20 @@
 import { ConfigProvider } from 'radix-vue'
 import '@/assets/css/transitions.css'
 
-const useIdFunction = () => useId()
+const props = defineProps<{
+  useId: () => string
+}>()
 </script>
 
 <template>
-  <ConfigProvider :use-id="useIdFunction">
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
+  <div v-bind="$attrs">
+    <ConfigProvider
+      :use-id="props.useId"
+    >
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+    </ConfigProvider>
     <UiToastToaster />
-  </ConfigProvider>
+  </div>
 </template>

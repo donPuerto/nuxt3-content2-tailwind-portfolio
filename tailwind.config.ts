@@ -1,4 +1,7 @@
 import { fontFamily } from 'tailwindcss/defaultTheme'
+import tailwindcssAnimate from 'tailwindcss-animate'
+import tailwindcssTypography from '@tailwindcss/typography'
+import tailwindcssForms from '@tailwindcss/forms'
 
 module.exports = {
   darkMode: 'class',
@@ -172,8 +175,8 @@ module.exports = {
     },
   },
   plugins: [
-    require('tailwindcss-animate'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/forms'),
+    tailwindcssAnimate,
+    tailwindcssTypography,
+    tailwindcssForms,
   ],
 }

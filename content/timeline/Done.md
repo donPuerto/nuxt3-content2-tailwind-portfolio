@@ -63,7 +63,7 @@ status: Done
 - Deploying site using Vercel 🚀
 - Successfully deployed 🎉
 
-#### 📅2024-May-17 
+##### 📅2024-May-16 
 - Installed font "Inter" locally 🔤
 - Integrated it into Tailwind 🎨
 

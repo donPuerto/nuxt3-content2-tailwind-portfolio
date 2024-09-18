@@ -5,40 +5,42 @@ const { toasts } = useToast()
 </script>
 
 <template>
-  <UiToastProvider>
-    <template
-      v-for="toast in toasts"
-      :key="toast.id"
-    >
-      <UiToast v-bind="toast">
-        <div class="flex gap-3">
-          <Icon
-            v-if="toast.icon"
-            :name="toast.icon"
-            class="h-5 w-5 shrink-0"
-            :class="[!!toast.title && !!toast.description && 'mt-0.5']"
-          />
-          <div class="flex flex-col gap-1">
-            <UiToastTitle
-              v-if="toast.title"
-              :title="toast.title"
+  <div v-bind="$attrs">
+    <UiToastProvider v-bind="$props">
+      <template
+        v-for="toast in toasts"
+        :key="toast.id"
+      >
+        <UiToast v-bind="toast">
+          <div class="flex gap-3">
+            <Icon
+              v-if="toast.icon"
+              :name="toast.icon"
+              class="h-5 w-5 shrink-0"
+              :class="[!!toast.title && !!toast.description && 'mt-0.5']"
             />
-            <template v-if="toast.description">
-              <UiToastDescription v-if="isVNode(toast.description)">
-                <component :is="toast.description" />
-              </UiToastDescription>
-              <UiToastDescription v-else>
-                {{ toast.description }}
-              </UiToastDescription>
-            </template>
-            <UiToastClose />
+            <div class="flex flex-col gap-1">
+              <UiToastTitle
+                v-if="toast.title"
+                :title="toast.title"
+              />
+              <template v-if="toast.description">
+                <UiToastDescription v-if="isVNode(toast.description)">
+                  <component :is="toast.description" />
+                </UiToastDescription>
+                <UiToastDescription v-else>
+                  {{ toast.description }}
+                </UiToastDescription>
+              </template>
+              <UiToastClose />
+            </div>
           </div>
-        </div>
-        <component :is="toast.action" />
-      </UiToast>
-    </template>
-    <UiToastViewport />
-  </UiToastProvider>
+          <component :is="toast.action" />
+        </UiToast>
+      </template>
+      <UiToastViewport />
+    </UiToastProvider>
+  </div>
 </template>
 
 <style>

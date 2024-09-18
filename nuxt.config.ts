@@ -1,10 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import type { NuxtConfig } from '@nuxt/schema'
-import routeRules from './router.options'
+// import type { NuxtConfig } from 'nuxt/config'
+// import routeRules from './router.options'
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  routeRules: routeRules as NuxtConfig['routeRules'],
+  // routeRules: routeRules,
   app: {
     layoutTransition: { name: 'slide', mode: 'out-in' },
     pageTransition: { name: 'page-fade', mode: 'out-in' },
@@ -86,7 +86,6 @@ export default defineNuxtConfig({
 
   disqus: {
     shortname: 'donpuerto-dev',
-
   },
 
   fonts: {
