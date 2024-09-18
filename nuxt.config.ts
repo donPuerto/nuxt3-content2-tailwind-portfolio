@@ -14,11 +14,11 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/css/transitions.css'],
   runtimeConfig: {
-    // public: {
-    //   siteUrl: process.env.NODE_ENV === 'production'
-    //     ? process.env.PROD_URL
-    //     : process.env.DEV_URL,
-    // },
+    public: {
+      siteUrl: process.env.NODE_ENV === 'production'
+        ? process.env.PROD_URL
+        : process.env.DEV_URL,
+    },
     gmailUserEmail: process.env.GMAIL_USER_EMAIL,
     gmailAppPass: process.env.GMAIL_APP_PASS,
   },
