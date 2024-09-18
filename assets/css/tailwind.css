@@ -1,0 +1,123 @@
+@import url("https://rsms.me/inter/inter.css");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 10% 96%; /* Dirty white background */
+    --foreground: 30 5% 10%; /* Dark gray with a slight warm tint */
+    --card: 30 10% 98%; /* Slightly lighter dirty white for cards */
+    --card-foreground: 30 5% 10%;
+    --popover: 30 10% 98%; /* Same as card */
+    --popover-foreground: 30 5% 10%;
+    --primary: 30 5% 20%; /* Darker gray for primary elements */
+    --primary-foreground: 30 10% 98%;
+    --secondary: 30 5% 90%; /* Lighter dirty white for secondary elements */
+    --secondary-foreground: 30 5% 10%;
+    --muted: 30 5% 85%; /* More muted dirty white */
+    --muted-foreground: 30 5% 40%; /* Muted dark color for less emphasis */
+    --accent: 30 5% 80%; /* Slightly colored accent */
+    --accent-foreground: 30 5% 10%;
+    --destructive: 0 70% 50%; /* Keeping a clear red for destructive actions */
+    --destructive-foreground: 30 10% 98%;
+    --border: 30 15% 80%; /* Slightly darker border for definition */
+    --input: 30 10% 90%; /* Input background */
+    --ring: 30 5% 20%; /* Same as primary */
+    --radius: 0.5rem;
+  }
+
+  .dark-mode {
+    --background: 0 0% 3%; /* Very dark gray, almost black */
+    --foreground: 0 0% 98%;
+    --card: 0 0% 5%; /* Slightly lighter than background */
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 5%; /* Slightly lighter than background */
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 3%;
+    --secondary: 0 0% 10%; /* Slightly lighter than card */
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 10%; /* Slightly lighter than card */
+    --muted-foreground: 0 0% 63%;
+    --accent: 0 0% 10%; /* Slightly lighter than card */
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 13%; /* Dark gray border color */
+    --input: 0 0% 10%; /* Slightly lighter than card */
+    --ring: 0 0% 18%;
+  }
+
+  .sepia-mode {
+    --background: 25 30% 8%; /* Very dark brown */
+    --foreground: 30 80% 80%; /* Light coffee color for main text */
+    --card: 25 30% 12%; /* Slightly lighter than background */
+    --card-foreground: 30 70% 75%; /* Slightly darker than main text */
+    --popover: 25 30% 12%; /* Slightly lighter than background */
+    --popover-foreground: 30 70% 75%; /* Slightly darker than main text */
+    --primary: 30 90% 70%; /* Creamy coffee color for primary elements */
+    --primary-foreground: 25 30% 8%; /* Very dark brown */
+    --secondary: 25 25% 16%; /* Slightly lighter than card */
+    --secondary-foreground: 30 60% 70%; /* Light coffee color */
+    --muted: 25 20% 20%; /* Muted brown */
+    --muted-foreground: 30 40% 60%; /* Muted coffee color */
+    --accent: 30 35% 25%; /* Accent brown */
+    --accent-foreground: 30 80% 80%; /* Light coffee color */
+    --destructive: 0 60% 40%; /* Keep red for destructive actions */
+    --destructive-foreground: 30 80% 80%; /* Light coffee color */
+    --border: 25 25% 18%; /* Dark brown border */
+    --input: 25 25% 16%; /* Slightly lighter than card */
+    --ring: 30 40% 50%; /* Brown ring color */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply antialiased;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+h1 > a,
+h2 > a,
+h3 > a,
+h4 > a,
+h5 > a,
+h6 > a {
+  @apply !font-bold !no-underline hover:!text-foreground hover:!decoration-wavy;
+}
+
+code {
+  @apply inline-block rounded bg-muted px-1 py-px font-mono;
+}
+
+a > code {
+  @apply inline-block border border-dashed border-primary/40 bg-primary/5 px-1 transition hover:border-primary;
+}
+
+pre::-webkit-scrollbar {
+  @apply h-2.5 w-2.5;
+}
+pre::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+pre::-webkit-scrollbar-corner {
+  @apply bg-transparent;
+}
+pre::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-muted-foreground/60;
+}
+pre {
+  max-height: 400px;
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted)) hsl(var(--background));
+}
