@@ -6,9 +6,9 @@ export default defineNuxtConfig({
     componentInspector: false,
   },
   nitro: {
-    output: {
-      dir: 'dist',
-    },
+    // output: {
+    //   dir: 'dist',
+    // },
   },
   ssr: true,
   app: {
