@@ -15,7 +15,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/transitions.css'],
   runtimeConfig: {
     public: {
-      baseURL: process.env.NUXT_APP_BASE_URL || 'http://localhost:3000',
+      baseURL: '/',
     },
     gmailUserEmail: process.env.GMAIL_USER_EMAIL,
     gmailAppPass: process.env.GMAIL_APP_PASS,
