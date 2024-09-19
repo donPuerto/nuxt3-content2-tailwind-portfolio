@@ -60,8 +60,6 @@
     "vite-plugin-eslint2": "^4.4.1",
     "vue-tsc": "^2.1.6",
     "yup": "^1.4.0"
-  },
-  "resolutions": {
-    "@iconify/vue": "^4.1.1"
   }
+ 
 }
