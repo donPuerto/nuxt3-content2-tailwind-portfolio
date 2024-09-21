@@ -5,15 +5,19 @@ export default defineNuxtConfig({
     enabled: true,
     componentInspector: false,
   },
-  nitro: {
-    // output: {
-    //   dir: 'dist',
-    // },
-  },
-  ssr: true,
   app: {
     pageTransition: { name: 'page-fade', mode: 'out-in' },
   },
+  nitro: {
+    preset: 'node-server',
+  },
+  routeRules: {
+    '/': { ssr: false },
+    '/contact/**': { static: true },
+    '/blog/**': { static: true },
+    '/projects/**': { ssr: false },
+  },
+
   css: ['~/assets/css/transitions.css'],
   runtimeConfig: {
     public: {
@@ -179,6 +183,14 @@ export default defineNuxtConfig({
       compilerOptions: {
         allowSyntheticDefaultImports: true,
         allowImportingTsExtensions: true,
+      },
+    },
+  },
+
+  vite: {
+    server: {
+      fs: {
+        strict: false,
       },
     },
   },

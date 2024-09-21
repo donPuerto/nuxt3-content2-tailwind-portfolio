@@ -3,6 +3,18 @@ import { ConfigProvider } from 'radix-vue';
 import '@/assets/css/transitions.css';
 
 const useIdFunction = () => useId() || '';
+
+// const error = useError();
+
+// Simulate an error after a short delay
+// onMounted(() => {
+//   setTimeout(() => {
+//     error.value = createError({
+//       statusCode: 404,
+//       message: 'This is a simulated 404 error',
+//     });
+//   }, 1000);
+// });
 </script>
 
 <template>
@@ -14,7 +26,6 @@ const useIdFunction = () => useId() || '';
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
-    
     </ConfigProvider>
     <UiToastToaster />
   </div>
