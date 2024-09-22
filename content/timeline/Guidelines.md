@@ -12,3 +12,4 @@ status: Guidelines
 - **OnHold** ⏸️ <span class="text-muted-foreground">– tasks that have been paused temporarily.</span>
 - **NotStarted** 🚫 <span class="text-muted-foreground">– tasks that haven't been initiated yet.</span>
 - **Review** 👀 <span class="text-muted-foreground">– tasks that are completed but pending review or approval.</span>
+- **Bug** 🐛 <span class="text-muted-foreground">– issues or errors that need to be fixed.</span>

@@ -6,7 +6,7 @@ import ScrollToTop from '~/components/ScrollToTop.vue';
 
 const selectedStatus = ref('Guidelines');
 
-const statuses = ['Guidelines', 'Plans', 'DropPlans', 'Done', 'InProgress', 'Pending', 'OnHold', 'NotStarted', 'Review'];
+const statuses = ['Guidelines', 'Plans', 'DropPlans', 'Done', 'InProgress', 'Pending', 'OnHold', 'NotStarted', 'Review','Bug'];
 
 const { data: timelineEvents } = await useAsyncData('timeline', () =>
   queryContent('timeline').find(),
