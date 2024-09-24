@@ -52,7 +52,7 @@ const smallerPosts = computed(() => filteredPosts.value.slice(1, 5));
         <UiInput
           v-model="searchQuery"
           type="text"
-          placeholder="Search posts"
+          placeholder="Search posts..."
           class="w-full rounded-md border border-input bg-background pl-10 pr-4 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary glow-effect"
         />
         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
