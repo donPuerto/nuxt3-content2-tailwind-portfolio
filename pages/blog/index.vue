@@ -74,33 +74,44 @@ const smallerPosts = computed(() => filteredPosts.value.slice(1, 5));
           class="block shadow-lg rounded-lg overflow-hidden transition-shadow hover:shadow-xl hover:border-primary hover:border-2"
         >
           <div class="flex flex-col sm:flex-row">
-            <div class="w-full sm:w-1/3 lg:w-2/5 h-48 sm:h-56">
+            <div class="w-full sm:w-1/3 lg:w-2/5 h-auto sm:h-56">
               <img
-                v-if="featuredPost.image"
+                v-if="featuredPost.image && featuredPost.image.url"
                 :src="featuredPost.image.url"
                 :alt="featuredPost.image.alt || 'Featured post image'"
-                class="w-full h-full object-cover"
+                class="w-full h-auto sm:h-full object-contain sm:object-cover"
               />
               <div
                 v-else
-                class="w-full h-full bg-gray-200 flex items-center justify-center"
+                class="w-full h-48 sm:h-full bg-gray-200 flex items-center justify-center"
               >
                 <span class="text-gray-500">No image available</span>
               </div>
             </div>
-            <div class="w-full sm:w-2/3 lg:w-3/5 p-4">
+            <div class="w-full sm:w-2/3 lg:w-3/5 p-4 flex flex-col">
               <h2 class="text-lg font-bold mb-2 line-clamp-2">
                 {{ featuredPost.title }}
               </h2>
               <p
                 v-if="featuredPost.description"
-                class="text-sm text-gray-600 mb-2 line-clamp-3"
+                class="text-base text-gray-600 mb-2 line-clamp-3"
               >
                 {{ featuredPost.description }}
               </p>
-              <p class="text-xs text-gray-500">
-                {{ new Date(featuredPost.published_at).toLocaleDateString() }} | {{ featuredPost.reading_time }}
-              </p>
+              <div class="flex flex-wrap mt-2 mb-auto">
+                <span 
+                  v-for="(tag, index) in featuredPost.tags" 
+                  :key="index" 
+                  class="inline-block bg-secondary text-secondary-foreground rounded-full px-2 py-1 text-xs sm:text-sm font-semibold mr-1 mb-1 hover:bg-primary hover:text-primary-foreground transition-colors duration-300 ease-in-out transform hover:scale-105"
+                >
+                  #{{ tag }}
+                </span>
+              </div>
+              <div class="text-sm text-gray-500 mt-2">
+                <span>{{ new Date(featuredPost.published_at).toLocaleDateString() }}</span>
+                <span class="mx-2">|</span>
+                <span>{{ featuredPost.reading_time }}</span>
+              </div>
             </div>
           </div>
 
@@ -193,5 +204,21 @@ const smallerPosts = computed(() => filteredPosts.value.slice(1, 5));
   to {
     box-shadow: 0 0 30px rgba(0, 123, 255, 0.4), 0 0 50px rgba(0, 123, 255, 0.4);
   }
+}
+
+@keyframes tagPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.inline-block:hover {
+  animation: tagPulse 0.5s ease-in-out;
 }
 </style>
