@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import type { Post } from '~/types/components/blog/post';
+import type { Post } from '~/types';
+
+const { getAuthor } = useAuthor();
 
 const { data: posts } = await useAsyncData<Post[]>('all-posts', () =>
   queryContent<Post>('blog')
@@ -22,17 +24,8 @@ const filteredPosts = computed(() => {
     const titleMatch = post.title.toLowerCase().includes(lowercaseQuery);
     const descriptionMatch = post.description?.toLowerCase().includes(lowercaseQuery) || false;
     const tagMatch = post.tags?.some(tag => tag.toLowerCase().includes(lowercaseQuery)) || false;
-
-    let authorMatch = false;
-    if (typeof post.authors === 'string') {
-      authorMatch = post.authors.toLowerCase().includes(lowercaseQuery);
-    }
-    else if (Array.isArray(post.authors)) {
-      authorMatch = post.authors.some(author => author.name.toLowerCase().includes(lowercaseQuery));
-    }
-    else if (post.authors && 'name' in post.authors) {
-      authorMatch = post.authors.name.toLowerCase().includes(lowercaseQuery);
-    }
+    const author = getAuthor(post.authors);
+    const authorMatch = author ? author.name.toLowerCase().includes(lowercaseQuery) : false;
 
     return titleMatch || descriptionMatch || tagMatch || authorMatch;
   });
@@ -41,12 +34,15 @@ const filteredPosts = computed(() => {
 // Get the latest post for the featured article
 const featuredPost = computed(() => filteredPosts.value[0]);
 
+// Get the author for the featured post
+const featuredAuthor = computed(() => featuredPost.value ? getAuthor(featuredPost.value.authors) : null);
+
 // Get the next 4 posts for the smaller cards
 const smallerPosts = computed(() => filteredPosts.value.slice(1, 5));
 </script>
 
 <template>
-  <article class="container mx-auto px-8">
+  <article class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col items-center my-12">
       <div class="relative w-full max-w-md">
         <UiInput
@@ -74,44 +70,65 @@ const smallerPosts = computed(() => filteredPosts.value.slice(1, 5));
           class="block shadow-lg rounded-lg overflow-hidden transition-shadow hover:shadow-xl hover:border-primary hover:border-2"
         >
           <div class="flex flex-col sm:flex-row">
-            <div class="w-full sm:w-1/3 lg:w-2/5 h-auto sm:h-56">
+            <div class="w-full sm:w-1/3 lg:w-2/5 h-auto sm:h-56 relative">
+              <!-- Thumbnail background -->
+              <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 backdrop-blur-sm" />
+              
+              <!-- Image display -->
               <img
-                v-if="featuredPost.image && featuredPost.image.url"
-                :src="featuredPost.image.url"
-                :alt="featuredPost.image.alt || 'Featured post image'"
-                class="w-full h-auto sm:h-full object-contain sm:object-cover"
+                v-if="featuredPost.media.type === 'image'"
+                :src="featuredPost.media.content.image.url"
+                :alt="featuredPost.media.content.image.alt"
+                class="w-full h-full object-cover relative z-10"
               />
+              <!-- Video thumbnail display -->
+              <div
+                v-else-if="featuredPost.media.type === 'video'"
+                class="w-full h-full flex items-center justify-center relative z-10"
+              >
+                <img
+                  :src="featuredPost.media.content.video.thumbnail.url"
+                  :alt="featuredPost.media.content.video.thumbnail.alt"
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                  <Icon name="uil:play-circle" class="text-6xl text-white" />
+                </div>
+              </div>
+              <!-- Fallback if no media -->
               <div
                 v-else
-                class="w-full h-48 sm:h-full bg-gray-200 flex items-center justify-center"
+                class="w-full h-full flex items-center justify-center relative z-10 bg-primary/10"
               >
-                <span class="text-gray-500">No image available</span>
+                <span class="text-primary-foreground">No media available</span>
               </div>
             </div>
             <div class="w-full sm:w-2/3 lg:w-3/5 p-4 flex flex-col">
-              <h2 class="text-lg font-bold mb-2 line-clamp-2">
+              <h2 class="text-sm sm:text-base md:text-lg font-bold line-clamp-2 text-justify">
                 {{ featuredPost.title }}
               </h2>
+              <p class="text-xs text-gray-500 mt-1 text-justify">
+                Published at {{ new Date(featuredPost.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) }}
+              </p>
               <p
                 v-if="featuredPost.description"
-                class="text-base text-gray-600 mb-2 line-clamp-3"
+                class="text-sm text-gray-600 mb-2 line-clamp-3 my-2 text-justify"
               >
                 {{ featuredPost.description }}
               </p>
-              <div class="flex flex-wrap mt-2 mb-auto">
-                <span 
-                  v-for="(tag, index) in featuredPost.tags" 
-                  :key="index" 
-                  class="inline-block bg-secondary text-secondary-foreground rounded-full px-2 py-1 text-xs sm:text-sm font-semibold mr-1 mb-1 hover:bg-primary hover:text-primary-foreground transition-colors duration-300 ease-in-out transform hover:scale-105"
-                >
-                  #{{ tag }}
+              
+              <div class="flex flex-wrap justify-between items-center mt-auto gap-2">
+                <BlogAuthor
+                  v-if="featuredAuthor"
+                  :author="featuredAuthor"
+                  size="sm"
+                  class="flex-shrink-0 mt-2 sm:mt-0"
+                />
+                <span class="text-xs text-gray-500 text-justify">
+                  Updated at {{ new Date(featuredPost.updated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) }} | {{ featuredPost.reading_time }}
                 </span>
               </div>
-              <div class="text-sm text-gray-500 mt-2">
-                <span>{{ new Date(featuredPost.published_at).toLocaleDateString() }}</span>
-                <span class="mx-2">|</span>
-                <span>{{ featuredPost.reading_time }}</span>
-              </div>
+              
             </div>
           </div>
 
@@ -127,43 +144,72 @@ const smallerPosts = computed(() => filteredPosts.value.slice(1, 5));
             class="block shadow-lg rounded-lg overflow-hidden transition-shadow hover:shadow-xl hover:border-primary hover:border-2"
           >
             <div class="flex flex-col sm:flex-row lg:flex-col">
-              <div class="w-full sm:w-1/3 lg:w-full h-32 sm:h-40 lg:h-32">
+              <div class="w-full sm:w-1/3 lg:w-full h-32 sm:h-40 lg:h-32 relative">
+                <!-- Thumbnail background -->
+                <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 backdrop-blur-sm" />
+                
+                <!-- Image display -->
                 <img
-                  v-if="post.image"
-                  :src="post.image.url"
-                  :alt="post.image.alt || 'Post image'"
-                  class="w-full h-full object-cover"
+                  v-if="post.media.type === 'image'"
+                  :src="post.media.content.image.url"
+                  :alt="post.media.content.image.alt"
+                  class="w-full h-full object-cover relative z-10"
                 />
+                <!-- Video thumbnail display -->
+                <div
+                  v-else-if="post.media.type === 'video'"
+                  class="w-full h-full relative z-10"
+                >
+                  <img
+                    :src="post.media.content.video.thumbnail.url"
+                    :alt="post.media.content.video.thumbnail.alt"
+                    class="w-full h-full object-cover"
+                  />
+                  <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                    <Icon name="uil:play-circle" class="text-4xl text-white" />
+                  </div>
+                </div>
+                <!-- Fallback if no media -->
                 <div
                   v-else
-                  class="w-full h-full bg-gray-200 flex items-center justify-center"
+                  class="w-full h-full flex items-center justify-center relative z-10 bg-primary/10"
                 >
-                  <span class="text-gray-500 text-sm">No image</span>
+                  <span class="text-primary-foreground text-sm">No media</span>
                 </div>
               </div>
               <div class="w-full sm:w-2/3 lg:w-full p-3">
-                <h3 class="text-lg font-bold mb-1 line-clamp-2">
+                <h3 class="text-sm sm:text-base md:text-lg font-bold line-clamp-2 text-justify">
                   {{ post.title }}
                 </h3>
+                <p class="text-xs text-gray-500 mt-1 text-justify">
+                  Published at {{ new Date(post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) }}
+                </p>
                 <p
                   v-if="post.description"
-                  class="text-sm text-gray-600 mb-1 line-clamp-2"
+                  class="text-sm text-gray-600 mb-1 line-clamp-2 my-2 text-justify"
                 >
                   {{ post.description }}
                 </p>
-                <p class="text-xs text-gray-500">
-                  {{ new Date(post.published_at).toLocaleDateString() }} | {{ post.reading_time }}
-                </p>
+                <div class="flex flex-wrap justify-between items-center mt-2 gap-2">
+                  <BlogAuthor
+                    v-if="getAuthor(post.authors)"
+                    :author="getAuthor(post.authors)!"
+                    size="xs"
+                    class="flex-shrink-0 mt-2 sm:mt-0"
+                  />
+                  <span class="text-xs text-gray-500 text-justify">
+                    Updated at {{ new Date(post.updated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) }} | {{ post.reading_time }}
+                  </span>
+                </div>
               </div>
-            </div>
-          </NuxtLink>
+            </div></NuxtLink>
         </div>
         <!-- Smaller Articles -->
       </div>
 
       <!-- Comments column -->
       <div class="shadow-lg rounded-lg p-4">
-        <h2 class="text-xl font-bold mb-4">
+        <h2 class="text-base sm:text-lg md:text-xl lg:text-2xl font-bold mb-4">
           Comments
         </h2>
         <!-- Add your comments component or content here -->
@@ -183,42 +229,5 @@ const smallerPosts = computed(() => filteredPosts.value.slice(1, 5));
 </template>
 
 <style scoped>
-.glow-effect {
-  box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
-  transition: all 0.3s ease;
-}
 
-.glow-effect:hover,
-.glow-effect:focus {
-  box-shadow: 0 0 25px rgba(0, 123, 255, 0.4);
-}
-
-.glow-effect:focus {
-  animation: wide-glow 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes wide-glow {
-  from {
-    box-shadow: 0 0 15px rgba(0, 123, 255, 0.2), 0 0 30px rgba(0, 123, 255, 0.2);
-  }
-  to {
-    box-shadow: 0 0 30px rgba(0, 123, 255, 0.4), 0 0 50px rgba(0, 123, 255, 0.4);
-  }
-}
-
-@keyframes tagPulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.inline-block:hover {
-  animation: tagPulse 0.5s ease-in-out;
-}
 </style>

@@ -1,0 +1,38 @@
+.glow-effect {
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.glow-effect:hover,
+.glow-effect:focus {
+  box-shadow: 0 0 25px rgba(0, 123, 255, 0.4);
+}
+
+.glow-effect:focus {
+  animation: wide-glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes wide-glow {
+  from {
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.2), 0 0 30px rgba(0, 123, 255, 0.2);
+  }
+  to {
+    box-shadow: 0 0 30px rgba(0, 123, 255, 0.4), 0 0 50px rgba(0, 123, 255, 0.4);
+  }
+}
+
+@keyframes tagPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.inline-block:hover {
+  animation: tagPulse 0.5s ease-in-out;
+}

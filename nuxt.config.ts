@@ -18,7 +18,12 @@ export default defineNuxtConfig({
     '/projects/**': { ssr: false },
   },
 
-  css: ['~/assets/css/transitions.css'],
+  css: [
+    '~/assets/css/tailwind.css',
+    '~/assets/css/transitions.css', 
+    '~/assets/css/glow-effects.css',
+  ],
+  
   runtimeConfig: {
     public: {
       baseURL: '/',
@@ -151,10 +156,8 @@ export default defineNuxtConfig({
   tailwindcss: {
     configPath: '~/tailwind.config.ts',
     exposeConfig: true,
-    editorSupport: true,
-    cssPath: ['~/assets/css/tailwind.css', { injectPosition: 'last' }],
     viewer: false,
-   
+    // Remove the deprecated 'injectPosition' from here if it exists
   },
 
   imports: {

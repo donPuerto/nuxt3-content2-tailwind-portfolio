@@ -2,18 +2,33 @@ import type { Author } from './author';
 
 export interface Post {
   _path: string
-  doc_url: string
+  edit_url: string
   slug: string
   headline: string
   title: string
   subtitle?: string
   series?: string
   description?: string
-  image?: {
-    url: string
-    alt: string
-    width?: number
-    height?: number
+  media: {
+    type: 'image' | 'video'
+    content: {
+      image: {
+        url: string
+        alt: string
+        width: number
+        height: number
+      }
+      video: {
+        url: string
+        title: string
+        thumbnail: {
+          url: string
+          alt: string
+          width: number
+          height: number
+        }
+      }
+    }
   }
   alt?: string
   published_at: string
