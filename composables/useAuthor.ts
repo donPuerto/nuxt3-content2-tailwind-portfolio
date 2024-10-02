@@ -9,7 +9,7 @@ export function useAuthor() {
       return authorData[0];
     }
     else if (typeof authorData === 'object' && authorData !== null) {
-      return authorData;
+      return Array.isArray(authorData) ? authorData[0] || null : authorData;
     }
     return null;
   };

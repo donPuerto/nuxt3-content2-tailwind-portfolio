@@ -8,8 +8,11 @@ const { data: posts } = await useAsyncData<Post[]>('all-posts', () =>
   queryContent<Post>('blog')
     .where({ is_publish: true })
     .sort({ published_at: -1 })
+  
     .find(),
 );
+
+const showSlug = ref(false);
 
 // Ensure posts is reactive and has a default value
 const safePosts = computed(() => posts.value || []);
@@ -65,48 +68,49 @@ const smallerPosts = computed(() => filteredPosts.value.slice(1, 5));
       <!-- Main content column -->
       <div class="lg:col-span-3 space-y-4">
         <!-- Featured Article -->
-        <NuxtLink
-          :to="featuredPost._path"
-          class="block shadow-lg rounded-lg overflow-hidden transition-shadow hover:shadow-xl hover:border-primary hover:border-2"
-        >
+        <div class="block shadow-lg rounded-lg overflow-hidden transition-shadow hover:shadow-xl hover:border-primary hover:border-2">
           <div class="flex flex-col sm:flex-row">
-            <div class="w-full sm:w-1/3 lg:w-2/5 h-auto sm:h-56 relative">
+            <div class="w-full sm:w-1/3 lg:w-2/5 h-auto sm:h-56 relative overflow-hidden group">
               <!-- Thumbnail background -->
               <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 backdrop-blur-sm" />
               
-              <!-- Image display -->
-              <img
-                v-if="featuredPost.media.type === 'image'"
-                :src="featuredPost.media.content.image.url"
-                :alt="featuredPost.media.content.image.alt"
-                class="w-full h-full object-cover relative z-10"
-              />
-              <!-- Video thumbnail display -->
-              <div
-                v-else-if="featuredPost.media.type === 'video'"
-                class="w-full h-full flex items-center justify-center relative z-10"
-              >
+              <div class="w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-110">
+                <!-- Image display -->
                 <img
-                  :src="featuredPost.media.content.video.thumbnail.url"
-                  :alt="featuredPost.media.content.video.thumbnail.alt"
-                  class="w-full h-full object-cover"
+                  v-if="featuredPost.media.type === 'image'"
+                  :src="featuredPost.media.content.image.url"
+                  :alt="featuredPost.media.content.image.alt"
+                  class="w-full h-full object-cover relative z-10"
                 />
-                <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
-                  <Icon name="uil:play-circle" class="text-6xl text-white" />
+                <!-- Video thumbnail display -->
+                <div
+                  v-else-if="featuredPost.media.type === 'video'"
+                  class="w-full h-full flex items-center justify-center relative z-10"
+                >
+                  <img
+                    :src="featuredPost.media.content.video.thumbnail.url"
+                    :alt="featuredPost.media.content.video.thumbnail.alt"
+                    class="w-full h-full object-cover"
+                  />
+                  <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                    <Icon name="uil:play-circle" class="text-6xl text-white" />
+                  </div>
                 </div>
-              </div>
-              <!-- Fallback if no media -->
-              <div
-                v-else
-                class="w-full h-full flex items-center justify-center relative z-10 bg-primary/10"
-              >
-                <span class="text-primary-foreground">No media available</span>
+                <!-- Fallback if no media -->
+                <div
+                  v-else
+                  class="w-full h-full flex items-center justify-center relative z-10 bg-primary/10"
+                >
+                  <span class="text-primary-foreground">No media available</span>
+                </div>
               </div>
             </div>
             <div class="w-full sm:w-2/3 lg:w-3/5 p-4 flex flex-col">
-              <h2 class="text-sm sm:text-base md:text-lg font-bold line-clamp-2 text-justify">
-                {{ featuredPost.title }}
-              </h2>
+              <NuxtLink :to="featuredPost._path" class="hover:text-primary transition-colors">
+                <h2 class="text-sm sm:text-base md:text-lg font-bold line-clamp-2 text-justify">
+                  {{ featuredPost.title }}
+                </h2>
+              </NuxtLink>
               <p class="text-xs text-gray-500 mt-1 text-justify">
                 Published at {{ new Date(featuredPost.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) }}
               </p>
@@ -123,6 +127,7 @@ const smallerPosts = computed(() => filteredPosts.value.slice(1, 5));
                   :author="featuredAuthor"
                   size="sm"
                   class="flex-shrink-0 mt-2 sm:mt-0"
+                  :show-slug="showSlug"
                 />
                 <span class="text-xs text-gray-500 text-justify">
                   Updated at {{ new Date(featuredPost.updated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) }} | {{ featuredPost.reading_time }}
@@ -131,56 +136,58 @@ const smallerPosts = computed(() => filteredPosts.value.slice(1, 5));
               
             </div>
           </div>
-
-        </NuxtLink>
+        </div>
         <!-- Featured Article -->
 
         <!-- Smaller Articles -->
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
-          <NuxtLink
+          <div
             v-for="post in smallerPosts"
             :key="post._path"
-            :to="post._path"
             class="block shadow-lg rounded-lg overflow-hidden transition-shadow hover:shadow-xl hover:border-primary hover:border-2"
           >
             <div class="flex flex-col sm:flex-row lg:flex-col">
-              <div class="w-full sm:w-1/3 lg:w-full h-32 sm:h-40 lg:h-32 relative">
+              <div class="w-full sm:w-1/3 lg:w-full h-32 sm:h-40 lg:h-32 relative overflow-hidden group">
                 <!-- Thumbnail background -->
                 <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 backdrop-blur-sm" />
                 
-                <!-- Image display -->
-                <img
-                  v-if="post.media.type === 'image'"
-                  :src="post.media.content.image.url"
-                  :alt="post.media.content.image.alt"
-                  class="w-full h-full object-cover relative z-10"
-                />
-                <!-- Video thumbnail display -->
-                <div
-                  v-else-if="post.media.type === 'video'"
-                  class="w-full h-full relative z-10"
-                >
+                <div class="w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-110">
+                  <!-- Image display -->
                   <img
-                    :src="post.media.content.video.thumbnail.url"
-                    :alt="post.media.content.video.thumbnail.alt"
-                    class="w-full h-full object-cover"
+                    v-if="post.media.type === 'image'"
+                    :src="post.media.content.image.url"
+                    :alt="post.media.content.image.alt"
+                    class="w-full h-full object-cover relative z-10"
                   />
-                  <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
-                    <Icon name="uil:play-circle" class="text-4xl text-white" />
+                  <!-- Video thumbnail display -->
+                  <div
+                    v-else-if="post.media.type === 'video'"
+                    class="w-full h-full relative z-10"
+                  >
+                    <img
+                      :src="post.media.content.video.thumbnail.url"
+                      :alt="post.media.content.video.thumbnail.alt"
+                      class="w-full h-full object-cover"
+                    />
+                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                      <Icon name="uil:play-circle" class="text-4xl text-white" />
+                    </div>
                   </div>
-                </div>
-                <!-- Fallback if no media -->
-                <div
-                  v-else
-                  class="w-full h-full flex items-center justify-center relative z-10 bg-primary/10"
-                >
-                  <span class="text-primary-foreground text-sm">No media</span>
+                  <!-- Fallback if no media -->
+                  <div
+                    v-else
+                    class="w-full h-full flex items-center justify-center relative z-10 bg-primary/10"
+                  >
+                    <span class="text-primary-foreground text-sm">No media</span>
+                  </div>
                 </div>
               </div>
               <div class="w-full sm:w-2/3 lg:w-full p-3">
-                <h3 class="text-sm sm:text-base md:text-lg font-bold line-clamp-2 text-justify">
-                  {{ post.title }}
-                </h3>
+                <NuxtLink :to="post._path" class="hover:text-primary transition-colors">
+                  <h3 class="text-sm sm:text-base md:text-lg font-bold line-clamp-2 text-justify">
+                    {{ post.title }}
+                  </h3>
+                </NuxtLink>
                 <p class="text-xs text-gray-500 mt-1 text-justify">
                   Published at {{ new Date(post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) }}
                 </p>
@@ -196,13 +203,15 @@ const smallerPosts = computed(() => filteredPosts.value.slice(1, 5));
                     :author="getAuthor(post.authors)!"
                     size="xs"
                     class="flex-shrink-0 mt-2 sm:mt-0"
+                    :show-slug="showSlug"
                   />
                   <span class="text-xs text-gray-500 text-justify">
                     Updated at {{ new Date(post.updated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) }} | {{ post.reading_time }}
                   </span>
                 </div>
               </div>
-            </div></NuxtLink>
+            </div>
+          </div>
         </div>
         <!-- Smaller Articles -->
       </div>

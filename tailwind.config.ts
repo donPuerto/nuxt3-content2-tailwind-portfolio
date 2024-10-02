@@ -66,6 +66,10 @@ const config: Config = {
           from: { height: 'var(--radix-collapsible-content-height)' },
           to: { height: '0px' },
         },
+        'pulse-border': {
+          '0%, 100%': { borderColor: 'hsl(var(--secondary) / 0%)' },
+          '50%': { borderColor: 'hsl(var(--secondary) / 100%)' },
+        },
       },
       animation: {
         'grid': 'grid 15s linear infinite',
@@ -75,6 +79,7 @@ const config: Config = {
         'fadeOut': 'fadeOut 0.2s ease-out',
         'collapse-down': 'collapse-down 0.2s ease-out',
         'collapse-up': 'collapse-up 0.2s ease-out',
+        'pulse-border': 'pulse-border 2s ease-in-out infinite',
       },
       colors: {
         border: 'hsl(var(--border))',
