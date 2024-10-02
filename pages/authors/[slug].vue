@@ -1,117 +1,108 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
-import type { MarkdownRoot } from '@nuxt/content/dist/runtime/types';
+// Add these lines
 
 const route = useRoute();
 const slug = route.params.slug as string;
 
 // Query all authors
-const allAuthors = await queryContent('authors').find();
+const { data: allAuthors } = await useAsyncData('authors', () => queryContent('authors').find());
 
 // Find the matching author
-const author = allAuthors.find(a => a._path === `/authors/${slug}` || a._file === `authors/${slug}.md`);
+const author = computed(() => {
+  return allAuthors.value?.find(a => a._path === `/authors/${slug}` || a._file === `authors/${slug}.md`) || null;
+});
 
-if (!author) {
-  console.error('Author not found for slug:', slug);
+// Add error handling
+if (!author.value) {
   throw createError({ statusCode: 404, message: 'Author not found' });
 }
 
-// Updated processContent function
-const processContent = (content: string | MarkdownRoot) => {
-  if (typeof content === 'string') {
-    return content.replace(
-      /<li>/g, 
-      '<li style="color: hsl(var(--foreground));"><span style="color: hsl(var(--muted-foreground));">•</span> ',
-    );
+// Safely access author properties
+const authorName = computed(() => author.value?.name || 'Unknown Author');
+const authorBio = computed(() => author.value?.bio || 'No bio available');
+const authorOccupation = computed(() => author.value?.occupation || 'Occupation not specified');
+const authorCompany = computed(() => author.value?.company || 'Company not specified');
+const authorLocation = computed(() => author.value?.location || 'Location not specified');
+const authorAvatar = computed(() => author.value?.avatar || '/default-avatar.png');
+
+// Compute the current page URL safely
+const currentPageUrl = computed(() => {
+  if (import.meta.client) {
+    return `${window.location.origin}${route.path}`;
   }
-  return content;
+  return ''; // Return an empty string or a default URL for server-side rendering
+});
+
+// State for fullscreen toggle
+const isFullScreen = ref(false);
+
+// Function to toggle fullscreen state
+const toggleFullScreen = () => {
+  isFullScreen.value = !isFullScreen.value;
 };
 </script>
 
 <template>
-  <div v-if="author" class="bg-background min-h-screen py-8 px-4 sm:py-12 sm:px-6 lg:px-8">
-    <div class="max-w-4xl mx-auto bg-card shadow-xl rounded-lg overflow-hidden border border-border">
-      <div class="md:flex">
-        <div class="md:flex-shrink-0">
-          <img 
-            :src="author.avatar" 
-            :alt="author.name" 
-            class="h-36 w-full object-cover md:h-48 md:w-48"
-          />
-        </div>
-        <div class="p-6 md:p-8">
-          <div class="uppercase tracking-wide text-xs md:text-sm text-primary font-semibold">{{ author.occupation }}</div>
-          <h1 class="mt-2 text-xl sm:text-2xl md:text-3xl leading-7 md:leading-8 font-bold md:font-extrabold tracking-tight text-foreground">{{ author.name }}</h1>
-          <p class="mt-2 text-sm md:text-base text-muted-foreground">{{ author.company }} | {{ author.location }}</p>
-          <p class="mt-4 text-base md:text-lg text-foreground">{{ author.bio }}</p>
-          
-          <div class="mt-4 md:mt-6 flex space-x-4">
-            <a
-              v-if="author.twitter"
-              :href="author.twitter"
-              target="_blank"
-              class="text-muted-foreground hover:text-foreground"
-            >
-              <span class="sr-only">Twitter</span>
-              <svg
-                class="h-5 w-5 md:h-6 md:w-6"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-              </svg>
-            </a>
-            <a
-              v-if="author.github"
-              :href="author.github"
-              target="_blank"
-              class="text-muted-foreground hover:text-foreground"
-            >
-              <span class="sr-only">GitHub</span>
-              <svg
-                class="h-5 w-5 md:h-6 md:w-6"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
-              </svg>
-            </a>
-            <a
-              v-if="author.linkedin"
-              :href="author.linkedin"
-              target="_blank"
-              class="text-muted-foreground hover:text-foreground"
-            >
-              <span class="sr-only">LinkedIn</span>
-              <svg
-                class="h-5 w-5 md:h-6 md:w-6"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path fill-rule="evenodd" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" clip-rule="evenodd" />
-              </svg>
-            </a>
+  <div>
+    <div v-if="author" class="bg-background min-h-screen py-8 px-4 sm:py-12 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto bg-card shadow-xl rounded-lg overflow-hidden border border-border">
+        <div class="md:flex md:h-[250px]">
+          <div class="md:w-1/3 md:flex-shrink-0">
+            <img 
+              :src="authorAvatar" 
+              :alt="authorName"
+              class="h-full w-full object-cover cursor-pointer"
+              @click="toggleFullScreen"
+            />
+          </div>
+          <div class="p-4 md:p-6 md:w-2/3 flex flex-col justify-between"> <!-- Reduced padding -->
+            <div>
+              <div class="uppercase tracking-wide text-xs md:text-sm text-primary font-semibold">{{ authorOccupation }}</div>
+              <h1 class="mt-1 text-lg sm:text-xl md:text-2xl leading-6 md:leading-7 font-bold md:font-extrabold tracking-tight text-foreground">{{ authorName }}</h1>
+              <p class="mt-1 text-sm md:text-base text-muted-foreground">{{ authorCompany }} | {{ authorLocation }}</p>
+              <p class="mt-1 text-sm md:text-base text-foreground">{{ authorBio }}</p> <!-- Reduced text size -->
+            </div>
+            
+            <div class="mt-2 flex space-x-4">
+              <BlogShareLinks
+                size="sm"
+                class="flex-shrink-0"
+                :url="currentPageUrl"
+                :title="authorName"
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div class="px-6 py-4 md:px-8 md:py-6 bg-muted/50">
-        <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-foreground">Skills</h2>
-        <div class="mt-3 md:mt-4 flex flex-wrap">
-          <span 
-            v-for="skill in author.skills" 
-            :key="skill" 
-            class="inline-block bg-muted/80 text-muted-foreground rounded-full px-2 py-1 text-xs sm:text-sm font-semibold mr-2 mb-2 hover:bg-primary hover:text-primary-foreground transition-colors duration-300 ease-in-out transform hover:scale-105"
-          >
-            {{ skill }}
-          </span>
+        <div class="px-6 py-2 md:px-8 md:py-4 bg-muted/50">
+          <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-foreground">Skills</h2>
+          <div class="mt-3 md:mt-4 flex flex-wrap">
+            <span 
+              v-for="skill in author.skills" 
+              :key="skill" 
+              class="inline-block bg-muted/80 text-muted-foreground rounded-full px-2 py-1 text-xs sm:text-sm font-semibold mr-2 mb-2 hover:bg-primary hover:text-primary-foreground transition-colors duration-300 ease-in-out transform hover:scale-105"
+            >
+              {{ skill }}
+            </span>
+          </div>
+        </div>
+        <div v-if="author.body" class="px-6 py-4 md:px-8 md:py-6 prose max-w-none leading-snug custom-prose content-renderer">
+          <ContentRenderer :value="author" />
         </div>
       </div>
-      <div v-if="author.body" class="px-6 py-4 md:px-8 md:py-6 prose max-w-none leading-snug custom-prose content-renderer">
-        <ContentRenderer :value="{ ...author, body: processContent(author.body) }" />
-      </div>
+    </div>
+
+    <!-- Full screen image overlay with blur effect -->
+    <div 
+      v-if="isFullScreen" 
+      class="fixed inset-0 bg-black bg-opacity-75 backdrop-blur-md z-50 flex items-center justify-center p-4" 
+      @click="toggleFullScreen"
+    >
+      <img 
+        :src="authorAvatar" 
+        :alt="authorName"
+        class="max-h-full max-w-full object-contain rounded-lg"
+        @click.stop
+      />
     </div>
   </div>
 </template>
@@ -119,7 +110,7 @@ const processContent = (content: string | MarkdownRoot) => {
 <style scoped>
 .content-renderer {
   font-size: 1rem;
-  line-height: 1.0; /* Added this line to reduce spacing */
+  line-height: 1.2;
 }
 
 @media (max-width: 768px) {
@@ -134,5 +125,64 @@ const processContent = (content: string | MarkdownRoot) => {
 
 .content-renderer :deep(li::marker) {
   color: hsl(var(--foreground));
+}
+
+/* Add these new styles */
+.content-renderer :deep(h2) {
+  margin-top: 1.5rem;  /* Reduce top margin of h2 */
+  margin-bottom: 1rem; /* Adjust bottom margin as needed */
+}
+
+.content-renderer :deep(h2:first-child) {
+  margin-top: 0;  /* Remove top margin for the first h2 */
+}
+
+/* Add these new styles */
+.fixed {
+  position: fixed;
+}
+
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.z-50 {
+  z-index: 50;
+}
+
+.max-h-full {
+  max-height: 100%;
+}
+
+.max-w-full {
+  max-width: 100%;
+}
+
+.object-contain {
+  object-fit: contain;
+}
+
+.backdrop-blur-md {
+  backdrop-filter: blur(8px);
+}
+
+/* Add this new style */
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+/* Add these new styles */
+.select-none {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+*,
+*::before,
+*::after {
+  cursor: default !important;
 }
 </style>
