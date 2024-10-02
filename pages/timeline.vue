@@ -67,7 +67,7 @@ const filteredEvents = computed(() => {
               (Updated: {{ formatDate(event.updated_date) }})
             </span>
           </time>
-          <div class="mb-4 text-base font-normal text-foreground prose prose-sm max-w-none leading-snug custom-prose">
+          <div class="mb-4 text-base font-normal text-foreground prose prose-sm max-w-none leading-snug content-renderer">
             <ContentRenderer :value="event" />
           </div>
           <a
@@ -127,5 +127,22 @@ const filteredEvents = computed(() => {
   /* Adjust spacing between paragraphs if needed */
   margin-top: 1em;
   margin-bottom: 1em;
+}
+
+.content-renderer :deep(li) {
+  color: hsl(var(--muted-foreground));
+}
+
+.content-renderer :deep(li::marker) {
+  color: hsl(var(--foreground));
+}
+
+.content-renderer :deep(h2) {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.content-renderer :deep(h2:first-child) {
+  margin-top: 0;
 }
 </style>

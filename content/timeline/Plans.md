@@ -7,4 +7,4 @@ status: Plans
 
 ##### 📅2024-Aug-12 (Thurs)
 
-- <span class="text-muted-foreground">Scroll to Top component</span>
+- Scroll to Top component

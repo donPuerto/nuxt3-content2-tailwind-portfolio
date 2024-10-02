@@ -5,11 +5,11 @@ updated_date:
 status: Guidelines
 ---
 
-- **DropPlans** 🛑 <span class="text-muted-foreground">– tasks that are no longer being pursued.</span>
-- **Done** ✅ <span class="text-muted-foreground">– tasks that have been completed.</span>
-- **InProgress** 🔄 <span class="text-muted-foreground">– tasks currently being worked on.</span>
-- **Pending** ⏳ <span class="text-muted-foreground">– tasks that are waiting to be started or need further clarification.</span>
-- **OnHold** ⏸️ <span class="text-muted-foreground">– tasks that have been paused temporarily.</span>
-- **NotStarted** 🚫 <span class="text-muted-foreground">– tasks that haven't been initiated yet.</span>
-- **Review** 👀 <span class="text-muted-foreground">– tasks that are completed but pending review or approval.</span>
-- **Bug** 🐛 <span class="text-muted-foreground">– issues or errors that need to be fixed.</span>
+- **DropPlans** 🛑 – tasks that are no longer being pursued.
+- **Done** ✅ – tasks that have been completed.
+- **InProgress** 🔄 – tasks currently being worked on.
+- **Pending** ⏳ – tasks that are waiting to be started or need further clarification.
+- **OnHold** ⏸️ – tasks that have been paused temporarily.
+- **NotStarted** 🚫 – tasks that haven't been initiated yet.
+- **Review** 👀 – tasks that are completed but pending review or approval.
+- **Bug** 🐛 – issues or errors that need to be fixed.

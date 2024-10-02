@@ -7,21 +7,21 @@ status: InProgress
 
 ##### 📅 2024-Oct-02 (Wed)
 
-- <span class="text-muted-foreground">Added Author Link</span>
+- Added Author Link
 - I want to remove the span on the bullet points content Markdown
 
 ##### 📅 2024-Sept-18 (Wed)
 
-- <span class="text-muted-foreground">Revamping the apps for version 4</span>
+- Revamping the apps for version 4
 
 ##### 📅 2024-June-20 (Thurs)
 
-- <span class="text-muted-foreground">Added Blog Page</span>
+- Added Blog Page
 
 ##### 📅 2024-June-20 (Thurs)
 
-- <span class="text-muted-foreground">Added Project Page</span>
+- Added Project Page
 
 ##### 📅 2024-June-20 (Thurs)
 
-- <span class="text-muted-foreground">Added Donate Page</span>
+- Added Donate Page</span>

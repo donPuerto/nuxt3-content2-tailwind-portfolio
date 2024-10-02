@@ -7,10 +7,10 @@ status: Bug
 
 Bugs are errors, flaws, or faults in the software that cause it to produce an incorrect or unexpected result, or to behave in unintended ways.
 
-- **Critical** 🚨 <span class="text-muted-foreground">– severe bugs that need immediate attention.</span>
-- **Major** ⚠️ <span class="text-muted-foreground">– significant bugs that impact functionality.</span>
-- **Minor** 📝 <span class="text-muted-foreground">– small bugs with minimal impact on functionality.</span>
+- **Critical** 🚨 – severe bugs that need immediate attention.
+- **Major** ⚠️ – significant bugs that impact functionality.
+- **Minor** 📝 – small bugs with minimal impact on functionality.
 
 ##### 📅2024-Sept-22 (Sun)
 
-- (Major) <span class="text-muted-foreground">Sending smpt email have some issues, its working on local but not in production, Solution: Use sendgrid for sending email</span>
+- (Major) Sending smpt email have some issues, its working on local but not in production, Solution: Use sendgrid for sending email
