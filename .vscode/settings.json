@@ -3,6 +3,9 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
    },
+   "emmet.includeLanguages": {
+    "postcss": "css"
+  },
   // ESLint
   "eslint.validate": [
     "javascript",
@@ -40,6 +43,7 @@
   },
   // "eslint.quiet": true,
   // Silent the stylistic rules in you IDE, but still auto fix them
+
   "eslint.rules.customizations": [
     {
       "rule": "style/*",
@@ -89,7 +93,8 @@
   // },
   // TailwindCSS
   "files.associations": {
-    "*.css": "tailwindcss"
+    "*.vue": "vue",
+    "*.css": "tailwindcss",   
   },
   "editor.quickSuggestions": {
     "strings": true,

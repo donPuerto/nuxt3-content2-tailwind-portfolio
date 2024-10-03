@@ -5,11 +5,6 @@ updated_date: 2024-09-13
 status: InProgress
 ---
 
-##### 📅 2024-Oct-02 (Wed)
-
-- Added Author Link
-- I want to remove the span on the bullet points content Markdown
-
 ##### 📅 2024-Sept-18 (Wed)
 
 - Revamping the apps for version 4

@@ -1,9 +1,14 @@
 ---
 title: Milestones Achieved and Enhancements Implemented 🏁
 posted_date: 2024-06-06
-updated_date: 2024-09-12
+updated_date: 2024-10-02
 status: Done
 ---
+
+##### 📅 2024-Oct-02 (Wed)
+
+- Added Author Page
+- I want to remove the span on the bullet points content Markdown
 
 ##### 📅2024-Aug-12 (Thurs)
 

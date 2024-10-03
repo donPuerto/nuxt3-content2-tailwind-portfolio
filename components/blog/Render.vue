@@ -427,7 +427,7 @@ onMounted(() => {
   </article>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .blog-content :deep(pre) {
   @apply font-mono text-xs;
 }

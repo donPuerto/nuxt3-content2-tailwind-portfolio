@@ -67,7 +67,7 @@ const filteredEvents = computed(() => {
               (Updated: {{ formatDate(event.updated_date) }})
             </span>
           </time>
-          <div class="mb-4 text-base font-normal text-foreground prose prose-sm max-w-none leading-snug content-renderer">
+          <div class="my-5 text-base font-normal text-foreground prose prose-sm max-w-none leading-snug content-renderer">
             <ContentRenderer :value="event" />
           </div>
           <a
@@ -97,40 +97,10 @@ const filteredEvents = computed(() => {
 </template>
 
 <style scoped>
-/* Add any additional styles here if needed */
-
-.custom-prose {
-  /* Adjust overall line height */
-  line-height: 1.2;
-}
-
-.custom-prose :deep(blockquote) {
-  /* Tighten spacing for blockquotes */
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-}
-
-.custom-prose :deep(ul),
-.custom-prose :deep(ol) {
-  /* Tighten spacing for lists */
-  margin-top: 0.5em;
-  margin-bottom: 1.2em;
-}
-
-.custom-prose :deep(li) {
-  /* Adjust line height for list items */
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-}
-
-.custom-prose :deep(p) {
-  /* Adjust spacing between paragraphs if needed */
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
 
 .content-renderer :deep(li) {
   color: hsl(var(--muted-foreground));
+ 
 }
 
 .content-renderer :deep(li::marker) {
@@ -139,10 +109,7 @@ const filteredEvents = computed(() => {
 
 .content-renderer :deep(h2) {
   margin-top: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-.content-renderer :deep(h2:first-child) {
-  margin-top: 0;
-}
 </style>
