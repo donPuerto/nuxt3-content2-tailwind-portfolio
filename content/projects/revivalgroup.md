@@ -4,10 +4,9 @@ description: A company dedicated to Window and Door Installation and Replacement
 tags:
   - Bootstrap
   - Laravel
-live_url: "https://revivalgroup.com"
-source_url: ""
-image: ""
-icon: ""
+production_url: "https://github.com/BayBreezy/ui-thing"
+repository_url: "https://github.com/BayBreezy/ui-thing"
+image: "/content/projects/revivalgroup.png"
 ---
 
 ## What is Revival Group? 🔨

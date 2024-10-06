@@ -33,8 +33,8 @@ const closingText = ref('In the vast realm of technology, I see a divine opportu
 </script>
 
 <template>
-  <div class="min-h-screen p-8">
-    <div class="max-w-4xl mx-auto bg-background bg-opacity-80 p-8 rounded-lg">
+  <div class="container mx-auto px-5 sm:px-6 lg:px-8 py-8 max-w-[912px]">
+    <div class="bg-background bg-opacity-80 p-8 rounded-lg">
       <h1 class="text-2xl font-bold mb-4 text-foreground text-center">
         About Me
       </h1>

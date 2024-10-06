@@ -28,17 +28,7 @@ const allAuthors = computed(() => {
 const title = computed(() => props.post.title);
 const publishedDate = computed(() => formatDate(props.post.published_at));
 const updatedDate = computed(() => props.post.updated_at ? formatDate(props.post.updated_at) : null);
-const imageUrl = computed(() => {
-  const rawImage = toRaw(props.post.media.content.image);
-
-  if (typeof rawImage === 'string') {
-    return rawImage;
-  }
-  else if (typeof rawImage === 'object' && rawImage !== null) {
-    return rawImage.url;
-  }
-  return null;
-});
+const imageUrl = computed(() => props.post.media.content.image?.url || null);
 
 // Define refs
 const tableOfContents = ref<TOCItem[]>([]);
@@ -50,6 +40,7 @@ const mainContentWrapper = ref<HTMLElement | null>(null);
 const imageError = ref(false);
 const showComments = ref(false);
 const disqusContainer = ref(null);
+const isVideoPlaying = ref(false);
 
 // Handle fullscreen
 const openFullscreen = () => {
@@ -156,13 +147,45 @@ onMounted(() => {
     observer.disconnect();
     window.removeEventListener('scroll', handleScroll);
   });
+
+  window.addEventListener('message', handleVideoStateChange);
 });
+
+onUnmounted(() => {
+  window.removeEventListener('message', handleVideoStateChange);
+});
+
+const mediaType = computed(() => props.post.media.type);
+const mediaError = ref(false);
+
+const videoUrl = computed(() => {
+  if (mediaType.value === 'video' && props.post.media.content.video) {
+    const videoId = props.post.media.content.video.url.split('v=')[1];
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : '';
+  }
+  return '';
+});
+
+onMounted(() => {
+  // Check if media content is available
+  if (!props.post.media || !props.post.media.content || !props.post.media.content.video) {
+    mediaError.value = true;
+  }
+});
+
+const handleVideoStateChange = (event: MessageEvent) => {
+  if (event.data === 1) { // YouTube iframe API: 1 means "playing"
+    isVideoPlaying.value = true;
+  } else if (event.data === 2 || event.data === 0) { // 2: "paused", 0: "ended"
+    isVideoPlaying.value = false;
+  }
+};
 </script>
 
 <template>
   <article class="font-sans text-sm">
     <!-- Start: Header Section -->
-    <div class="container mx-auto p-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 2xl:px-[10rem]">
+    <div class="container mx-auto px-5 sm:px-6 lg:px-8 py-8">
       <!-- Start: Breadcrumb -->
       <nav class="text-sm sm:text-base font-medium flex items-center space-x-1">
         <NuxtLink
@@ -215,44 +238,57 @@ onMounted(() => {
       </div>
       <!-- End: Tags -->
 
-      <!-- Start: Image with error handling -->
-      <div class="relative mt-2 mb-4">
+      <!-- Start: Media Section (Image or YouTube Video) -->
+      <div class="relative w-full mb-6 rounded-lg overflow-hidden">
+        <!-- Fullscreen Image View -->
         <Transition name="fade">
           <div
-            v-if="isFullscreen"
+            v-if="isFullscreen && imageUrl"
             class="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-md"
             @click="closeFullscreen"
           >
             <img
-              v-if="imageUrl && !imageError"
               :src="imageUrl"
-              :alt="props.post.title"
-              class="max-w-[95%] max-h-[95%] object-contain rounded-lg grayscale hover:grayscale-0 transition-all"
-              @load="onImageLoad"
-              @error="handleImageError"
+              :alt="props.post.media.content.image.alt || props.post.title"
+              class="max-w-[95%] max-h-[95%] object-contain rounded-lg"
             />
           </div>
         </Transition>
 
-        <div class="relative w-full mb-6 rounded-lg cursor-pointer overflow-hidden">
-          <img
-            v-if="imageUrl && !imageError"
-            :src="imageUrl"
-            :alt="props.post.title"
-            class="w-full object-cover rounded-lg grayscale hover:grayscale-0 transition-all"
-            @click="openFullscreen"
-            @load="onImageLoad"
-            @error="handleImageError"
-          />
-          <div
-            v-else
-            class="w-full h-48 bg-secondary flex items-center justify-center text-muted-foreground"
-          >
-            {{ imageError ? 'Image failed to load' : 'No image available' }}
+        <!-- Main Media Display -->
+        <div class="relative w-full mb-6 rounded-lg overflow-hidden">
+          <div class="aspect-w-45 aspect-h-16"> <!-- 1440:512 aspect ratio -->
+            <template v-if="mediaType === 'image' && imageUrl">
+              <img
+                :src="imageUrl"
+                :alt="props.post.media.content.image.alt || props.post.title"
+                class="w-full h-full object-cover cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
+                @click="openFullscreen"
+                @load="onImageLoad"
+                @error="handleImageError"
+              />
+            </template>
+            <template v-else-if="mediaType === 'video'">
+              <iframe
+                v-if="videoUrl"
+                :src="videoUrl"
+                :title="post.media.content.video.title"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                class="w-full h-full"
+              />
+              <div v-else class="flex justify-center items-center w-full h-full bg-secondary text-secondary-foreground">
+                No video available
+              </div>
+            </template>
+            <div v-else class="flex justify-center items-center w-full h-full bg-secondary text-secondary-foreground">
+              Media content is not available
+            </div>
           </div>
         </div>
       </div>
-      <!-- End: Image with error handling -->
+      <!-- End: Media Section -->
 
       <!-- Start: Author and Share Section -->
       <div class="flex justify-between items-center mt-auto">
@@ -277,7 +313,7 @@ onMounted(() => {
     <!-- Start: Main Content Wrapper -->
     <div
       ref="mainContentWrapper"
-      class="container mx-auto p-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 2xl:px-[10rem]"
+      class="container mx-auto px-5 sm:px-6 lg:px-8 py-8"
     >
       <div class="grid grid-cols-12 gap-2 lg:gap-4">
         <!-- Start: Left Sidebar (Share Links) -->
@@ -517,7 +553,7 @@ onMounted(() => {
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+.fade-enter, .fade-leave-to {
   opacity: 0;
 }
 
@@ -526,5 +562,72 @@ onMounted(() => {
 }
 .zoom-enter, .zoom-leave-to /* .zoom-leave-active in <2.1.8 */ {
   transform: scale(0.9);
+}
+
+.group:hover .group-hover\:scale-105 {
+  transform: scale(1.05);
+}
+
+.transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+.media-fallback {
+  background-color: #f0f0f0;
+  padding: 20px;
+  text-align: center;
+  color: #666;
+}
+
+.no-video-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  background-color: #f0f0f0;
+  color: #666;
+  font-style: italic;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .aspect-w-45 {
+    position: relative;
+    padding-bottom: calc(16 / 45 * 100%);
+  }
+  .aspect-w-45 > * {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
 }
 </style>
