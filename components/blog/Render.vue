@@ -203,21 +203,14 @@ const handleVideoStateChange = (event: MessageEvent) => {
       </nav>
       <!-- End: Breadcrumb -->
 
-      <!-- Start: Date Section -->
-      <div class="flex flex-col sm:flex-row justify-between text-sm text-muted-foreground my-4">
-        <span>Published: {{ publishedDate }}</span>
-        <span v-if="updatedDate">Updated: {{ updatedDate }}</span>
-      </div>
-      <!-- End: Date Section -->
-
       <!-- Start: Blog Title -->
-      <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
+      <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mt-12 mb-2">
         {{ title }}
       </h1>
       <!-- End: Blog Title -->
 
       <!-- Start: Blog Description -->
-      <p class="text-sm text-foreground mt-1">
+      <p class="text-sm text-foreground my-2">
         {{ post.description }}
       </p>
       <!-- End: Blog Description -->
@@ -238,8 +231,15 @@ const handleVideoStateChange = (event: MessageEvent) => {
       </div>
       <!-- End: Tags -->
 
+      <!-- Start: Date Section -->
+      <div class="flex flex-col sm:flex-row justify-between text-sm text-muted-foreground mt-8 mb-2">
+        <span>Published at {{ publishedDate }}</span>
+        <span v-if="updatedDate">Updated at {{ updatedDate }}</span>
+      </div>
+      <!-- End: Date Section -->
+
       <!-- Start: Media Section (Image or YouTube Video) -->
-      <div class="relative w-full mb-6 rounded-lg overflow-hidden">
+      <div class="relative w-full rounded-lg overflow-hidden">
         <!-- Fullscreen Image View -->
         <Transition name="fade">
           <div
@@ -256,7 +256,7 @@ const handleVideoStateChange = (event: MessageEvent) => {
         </Transition>
 
         <!-- Main Media Display -->
-        <div class="relative w-full mb-6 rounded-lg overflow-hidden">
+        <div class="relative w-full rounded-lg overflow-hidden">
           <div class="aspect-w-45 aspect-h-16"> <!-- 1440:512 aspect ratio -->
             <template v-if="mediaType === 'image' && imageUrl">
               <img
@@ -278,20 +278,20 @@ const handleVideoStateChange = (event: MessageEvent) => {
                 allowfullscreen
                 class="w-full h-full"
               />
-              <div v-else class="flex justify-center items-center w-full h-full bg-secondary text-secondary-foreground">
+              <div v-else class="flex justify-center items-center w-full h-full bg-secondary text-secondary-foreground text-xs sm:text-sm md:text-base">
                 No video available
               </div>
             </template>
-            <div v-else class="flex justify-center items-center w-full h-full bg-secondary text-secondary-foreground">
+            <div v-else class="flex justify-center items-center w-full h-full bg-secondary text-secondary-foreground text-xs sm:text-sm md:text-base">
               Media content is not available
             </div>
           </div>
         </div>
       </div>
-      <!-- End: Media Section -->
+      <!-- End: Start: Media Section (Image or YouTube Video) -->
 
       <!-- Start: Author and Share Section -->
-      <div class="flex justify-between items-center mt-auto">
+      <div class="flex justify-between items-center mt-4">
         <BlogAuthorList
           :authors="allAuthors"
           size="sm"
@@ -307,7 +307,7 @@ const handleVideoStateChange = (event: MessageEvent) => {
     <!-- End: Header Section -->
 
     <ClientOnly>
-      <UiGradientDivider class="mb-2" />
+      <UiGradientDivider />
     </ClientOnly>
 
     <!-- Start: Main Content Wrapper -->
@@ -347,7 +347,7 @@ const handleVideoStateChange = (event: MessageEvent) => {
             </div>
             <div
               v-else-if="post"
-              class="blog-content text-sm leading-relaxed"
+              class="blog-content text-sm"
             >
               <ContentRenderer
                 :value="post"
@@ -372,7 +372,7 @@ const handleVideoStateChange = (event: MessageEvent) => {
               v-if="tableOfContents.length > 0"
               class="bg-secondary py-6 px-6 rounded-xl shadow-sm"
             >
-              <h2 class="text-base font-semibold mb-4">
+              <h2 class="text-lg font-semibold mb-4">
                 Table of Contents
               </h2>
               <ul class="space-y-2">
@@ -382,13 +382,13 @@ const handleVideoStateChange = (event: MessageEvent) => {
                 >
                   <a
                     :href="`#${header.id}`"
-                    class="toc-link block text-xs text-primary transition-all duration-300 ease-in-out"
+                    class="toc-link block text-sm text-primary transition-all duration-300 ease-in-out"
                     :class="{
                       'active': header.id === activeId,
                       'font-medium': header.level === 2,
-                      'pr-2': header.level === 3,
+                      'pl-2': header.level === 3,
                       'pl-4': header.level === 4,
-                      'pr-6': header.level > 4,
+                      'pl-6': header.level > 4,
                     }"
                     @click="activeId = header.id"
                   >
@@ -401,7 +401,7 @@ const handleVideoStateChange = (event: MessageEvent) => {
 
             <!-- Start: Quick Links -->
             <div class="bg-secondary p-6 rounded-xl shadow-sm">
-              <h2 class="text-base font-semibold mb-4">
+              <h2 class="text-lg font-semibold mb-4">
                 Quick Links
               </h2>
               <ul class="space-y-2">
@@ -412,12 +412,11 @@ const handleVideoStateChange = (event: MessageEvent) => {
                   <a
                     :href="link.url"
                     target="_blank"
-                    class="flex items-center text-xs text-primary hover:text-ring transition-colors duration-200"
+                    class="flex items-center text-sm text-primary hover:text-ring transition-colors duration-200"
                   >
                     <Icon
                       :name="link.icon"
                       class="mr-2"
-                      size="16px"
                     />
                     <span>{{ link.text }}</span>
                   </a>
@@ -462,34 +461,33 @@ const handleVideoStateChange = (event: MessageEvent) => {
     </div>
   </article>
 </template>
-
 <style scoped lang="postcss">
-.blog-content :deep(pre) {
-  @apply font-mono text-xs;
+.blog-content :deep(h1) {
+  @apply text-lg sm:text-xl md:text-2xl font-bold mb-4;
 }
 
 .blog-content :deep(h2) {
-  @apply text-2xl font-semibold mt-8 mb-4;
+  @apply text-base sm:text-lg md:text-xl font-semibold mt-7 mb-4;
 }
 
 .blog-content :deep(h3) {
-  @apply text-xl font-semibold mt-6 mb-3;
+  @apply text-sm sm:text-base md:text-lg font-semibold mt-6 mb-3;
 }
 
 .blog-content :deep(h4) {
-  @apply text-lg font-medium mt-4 mb-2;
+  @apply text-xs sm:text-sm md:text-base font-medium mt-5 mb-3;
 }
 
 .blog-content :deep(h5) {
-  @apply text-base font-medium mt-3 mb-2;
+  @apply text-xs sm:text-xs md:text-sm font-medium mt-4 mb-2;
 }
 
 .blog-content :deep(h6) {
-  @apply text-sm font-medium mt-2 mb-2;
+  @apply text-xs sm:text-xs md:text-sm font-medium mt-3 mb-2;
 }
 
 .blog-content :deep(p) {
-  @apply mb-4;
+  @apply text-xs sm:text-sm md:text-base mb-4;
 }
 
 .toc-link {
