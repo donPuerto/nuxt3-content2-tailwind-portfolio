@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue';
 import type { Post } from '~/types';
 
+const config = useRuntimeConfig();
 const { getAuthor } = useAuthor();
 
 const { data: posts } = await useAsyncData<Post[]>('all-posts', () =>
@@ -42,6 +43,14 @@ const featuredAuthor = computed(() => featuredPost.value ? getAuthor(featuredPos
 
 // Get the next 4 posts for the smaller cards
 const smallerPosts = computed(() => filteredPosts.value.slice(1, 5));
+
+const disqusConfig = computed(() => ({
+  url: `${config.public.siteUrl}/blog`,
+  identifier: 'blog-index',
+  title: 'Blog Comments',
+}));
+
+const showComments = ref(true);
 </script>
 
 <template>
@@ -52,7 +61,7 @@ const smallerPosts = computed(() => filteredPosts.value.slice(1, 5));
           v-model="searchQuery"
           type="text"
           placeholder="Search posts..."
-          class="w-full rounded-md border border-input bg-background pl-10 pr-4 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary glow-effect"
+          class="w-full rounded-md border border-input bg-background pl-10 pr-4 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary"
         />
         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
           <Icon name="uil:search" class="h-5 w-5 text-gray-400" />
@@ -218,11 +227,20 @@ const smallerPosts = computed(() => filteredPosts.value.slice(1, 5));
 
       <!-- Comments column -->
       <div class="shadow-lg rounded-lg p-4">
-        <h2 class="text-base sm:text-lg md:text-xl lg:text-2xl font-bold mb-4">
+        <h2 class="text-sm sm:text-base md:text-lg lg:text-xl font-bold mb-4">
           Comments
         </h2>
-        <!-- Add your comments component or content here -->
-        <p>Comments section placeholder</p>
+        <!-- Start: Disqus section -->
+        <ClientOnly>
+          <DisqusComments
+            v-if="showComments"
+            :identifier="disqusConfig.identifier"
+            :url="disqusConfig.url"
+            :title="disqusConfig.title"
+            class="mt-16 mb-12"
+          />
+        </ClientOnly>
+        <!-- End: Disqus section -->
       </div>
     </div>
 

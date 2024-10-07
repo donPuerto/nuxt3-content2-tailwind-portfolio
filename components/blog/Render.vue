@@ -439,25 +439,28 @@ const handleVideoStateChange = (event: MessageEvent) => {
           </div>
         </aside>
         <!-- End: Right Sidebar -->
-      </div>
-
-      <!-- Simplified Disqus component section -->
-      <div ref="disqusContainer">
-        <Suspense>
-          <DisqusComments
-            v-show="showComments"
-            :identifier="disqusConfig.identifier"
-            :url="disqusConfig.url"
-            :title="disqusConfig.title"
-            style="margin-top: 4rem; margin-bottom: 3rem;"
-          />
-        </Suspense>
-
-        <ClientOnly>
-          <UiGradientDivider />
-        </ClientOnly>
-      </div>
+        
       <!-- End: Main Content Wrapper -->
+      </div>
+
+      <!-- Start: Divider -->
+      <ClientOnly>
+        <UiGradientDivider class="my-16" />
+      </ClientOnly>
+      <!-- End: Divider -->
+
+      <!-- Start: Disquss section -->
+      <div ref="disqusContainer">
+        <DisqusComments
+          v-if="showComments"
+          :identifier="disqusConfig.identifier"
+          :url="disqusConfig.url"
+          :title="disqusConfig.title"
+          class="mt-16 mb-12"
+        />
+      </div>
+      <!-- End: Disquss section -->
+     
     </div>
   </article>
 </template>
