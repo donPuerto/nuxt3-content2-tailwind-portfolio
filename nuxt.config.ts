@@ -27,8 +27,7 @@ export default defineNuxtConfig({
   
   runtimeConfig: {
     public: {
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://example.com',
-      baseURL: '/',
+      productionUrl: process.env.PRODUCTION_URL || `https://${process.env.VERCEL_URL}` || 'https://localhost:3000',     
     },
     gmailUserEmail: process.env.GMAIL_USER_EMAIL,
     gmailAppPass: process.env.GMAIL_APP_PASS,

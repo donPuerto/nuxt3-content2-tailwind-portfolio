@@ -99,7 +99,7 @@ const updateActiveHeader = () => {
 
 // Disqus configuration
 const disqusConfig = computed(() => ({
-  url: `${config.public.siteUrl}${route.path}`,
+  url: `${config.public.productionUrl}${route.path}`,
   identifier: props.post.slug || route.path,
   title: props.post.title,
 }));

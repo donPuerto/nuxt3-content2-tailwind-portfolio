@@ -45,7 +45,7 @@ const featuredAuthor = computed(() => featuredPost.value ? getAuthor(featuredPos
 const smallerPosts = computed(() => filteredPosts.value.slice(1, 5));
 
 const disqusConfig = computed(() => ({
-  url: `${config.public.siteUrl}/blog`,
+  url: `${config.public.productionUrl}/blog`,
   identifier: 'blog-index',
   title: 'Blog Comments',
 }));
