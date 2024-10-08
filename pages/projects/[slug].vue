@@ -1,11 +1,31 @@
 <script setup lang="ts">
+
 const route = useRoute();
 const { data: project } = await useAsyncData(`project-${route.params.slug}`, () => queryContent(`/projects/${route.params.slug}`).findOne());
+
+// Add error handling
+if (!project.value) {
+  throw createError({ statusCode: 404, message: 'Project not found' });
+}
+
+// Custom directive to style list items
+const vStyleListItems = {
+  mounted: (el: HTMLElement) => {
+    const listItems = el.querySelectorAll('li');
+    listItems.forEach(li => {
+      const strong = li.querySelector('strong');
+      if (strong) {
+        const text = li.innerHTML.split(strong.outerHTML)[1];
+        li.innerHTML = `${strong.outerHTML}<span class="text-muted-foreground">${text}</span>`;
+      }
+    });
+  },
+};
 </script>
 
 <template>
   <div v-if="project" class="container mx-auto px-5 sm:px-6 lg:px-8 py-8">
-    <div class="mb-3 text-lg sm:text-xl md:text-2xl font-bold">
+    <div class="mb-3 text-sm sm:text-base md:text-lg lg:text-xl font-bold">
       <NuxtLink to="/projects" class="hover:underline hover:scale-105 transition-transform duration-300 inline-block">Projects</NuxtLink>
       <span class="text-gray-500 mx-2">&gt;</span>
       <span>{{ project.title }}</span>
@@ -44,18 +64,18 @@ const { data: project } = await useAsyncData(`project-${route.params.slug}`, () 
           :href="project.repository_url"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-foreground hover:text-primary transition-colors duration-300 ease-in-out transform hover:scale-110"
+          class="bg-secondary text-secondary-foreground rounded-full p-1.5 hover:bg-primary hover:text-primary-foreground transition-colors duration-300 ease-in-out transform hover:scale-110 flex items-center justify-center w-8 h-8"
         >
-          <Icon name="mdi:github" size="20" />
+          <Icon name="line-md:github" size="18" />
         </a>
         <a
           v-if="project.production_url"
           :href="project.production_url"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-green-500 hover:text-green-400 transition-colors duration-300 ease-in-out transform hover:scale-110"
+          class="bg-secondary text-secondary-foreground rounded-full p-1.5 hover:bg-primary hover:text-primary-foreground transition-colors duration-300 ease-in-out transform hover:scale-110 flex items-center justify-center w-8 h-8"
         >
-          <Icon name="mdi:link" size="20" />
+          <Icon name="line-md:external-link" size="18" />
         </a>
         <span v-if="!project.repository_url && !project.production_url" class="text-muted-foreground italic text-sm">
           No external links available
@@ -63,7 +83,7 @@ const { data: project } = await useAsyncData(`project-${route.params.slug}`, () 
       </div>
     </div>
 
-    <div class="prose prose-invert max-w-none">
+    <div v-style-list-items class="project-content max-w-none">
       <ContentRenderer :value="project" />
     </div>
   </div>
@@ -71,16 +91,46 @@ const { data: project } = await useAsyncData(`project-${route.params.slug}`, () 
 </template>
 
 <style scoped lang="postcss">
-.prose h2 {
-  @apply text-2xl font-bold mb-4 mt-8;
-}
-.prose p {
-  @apply mb-4;
-}
-.prose a {
-  @apply text-green-500 hover:underline;
-}
-.prose blockquote {
-  @apply border-l-4 border-gray-600 pl-4 italic;
+.project-content {
+  @apply text-foreground text-sm sm:text-base max-w-none;
+
+  :deep(h1), :deep(h2), :deep(h3), :deep(h4), :deep(h5), :deep(h6) {
+    @apply text-foreground font-bold mb-4 mt-6;
+  }
+  :deep(h1) { @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl; }
+  :deep(h2) { @apply text-lg sm:text-xl md:text-2xl lg:text-3xl; }
+  :deep(h3) { @apply text-base sm:text-lg md:text-xl lg:text-2xl; }
+  :deep(h4) { @apply text-sm sm:text-base md:text-lg lg:text-xl; }
+  :deep(h5) { @apply text-sm sm:text-sm md:text-base lg:text-lg; }
+  :deep(h6) { @apply text-xs sm:text-sm md:text-sm lg:text-base; }
+
+ :deep(a) {
+    @apply text-primary hover:text-primary/80 transition-colors duration-200;
+  }
+  
+  :deep(ul), :deep(ol) {
+    @apply pl-10 mb-4; 
+  }
+  :deep(ul) { 
+    @apply list-disc; 
+  }
+  :deep(ol) { 
+    @apply list-decimal; 
+  }
+  :deep(li) { 
+    @apply mb-2; 
+    line-height: 1.2;
+    padding-left: 0.5em;
+  }
+  :deep(li::marker) {
+    @apply text-primary;
+  }
+
+  :deep(p) {
+    @apply mb-5 leading-relaxed;
+    text-align: justify;
+    line-height: 1.2;
+
+  }
 }
 </style>

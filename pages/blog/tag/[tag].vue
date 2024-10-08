@@ -88,11 +88,11 @@ function changePage(page: number) {
           </div>
           <div class="p-4 flex flex-col flex-grow">
             <NuxtLink :to="post._path" class="hover:text-primary transition-colors">
-              <h2 class="text-sm sm:text-base font-bold line-clamp-2 text-justify mb-2">
+              <h2 class="text-sm sm:text-base font-bold line-clamp-2 text-justify">
                 {{ post.title }}
               </h2>
             </NuxtLink>
-            <p class="text-xs sm:text-sm text-gray-500 mb-2">
+            <p class="text-xs text-gray-500 mt-1 mb-2">
               Published at {{ new Date(post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) }}
             </p>
             <p v-if="post.description" class="text-xs sm:text-sm text-gray-600 line-clamp-3 mb-4">

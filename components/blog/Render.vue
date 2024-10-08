@@ -543,10 +543,6 @@ const handleVideoStateChange = (event: MessageEvent) => {
   filter: grayscale(100%);
 }
 
-.hover\:grayscale-0:hover {
-  filter: grayscale(0%);
-}
-
 .transition-all {
   transition: all 0.3s ease;
 }

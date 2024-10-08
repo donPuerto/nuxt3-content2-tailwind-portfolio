@@ -7,6 +7,7 @@ tags:
 production_url: "https://github.com/BayBreezy/ui-thing"
 repository_url: "https://github.com/BayBreezy/ui-thing"
 image: "/content/projects/revivalgroup.png"
+icon: icon-park-outline:push-door
 ---
 
 ## What is Revival Group? 🔨
