@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     enabled: true,
     componentInspector: false,
   },
+  ssr: true,
   app: {
     pageTransition: { name: 'page-fade', mode: 'out-in' },
   },
