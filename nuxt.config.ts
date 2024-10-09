@@ -67,22 +67,22 @@ export default defineNuxtConfig({
   ],
   icon: {
       
-    serverBundle: {
-      collections: [
-        'heroicons', 
-        'lucide', 
-        'mdi', 
-        'line-md', 
-        'uil', 
-        'ri',
-        'ic', 
-        'material-symbols',
-        'logos',
-        'icon-park-outline',
-        'ph',
-      ], 
+    // serverBundle: {
+    //   collections: [
+    //     'heroicons', 
+    //     'lucide', 
+    //     'mdi', 
+    //     'line-md', 
+    //     'uil', 
+    //     'ri',
+    //     'ic', 
+    //     'material-symbols',
+    //     'logos',
+    //     'icon-park-outline',
+    //     'ph',
+    //   ], 
       
-    },
+    // },
     
   },
   plugins: [
