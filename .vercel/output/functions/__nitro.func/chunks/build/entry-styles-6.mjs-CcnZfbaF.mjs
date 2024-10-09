@@ -1,4 +1,0 @@
-const Toaster_vue_vue_type_style_index_0_lang = ":root{--success-bg:#ecfdf3;--success-border:#d3fde5;--success-text:#008a2e;--info-bg:#f0f8ff;--info-border:#d3e0fd;--info-text:#0973dc;--warning-bg:#fffcf0;--warning-border:#fdf5d3;--warning-text:#dc7609;--error-bg:#fff0f0;--error-border:#ffe0e1;--error-text:#e60000}.dark-mode{--success-bg:#001f0f;--success-border:#003d1c;--success-text:#59f3a6;--info-bg:#000d1f;--info-border:#00113d;--info-text:#5896f3;--warning-bg:#1d1f00;--warning-border:#3d3d00;--warning-text:#f3cf58;--error-bg:#2d0607;--error-border:#4d0408;--error-text:#ff9ea1}.sepia-mode{--success-bg:#f7faf4;--success-border:#e7f1df;--success-text:#739e47;--info-bg:#f4faf8;--info-border:#dff1ec;--info-text:#479e7a;--warning-bg:#faf5f4;--warning-border:#f1e0df;--warning-text:#9e4747;--error-bg:#faf5f4;--error-border:#f1dfe0;--error-text:#9e4747}";
-
-export { Toaster_vue_vue_type_style_index_0_lang as T };
-//# sourceMappingURL=entry-styles-6.mjs-CcnZfbaF.mjs.map

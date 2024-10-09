@@ -1,5 +1,0 @@
-// ROLLUP_NO_REPLACE 
- const Plans = "{\"parsed\":{\"_path\":\"/timeline/plans\",\"_dir\":\"timeline\",\"_draft\":false,\"_partial\":false,\"_locale\":\"\",\"title\":\"Upcoming Features and Enhancements\",\"description\":\"\",\"posted_date\":\"2024-06-03T00:00:00.000Z\",\"updated_date\":null,\"status\":\"Plans\",\"body\":{\"type\":\"root\",\"children\":[{\"type\":\"element\",\"tag\":\"h5\",\"props\":{\"id\":\"_2024-aug-12-thurs\"},\"children\":[{\"type\":\"text\",\"value\":\"📅2024-Aug-12 (Thurs)\"}]},{\"type\":\"element\",\"tag\":\"ul\",\"props\":{},\"children\":[{\"type\":\"element\",\"tag\":\"li\",\"props\":{},\"children\":[{\"type\":\"text\",\"value\":\"Scroll to Top component\"}]}]}],\"toc\":{\"title\":\"\",\"searchDepth\":2,\"depth\":2,\"links\":[]}},\"_type\":\"markdown\",\"_id\":\"content:timeline:Plans.md\",\"_source\":\"content\",\"_file\":\"timeline/Plans.md\",\"_stem\":\"timeline/Plans\",\"_extension\":\"md\"},\"hash\":\"dlVwNC1ddY\"}";
-
-export { Plans as default };
-//# sourceMappingURL=Plans.mjs.map
