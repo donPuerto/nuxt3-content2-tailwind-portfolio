@@ -744,7 +744,7 @@ const _routes = [
   {
     name: "blog-slug",
     path: "/blog/:slug(.*)*",
-    component: () => import('./_...slug_-Dd5wEf7g.mjs')
+    component: () => import('./_...slug_-DD6hoGs3.mjs')
   },
   {
     name: "blog",

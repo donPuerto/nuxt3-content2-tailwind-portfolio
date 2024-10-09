@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page-fade', mode: 'out-in' },
   },
   nitro: {
-    preset: 'vercel',
+    preset: 'netlify',
   },
   routeRules: {
     '/': { ssr: false },
