@@ -66,6 +66,7 @@ export default defineNuxtConfig({
     }],
   ],
   icon: {
+      
     serverBundle: {
       collections: [
         'heroicons', 
@@ -80,7 +81,9 @@ export default defineNuxtConfig({
         'icon-park-outline',
         'ph',
       ], 
+      
     },
+    
   },
   plugins: [
    
