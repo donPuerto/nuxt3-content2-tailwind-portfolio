@@ -1,75 +1,23 @@
-# Nuxt 3 Minimal Starter
+# Portfolio V4 🚀
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+The current & third iteration of my portfolio rebuilt from scratch using [Nuxt 3](https://nuxt.com/) and [TailwindCSS](https://tailwindcss.com/). ✨
 
-## Setup
+## Stack 🛠️
 
-Make sure to install the dependencies:
+- [Nuxt 3](https://nuxt.com/) - The Intuitive Vue Framework
+- [TailwindCSS](https://tailwindcss.com/) - A utility-first CSS framework
 
-```bash
-# npm
-npm install
+## Live Demo 🌐
 
-# pnpm
-pnpm install
+Check out the live version of the portfolio [here](https://comforting-bunny-74c20b.netlify.app/)!
 
-# yarn
-yarn install
+## Getting Started 🏁
 
-# bun
-bun install
-```
+1. Clone the repository
+2. Install dependencies: `npm install` or `yarn install`
+3. Run the development server: `npm run dev` or `yarn dev`
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## Development Server
+## Build 🏗️
 
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+To build the project for production:
