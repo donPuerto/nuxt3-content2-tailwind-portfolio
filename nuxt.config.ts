@@ -78,6 +78,7 @@ export default defineNuxtConfig({
         'material-symbols',
         'logos',
         'icon-park-outline',
+        'ph',
       ], 
     },
   },
