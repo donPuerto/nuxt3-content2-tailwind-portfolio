@@ -3673,7 +3673,9 @@ function createFetch$1(globalOptions = {}) {
       response: void 0,
       error: void 0
     };
-    context.options.method = context.options.method?.toUpperCase();
+    if (context.options.method) {
+      context.options.method = context.options.method.toUpperCase();
+    }
     if (context.options.onRequest) {
       await callHooks(context, context.options.onRequest);
     }
@@ -3683,6 +3685,13 @@ function createFetch$1(globalOptions = {}) {
       }
       if (context.options.query) {
         context.request = withQuery(context.request, context.options.query);
+        delete context.options.query;
+      }
+      if ("query" in context.options) {
+        delete context.options.query;
+      }
+      if ("params" in context.options) {
+        delete context.options.params;
       }
     }
     if (context.options.body && isPayloadMethod(context.options.method)) {
@@ -3737,7 +3746,10 @@ function createFetch$1(globalOptions = {}) {
         clearTimeout(abortTimeout);
       }
     }
-    const hasBody = context.response.body && !nullBodyResponses$1.has(context.response.status) && context.options.method !== "HEAD";
+    const hasBody = (context.response.body || // https://github.com/unjs/ofetch/issues/324
+    // https://github.com/unjs/ofetch/issues/294
+    // https://github.com/JakeChampion/fetch/issues/1454
+    context.response._bodyInit) && !nullBodyResponses$1.has(context.response.status) && context.options.method !== "HEAD";
     if (hasBody) {
       const responseType = (context.options.parseResponse ? "json" : context.options.responseType) || detectResponseType(context.response.headers.get("content-type") || "");
       switch (responseType) {
@@ -3748,7 +3760,7 @@ function createFetch$1(globalOptions = {}) {
           break;
         }
         case "stream": {
-          context.response._data = context.response.body;
+          context.response._data = context.response.body || context.response._bodyInit;
           break;
         }
         default: {
@@ -4507,7 +4519,7 @@ const appConfig = defuFn(appConfig0, inlineAppConfig);
 const _inlineRuntimeConfig = {
   "app": {
     "baseURL": "/",
-    "buildId": "dcf19d67-361f-448b-ac9f-232cf8764f83",
+    "buildId": "4f6cd7ba-b182-4cb1-8b81-9d6fd4fe1d4d",
     "buildAssetsDir": "/_nuxt/",
     "cdnURL": ""
   },
@@ -4532,7 +4544,7 @@ const _inlineRuntimeConfig = {
       "/projects/**": {
         "ssr": false
       },
-      "/api/_content/search-1728401608123": {
+      "/api/_content/search-1728432897676": {
         "prerender": true,
         "headers": {
           "Content-Type": "text/plain"
@@ -4614,7 +4626,7 @@ const _inlineRuntimeConfig = {
     "content": {
       "locales": [],
       "defaultLocale": "",
-      "integrity": 1728401608123,
+      "integrity": 1728432897676,
       "experimental": {
         "stripQueryParameters": false,
         "advanceQuery": false,
@@ -5509,51 +5521,51 @@ async function dispose(driver) {
 const _assets = {
   ["nitro:bundled:cache:content:content-index.json"]: {
     import: () => import('./raw/content-index.mjs').then(r => r.default || r),
-    meta: {"type":"application/json","etag":"\"22b-CdIDE/LQCVSdLb4lertn9kSv+Uw\"","mtime":"2024-10-08T15:34:07.142Z"}
+    meta: {"type":"application/json","etag":"\"22b-CdIDE/LQCVSdLb4lertn9kSv+Uw\"","mtime":"2024-10-09T00:15:32.982Z"}
   },
   ["nitro:bundled:cache:content:content-navigation.json"]: {
     import: () => import('./raw/content-navigation.mjs').then(r => r.default || r),
-    meta: {"type":"application/json","etag":"\"3c6-wz2+xPx97/EDR+PocZjP8FA0tKA\"","mtime":"2024-10-08T15:34:07.142Z"}
-  },
-  ["nitro:bundled:cache:content:parsed:content:projects:portfolio.md"]: {
-    import: () => import('./raw/portfolio.mjs').then(r => r.default || r),
-    meta: {"type":"text/markdown; charset=utf-8","etag":"\"200a-6C7IVJhJ7I8cKqpbso7uApIuBQQ\"","mtime":"2024-10-08T15:34:07.143Z"}
-  },
-  ["nitro:bundled:cache:content:parsed:content:projects:revivalgroup.md"]: {
-    import: () => import('./raw/revivalgroup.mjs').then(r => r.default || r),
-    meta: {"type":"text/markdown; charset=utf-8","etag":"\"152d-uMQXnVVNqXGpWqm82hfzL/MIldk\"","mtime":"2024-10-08T15:34:07.143Z"}
-  },
-  ["nitro:bundled:cache:content:parsed:content:timeline:Bug.md"]: {
-    import: () => import('./raw/Bug.mjs').then(r => r.default || r),
-    meta: {"type":"text/markdown; charset=utf-8","etag":"\"7a1-5ykMpcRGKSciI22hXpRk2BzBzzw\"","mtime":"2024-10-08T15:34:07.144Z"}
-  },
-  ["nitro:bundled:cache:content:parsed:content:timeline:Done.md"]: {
-    import: () => import('./raw/Done.mjs').then(r => r.default || r),
-    meta: {"type":"text/markdown; charset=utf-8","etag":"\"1ded-b+fV4xGY3E18T6RJWS25kWn4vE8\"","mtime":"2024-10-08T15:34:07.143Z"}
-  },
-  ["nitro:bundled:cache:content:parsed:content:timeline:Drop-plans.md"]: {
-    import: () => import('./raw/Drop-plans.mjs').then(r => r.default || r),
-    meta: {"type":"text/markdown; charset=utf-8","etag":"\"6a8-H20T0MRvJBh+qw9jr34panKhC8A\"","mtime":"2024-10-08T15:34:07.143Z"}
-  },
-  ["nitro:bundled:cache:content:parsed:content:timeline:Guidelines.md"]: {
-    import: () => import('./raw/Guidelines.mjs').then(r => r.default || r),
-    meta: {"type":"text/markdown; charset=utf-8","etag":"\"93f-2bC0OHrFf8wkgRjkVNvv9/kGATU\"","mtime":"2024-10-08T15:34:07.143Z"}
-  },
-  ["nitro:bundled:cache:content:parsed:content:timeline:In-progress.md"]: {
-    import: () => import('./raw/In-progress.mjs').then(r => r.default || r),
-    meta: {"type":"text/markdown; charset=utf-8","etag":"\"693-UFYz1518JFTVberAFjzql+dD/KI\"","mtime":"2024-10-08T15:34:07.143Z"}
-  },
-  ["nitro:bundled:cache:content:parsed:content:timeline:Plans.md"]: {
-    import: () => import('./raw/Plans.mjs').then(r => r.default || r),
-    meta: {"type":"text/markdown; charset=utf-8","etag":"\"310-igJgKboK0yDXQcKsgtL/JlZ+PMo\"","mtime":"2024-10-08T15:34:07.143Z"}
+    meta: {"type":"application/json","etag":"\"3c6-wz2+xPx97/EDR+PocZjP8FA0tKA\"","mtime":"2024-10-09T00:15:32.981Z"}
   },
   ["nitro:bundled:cache:content:parsed:content:authors:@donpuerto.md"]: {
     import: () => import('./raw/_donpuerto.mjs').then(r => r.default || r),
-    meta: {"type":"text/markdown; charset=utf-8","etag":"\"1b27-B6CbkaXuHfjD4eHT10MfCLqyqro\"","mtime":"2024-10-08T15:34:07.143Z"}
+    meta: {"type":"text/markdown; charset=utf-8","etag":"\"1b27-B6CbkaXuHfjD4eHT10MfCLqyqro\"","mtime":"2024-10-09T00:15:32.983Z"}
+  },
+  ["nitro:bundled:cache:content:parsed:content:projects:portfolio.md"]: {
+    import: () => import('./raw/portfolio.mjs').then(r => r.default || r),
+    meta: {"type":"text/markdown; charset=utf-8","etag":"\"200a-6C7IVJhJ7I8cKqpbso7uApIuBQQ\"","mtime":"2024-10-09T00:15:32.983Z"}
+  },
+  ["nitro:bundled:cache:content:parsed:content:projects:revivalgroup.md"]: {
+    import: () => import('./raw/revivalgroup.mjs').then(r => r.default || r),
+    meta: {"type":"text/markdown; charset=utf-8","etag":"\"152d-uMQXnVVNqXGpWqm82hfzL/MIldk\"","mtime":"2024-10-09T00:15:32.983Z"}
+  },
+  ["nitro:bundled:cache:content:parsed:content:timeline:Bug.md"]: {
+    import: () => import('./raw/Bug.mjs').then(r => r.default || r),
+    meta: {"type":"text/markdown; charset=utf-8","etag":"\"7a1-5ykMpcRGKSciI22hXpRk2BzBzzw\"","mtime":"2024-10-09T00:15:32.983Z"}
+  },
+  ["nitro:bundled:cache:content:parsed:content:timeline:Done.md"]: {
+    import: () => import('./raw/Done.mjs').then(r => r.default || r),
+    meta: {"type":"text/markdown; charset=utf-8","etag":"\"1ded-b+fV4xGY3E18T6RJWS25kWn4vE8\"","mtime":"2024-10-09T00:15:32.983Z"}
+  },
+  ["nitro:bundled:cache:content:parsed:content:timeline:Drop-plans.md"]: {
+    import: () => import('./raw/Drop-plans.mjs').then(r => r.default || r),
+    meta: {"type":"text/markdown; charset=utf-8","etag":"\"6a8-H20T0MRvJBh+qw9jr34panKhC8A\"","mtime":"2024-10-09T00:15:32.983Z"}
+  },
+  ["nitro:bundled:cache:content:parsed:content:timeline:Guidelines.md"]: {
+    import: () => import('./raw/Guidelines.mjs').then(r => r.default || r),
+    meta: {"type":"text/markdown; charset=utf-8","etag":"\"93f-2bC0OHrFf8wkgRjkVNvv9/kGATU\"","mtime":"2024-10-09T00:15:32.983Z"}
+  },
+  ["nitro:bundled:cache:content:parsed:content:timeline:In-progress.md"]: {
+    import: () => import('./raw/In-progress.mjs').then(r => r.default || r),
+    meta: {"type":"text/markdown; charset=utf-8","etag":"\"693-UFYz1518JFTVberAFjzql+dD/KI\"","mtime":"2024-10-09T00:15:32.982Z"}
+  },
+  ["nitro:bundled:cache:content:parsed:content:timeline:Plans.md"]: {
+    import: () => import('./raw/Plans.mjs').then(r => r.default || r),
+    meta: {"type":"text/markdown; charset=utf-8","etag":"\"310-igJgKboK0yDXQcKsgtL/JlZ+PMo\"","mtime":"2024-10-09T00:15:32.983Z"}
   },
   ["nitro:bundled:cache:content:parsed:content:blog:nuxt:1.introduction.md"]: {
     import: () => import('./raw/1.introduction.mjs').then(r => r.default || r),
-    meta: {"type":"text/markdown; charset=utf-8","etag":"\"1d0d-x2hW9q6h2Nkuritci3JkZhW92Nw\"","mtime":"2024-10-08T15:34:07.142Z"}
+    meta: {"type":"text/markdown; charset=utf-8","etag":"\"1d0d-x2hW9q6h2Nkuritci3JkZhW92Nw\"","mtime":"2024-10-09T00:15:32.982Z"}
   }
 };
 
@@ -9370,8 +9382,8 @@ const handlers = [
   { route: '/api/_content/query/:qid/**:params', handler: _4NRdoo, lazy: false, middleware: false, method: "get" },
   { route: '/api/_content/query/:qid', handler: _4NRdoo, lazy: false, middleware: false, method: "get" },
   { route: '/api/_content/query', handler: _4NRdoo, lazy: false, middleware: false, method: "get" },
-  { route: '/api/_content/cache.1728401608123.json', handler: _jdJZlC, lazy: false, middleware: false, method: "get" },
-  { route: '/api/_content/search-1728401608123', handler: _ExuuPZ, lazy: false, middleware: false, method: "get" },
+  { route: '/api/_content/cache.1728432897676.json', handler: _jdJZlC, lazy: false, middleware: false, method: "get" },
+  { route: '/api/_content/search-1728432897676', handler: _ExuuPZ, lazy: false, middleware: false, method: "get" },
   { route: '/api/_content/navigation/:qid/**:params', handler: _rMEzOQ, lazy: false, middleware: false, method: "get" },
   { route: '/api/_content/navigation/:qid', handler: _rMEzOQ, lazy: false, middleware: false, method: "get" },
   { route: '/api/_content/navigation', handler: _rMEzOQ, lazy: false, middleware: false, method: "get" },

@@ -21,7 +21,7 @@ var info = {
 		"cog-filled-loop"
 	],
 	height: 24,
-	category: "Animated Icons",
+	category: "Material",
 	palette: false
 };
 var lastModified = 1725600523;

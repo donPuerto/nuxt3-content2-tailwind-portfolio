@@ -20,7 +20,7 @@ var info = {
 		"lock-open-outline"
 	],
 	height: 24,
-	category: "General",
+	category: "Material",
 	palette: false
 };
 var lastModified = 1718880438;

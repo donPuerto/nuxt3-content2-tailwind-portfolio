@@ -1,1 +1,0 @@
-import{N as r,M as o,c as t,k as a,P as p,Q as n,q as c}from"./C5A_yXpG.js";const _={__name:"DisqusComments",props:{...r.props,shortname:{type:String,default:()=>{var s,e;return(e=(s=o())==null?void 0:s.$disqusOptions)==null?void 0:e.shortname}}},setup(s){const e=s;return(u,m)=>(t(),a(c(r),p(n(e)),null,16))}};export{_};

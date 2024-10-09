@@ -21,7 +21,7 @@ var info = {
 		"pinwheel"
 	],
 	height: 24,
-	category: "General",
+	category: "UI 24px",
 	palette: false
 };
 var lastModified = 1722794037;

@@ -21,7 +21,7 @@ var info = {
 		"add-line"
 	],
 	height: 24,
-	category: "General",
+	category: "UI 24px",
 	palette: false
 };
 var lastModified = 1718298373;

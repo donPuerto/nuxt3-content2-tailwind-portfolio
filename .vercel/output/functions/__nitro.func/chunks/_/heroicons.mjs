@@ -20,7 +20,7 @@ var info = {
 		"cloud",
 		"folder"
 	],
-	category: "General",
+	category: "UI Other / Mixed Grid",
 	palette: false
 };
 var lastModified = 1721921294;
